@@ -1,3 +1,11 @@
 export const selectSessionErrors = state => {
     return state.errors.session;
 };
+
+export const selectCurrentUser = state => {
+    return state.entities.users[state.session.id];
+};
+
+export const selectUsers = state => {
+    return state.entities.users;
+}

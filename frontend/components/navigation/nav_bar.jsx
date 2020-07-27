@@ -2,7 +2,7 @@ import React from "react";
 
 const NavBar = ({ logout }) => {
     return (
-        <button onClick={logout}>Log Out</button>
+        <div>-Navigation Bar Placeholder-</div>
     );
 };
 

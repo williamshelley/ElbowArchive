@@ -76,10 +76,16 @@ class LoginForm extends React.Component {
                 <Link className={style.LINK} to="/recover">Forgot account?</Link>
 
                 <span className={style.SEPARATOR} />
-                <button
-                    id={style.SIGNUP_BUTTON}>
-                    Create New Account
-                </button>
+                {/* <button */}
+                
+                <Link 
+                    id={style.INHERITS_ALL}
+                    to="/signup">
+                    <button id={style.SIGNUP_BUTTON}>
+                        Create New Account
+                    </button>
+                </Link>
+                {/* </button> */}
             </div>
         );
     }

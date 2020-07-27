@@ -21,7 +21,7 @@
     padding: 0px;
 }
 
-.session button, 
+.session button,
 .session input,
 .session .link {
     margin: 7px 0;
@@ -60,6 +60,10 @@
     color: #1877f2;
     font-size: 15px;
     text-decoration: none;
+}
+
+#inherits_all {
+    all: inherit;
 }
 
 .session .separator {

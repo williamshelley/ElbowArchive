@@ -1,5 +1,9 @@
 import React from "react";
 import Moment from "moment";
+import * as style from "../../styles/session";
+
+const FEMALE = "Female";
+const MALE = "Male";
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -14,13 +18,12 @@ class SignupForm extends React.Component {
 
     handleInput(field) {
         return e => {
-            e.preventDefault();
             this.setState({ [field]: e.target.value });
         }
     }
 
     mergeDate() {
-        let { year, month, day} = this.state;
+        let { year, month, day } = this.state;
         return [year, month, day].join("-");
     }
 
@@ -55,16 +58,17 @@ class SignupForm extends React.Component {
 
     componentDidMount() {
         let now = new Moment();
-        this.setState({ 
-                year: now.year(), 
-                month: now.month(), 
-                day: now.toDate().getDate() })
+        this.setState({
+            year: now.year(),
+            month: now.month(),
+            day: now.toDate().getDate()
+        })
     }
 
     datePicker(array, field) {
         return (
             <select
-                className={`birthday-${field}`}
+                className={style.BIRTHDAY_INPUT}
                 value={this.state[field]}
                 onChange={this.handleInput(field)}>
 
@@ -79,8 +83,28 @@ class SignupForm extends React.Component {
         );
     }
 
+    genderSelect(gender) {
+        return (
+            <div className={style.BIRTHDAY_INPUT + " " + style.GENDER_OPTION}>
+                <label>{gender}</label>
+                <input
+                    className={style.GENDER_RADIO}
+                    type="radio"
+                    name="gender"
+                    value={gender}
+                    checked={this.state.gender === gender}
+                    onChange={this.handleInput("gender")}
+                />
+            </div>
+        );
+    }
+
+    hideForm(e) {
+        e.preventDefault();
+        $(`.${style.OVERLAY}`).css("display", "none");
+    }
+
     render() {
-        let { formType, className } = this.props;
         let { username, password, month, year, day, date } = this.state;
 
         let monthMoment = new Moment(`${year}-${month}`, "YYYY-MM");
@@ -88,36 +112,69 @@ class SignupForm extends React.Component {
         let daysInMonth = Array.from({ length: numDaysInMonth }, (_, i) => i)
         const numYears = 116;
         let thisYear = monthMoment.year();
-        let years = Array.from({ length: numYears}, (_, i) => (thisYear - i));
+        let years = Array.from({ length: numYears }, (_, i) => (thisYear - i));
 
         return (year) ? (
-            <form className={className} onSubmit={this.handleSubmit}>
-                <h1>{formType}!</h1>
-                <div className={`${className}-name`}>
-                    {this.textInput("First name", "first_name")}
-                    {this.textInput("Last name", "last_name")}
+            <div className={style.OVERLAY}>
+                <div className={style.CONTAINER}>
+                    <div className={style.SIGNUP_MODAL}>
+                        <div className={style.SIGNUP_HEADER}>
+                            <div className={style.SIGNUP_MESSAGE}>
+                                <h2>Sign Up</h2>
+                                <p>It's quick and easy.</p>
+                            </div>
+                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yX/r/TdCEremeWv5.png" onClick={this.hideForm} />
+                        </div>
+                        <span className={style.SEPARATOR} />
+                        <form onSubmit={this.handleSubmit}>
+                            <div>
+                                {this.textInput("First name", "first_name")}
+                                {this.textInput("Last name", "last_name")}
+                            </div>
+
+                            <input
+                                type="text"
+                                placeholder="Mobile number or email"
+                                value={username}
+                                autoComplete="on"
+                                onChange={this.handleInput("username")} />
+
+                            <input
+                                type="password"
+                                placeholder="New password"
+                                value={password}
+                                autoComplete="on"
+                                onChange={this.handleInput("password")} />
+
+                            <div className={style.TAG}>
+                                <label>Birthday
+                                <img src="https://www.marshall.edu/it/files/question-mark-circle-icon.png" />
+                                </label>
+                            </div>
+                            <div className={style.GROUPING}>
+                                {this.datePicker(Moment.monthsShort(), "month")}
+                                {this.datePicker(daysInMonth, "day")}
+                                {this.datePicker(years, "year")}
+                            </div>
+
+                            <div className={style.TAG}>
+                                <label>Gender
+                                <img src="https://www.marshall.edu/it/files/question-mark-circle-icon.png" />
+                                </label>
+                            </div>
+                            <div className={style.GROUPING}>
+                                {this.genderSelect(FEMALE)}
+                                {this.genderSelect(MALE)}
+                                {this.genderSelect("Other")}
+                            </div>
+
+                            <button
+                                id={style.SIGNUP_BUTTON}
+                                onClick={this.handleSubmit}>Sign Up</button>
+                        </form>
+                    </div>
                 </div>
-
-                <input
-                    type="text"
-                    placeholder="Mobile number or email"
-                    value={username}
-                    autoComplete="on"
-                    onChange={this.handleInput("username")} />
-
-                <input
-                    type="password"
-                    placeholder="New password"
-                    value={password}
-                    autoComplete="on"
-                    onChange={this.handleInput("password")} />
-
-                { this.datePicker(Moment.months(), "month")}
-                { this.datePicker(daysInMonth, "day")}
-                { this.datePicker(years, "year")}
-
-                <button onClick={this.handleSubmit}>{formType}!</button>
-            </form>
+            </div>
         ) : null;
     }
 }

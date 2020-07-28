@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import RecentUser from "./recent_user";
+import SignupFormContainer from "./signup_form_container";
 import * as style from "../../styles/session";
 
 class LoginForm extends React.Component {
@@ -41,51 +42,59 @@ class LoginForm extends React.Component {
         this.props.login(credentials);
     }
 
+    presentSignup(e) {
+        e.preventDefault();
+        let signupForm = $(`.${style.OVERLAY}`);
+        signupForm.css("display", "flex");
+    }
+
     render() {
-        let { recentUsers } = this.props;
         let { username, password } = this.state;
 
         return (
-            <div className={style.CONTAINER}>
-                {/* <ul>
+            <div id="login-container" className={style.CONTAINER}>
+                <div className={style.LOGIN_MODAL}>
+
+                    {/* <ul>
                     {recentUsers.map((user, idx) => (
                         <RecentUser key={idx} user={user} />
-                    ))}
-                </ul> */}
+                        ))}
+                    </ul> */}
 
 
-                <form onSubmit={this.handleSubmit}>
-                    <input
-                        type="text"
-                        placeholder="Email or Phone Number"
-                        value={username}
-                        autoComplete="on"
-                        onChange={this.handleInput("username")} />
+                    <form onSubmit={this.handleSubmit}>
+                        <input
+                            type="text"
+                            placeholder="Email or Phone Number"
+                            value={username}
+                            autoComplete="on"
+                            onChange={this.handleInput("username")} />
 
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        autoComplete="on"
-                        onChange={this.handleInput("password")} />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            autoComplete="on"
+                            onChange={this.handleInput("password")} />
 
-                    <button
-                        onClick={this.handleSubmit}>Log In</button>
-                </form>
+                        <button
+                            onClick={this.handleSubmit}>Log In</button>
+                    </form>
 
-                <Link className={style.LINK} to="/recover">Forgot account?</Link>
+                    <Link className={style.LINK} to="/recover">Forgot account?</Link>
 
-                <span className={style.SEPARATOR} />
-                {/* <button */}
-                
-                <Link 
-                    id={style.INHERITS_ALL}
-                    to="/signup">
-                    <button id={style.SIGNUP_BUTTON}>
-                        Create New Account
+                    <span className={style.SEPARATOR} />
+
+
+                    {/* <Link */}
+                        {/* id={style.INHERITS_ALL} */}
+                        {/* to="/signup"> */}
+                        <button id={style.SIGNUP_BUTTON}
+                            onClick={this.presentSignup}>
+                            Create New Account
                     </button>
-                </Link>
-                {/* </button> */}
+                    {/* </Link> */}
+                </div>
             </div>
         );
     }

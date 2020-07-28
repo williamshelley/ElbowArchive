@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const Home = ({ currentUser, logout }) => {
     return (
         <div className="home">
+            <h1>ElbowArchive</h1>
             {
                 currentUser ? (
                     <button onClick={logout}>Log Out</button>

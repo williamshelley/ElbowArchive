@@ -1,12 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import RecentUser from "./recent_user";
-import SignupFormContainer from "./signup_form_container";
 import * as style from "../../styles/session";
 
 class LoginForm extends React.Component {
     constructor(props) {
-        super();
+        super(props);
 
         this.state = {
             username: "",
@@ -44,7 +42,7 @@ class LoginForm extends React.Component {
 
     presentSignup(e) {
         e.preventDefault();
-        let signupForm = $(`.${style.OVERLAY}`);
+        let signupForm = $(`.${style.SIGNUP_OVERLAY}`);
         signupForm.css("display", "flex");
     }
 
@@ -52,50 +50,41 @@ class LoginForm extends React.Component {
         let { username, password } = this.state;
 
         return (
-            <div id="login-container" className={style.CONTAINER}>
-                <div className={style.LOGIN_MODAL}>
+            <form
+                className={style.LOGIN_MODAL}
+                onSubmit={this.handleSubmit}>
+                <input
+                    type="text"
+                    placeholder="Email or Phone Number"
+                    value={username}
+                    autoComplete="on"
+                    onChange={this.handleInput("username")} />
 
-                    {/* <ul>
-                    {recentUsers.map((user, idx) => (
-                        <RecentUser key={idx} user={user} />
-                        ))}
-                    </ul> */}
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    autoComplete="on"
+                    onChange={this.handleInput("password")} />
 
+                <button
+                    className={style.LOGIN_BUTTON}
+                    onClick={this.handleSubmit}>
+                    Log In
+                </button>
 
-                    <form onSubmit={this.handleSubmit}>
-                        <input
-                            type="text"
-                            placeholder="Email or Phone Number"
-                            value={username}
-                            autoComplete="on"
-                            onChange={this.handleInput("username")} />
+                <Link className={style.LINK} to="/recover">
+                    Forgot account?
+                </Link>
 
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            autoComplete="on"
-                            onChange={this.handleInput("password")} />
+                <div className={style.SECTION_SEPARATOR}/>
 
-                        <button
-                            onClick={this.handleSubmit}>Log In</button>
-                    </form>
-
-                    <Link className={style.LINK} to="/recover">Forgot account?</Link>
-
-                    <span className={style.SEPARATOR} />
-
-
-                    {/* <Link */}
-                        {/* id={style.INHERITS_ALL} */}
-                        {/* to="/signup"> */}
-                        <button id={style.SIGNUP_BUTTON}
-                            onClick={this.presentSignup}>
-                            Create New Account
-                    </button>
-                    {/* </Link> */}
-                </div>
-            </div>
+                <button
+                    className={style.SIGNUP_BUTTON}
+                    onClick={this.presentSignup}>
+                    Create New Account
+                </button>
+            </form>
         );
     }
 }

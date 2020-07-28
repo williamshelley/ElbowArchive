@@ -10,6 +10,17 @@ require "faker"
 User.destroy_all
 User.reset_pk_sequence
 
+User.create!(
+    first_name: "Harry", 
+    last_name: "Potter", 
+    email: "harry_potter@gmail.com", 
+    phone_number: "917-111-1234", 
+    password: "password", 
+    birth_date: "1981-07-31",
+    gender: "Male",
+    profile_img_url: "")
+
+
 (1..10).to_a.each do |n|
     User.create!(
         first_name: Faker::Name.first_name, 

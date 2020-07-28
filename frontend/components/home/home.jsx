@@ -1,25 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import NavBarContainer from "../navigation/nav_bar_container";
+import style from "../../styles/session";
 
 const Home = ({ currentUser, logout }) => {
     return (
         <div className="home">
             <h1>ElbowArchive</h1>
-            {
-                currentUser ? (
-                    <button onClick={logout}>Log Out</button>
-                ) : (
-                    <>
-                        <Link
-                            className="signup-button"
-                            to="/signup">Create New Account</Link>
-
-                        <Link
-                            className="login-button"
-                            to="/login">Log In</Link>
-                    </>
-                )
-            }
+            <NavBarContainer />
+            <button 
+                className={style.LOGIN_BUTTON}
+                onClick={logout}>Log Out</button>
         </div>
     );
 };

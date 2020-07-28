@@ -11,6 +11,7 @@ const mapStateToProps = () => ({
         day: "",
         year: "",
         gender: "",
+        customGender: "",
         username: "", 
         password: "", 
         email: ""

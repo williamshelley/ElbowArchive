@@ -4,69 +4,237 @@
 
 @import "../static_pages.scss";
 
-.form-container {
-    font-size: 17px;
+// .logged-out-container {
+//     div
+// }
+
+.logged-out-container {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 10px 15px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
-    box-sizing: border-box;
-    justify-content: flex-start;
+    background-color: $light-gray;
+    justify-content: center;
     align-items: center;
-    width: auto;
 }
 
-.login {
-    width: 370px;
-    height: 350px;
+.logged-out-footer {
+    background-color: white;
+    align-self: stretch;
 }
 
-.signup .gender-radio {
-    width: 13px;
-}
-
-.signup {
-    width: 400px;
-    height: 500px;
-    padding: 0px;
-    align-items: flex-start;
-    font-size: 15px;
-}
-
-.show-modal {
+.logged-out-body-login {
     display: flex;
+    flex-direction: column;
+    width: 396px;
+    align-items: center;
 }
 
-.signup div {
+.logged-out-body {
+    display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding-top: 92px;
+    padding-bottom: 132px;
+    overflow: hidden;
+    width: fit-content;
+}
+
+.logged-out-body-recent-logins {
+    justify-content: flex-start;
+    display: flex;
+    width: 584px;
+    box-sizing: border-box;
+    height: 496px;
+    flex-direction: column;
+    // align-items: flex-start;
+    padding-right: 48px;
+    // position: relative;
+}
+
+.logged-out-body-recent-logins > .section-header-message > h2 {
+    font-weight: normal;
+}
+
+.recent-login-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.recent-login-card {
+    display: flex;
+    width: 160px;
+    height: 206px;
+    list-style: none;
+    border: 1px solid $light-border-gray;
+    border-radius: 8px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.logged-out-body-recent-logins > .section-header-message {
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+.logged-out-logo {
+    height: 70px;
+    padding: 8px 0 16px 0;
+    margin-left: -20px;
+}
+
+.section-header > .section-header-message {
+    flex-direction: column;
+    width: fit-content;
+    align-items: flex-start;
+}
+
+.login-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: 396px;
+    // height: 345px;
+    background-color: white;
+    padding: 10px 16px 24px 16px;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+    border: none;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin: 40px 0 0 0;
 }
 
 .signup-overlay {
-    display: none;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background-color: rgba(255,255,255,0.7);
+    background-color: rgba(255, 255, 255, .8);
     width: 100%;
     height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
     align-items: center;
     justify-content: center;
 }
 
-.signup div {
+.small-message {
+    font-size: 11px;
+    margin: 0;
+    padding: 0;
+    align-self: flex-start;
+    width: fit-content;
+}
+
+.signup-overlay > .login-modal {
+    margin: 0;
+    padding: 16px;
+    width: 432px;
+    // height: 489px;
+    justify-content: flex-start;
+}
+
+.signup-form {
     display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.link {
+    color: rgb(56, 88, 152);
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.signup-form > p > .link {
+    color: rgb(56, 88, 152);
+}
+
+.signup-form-h-stack {
+    display: flex;
+    flex-direction: row;
+    padding: inherit;
     justify-content: space-between;
 }
 
-.signup div input {
-    width: 195px;
+.signup-form-h-stack > input {
+    margin: 0;
+    padding: 0;
+    width: 160px;
+    padding: 11px;
+    height: 10px;
 }
 
-.birthday-input {
+.signup-form {
+    input {
+        background-color: #f5f6f7;
+    }
+}
+
+.signup-form > input {
+    width: 366px;
+    height: 10px;
+    font-size: 15px;;
+    background-color: #f5f6f7;
+}
+
+.signup-form > p {
+    font-size: 11px;
+    line-height: 14.74px;
+    margin: 11px 0;
+}
+
+.signup-form > .signup-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00a400;
+    width: 194px;
+    height: 36px;
+    padding: 0;
+    margin: 0;
+}
+
+.signup-form > .named-selector-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 6px 0;
+}
+
+.named-selector-container > .named-selector-tag {
+    flex-direction: row;
+    svg {
+        color: $subtext-gray;
+    }
+}
+
+.named-selector-tag > label {
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.named-selector-container > .named-selectors {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 6px;
+
+}
+
+.named-selectors > select,
+.named-selectors > .radio-option {
     width: 125px;
     border-radius: 4px;
     color: #1c1e21;
@@ -78,123 +246,65 @@
     border-color: $light-border-gray;
 }
 
-.gender-option {
-    width: 125px;
+.named-selectors > .radio-option {
     align-items: center;
-    padding: 10px;
+    justify-content: space-between;    
     border: 1px solid $light-border-gray;
+    width: fit-content;
+    padding: 14px 16px;
+    box-sizing: border-box;
+    flex-grow: 1;
 }
 
-.login-page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.login-modal > .section-header {
     flex-direction: row;
-    width: 100%;
-    height: 100%;
-    background-color: $light-gray;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #dadde1;
 }
 
-.login form,
-.signup form {
-    padding: 0px;
-    width: 100%;
+.login-modal > input {
+    width: 330px;
+    height: 22px;
 }
 
-.login button,
-.login input,
-.login .link,
-.signup button,
-.signup input {
-    margin: 5px 0;
-    height: 55px;
-    padding: 10px;
-    justify-content: center;
+.login-button {
+    background-color: #1877f2;
+    font-size: 20px;
+    line-height: 48px;
+    padding: 0 16px;
+    width: 332px;;
+    margin-top: 6px;
 }
 
-.signup input {
-    background-color: $lightest-gray;
-    height: 40px;
-}
-
-.login button,
-.signup button {
-    height: 50px;
+.login-modal > .signup-button,
+.login-modal > form > .signup-button {
+    background-color: #42b72a;
     border: none;
-    background-color: $blue;
-    color: white;
-    font-weight: bold;
+    font-size: 17px;
+    line-height: 48px;
+    padding: 0 16px;
 }
 
-.login input,
-.signup input {
-    border: 1px solid $light-border-gray;
-}
-
-#signup-button {
-    background-color: $green;
-    width: 200px;
-    align-items: center;
-    align-self: center;
-}
-
-.login .links {
-    justify-content: space-evenly;
-    height: 50%;
-}
-
-.login .link {
-    color: $blue;
-    font-size: 15px;
+.login-modal > .link {
+    color: #1877f2;
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    text-align: center;
     text-decoration: none;
 }
 
-#inherits_all {
-    all: inherit;
+.login-modal > .link:hover {
+    text-decoration: underline;
 }
 
-.signup-grouping {
-    margin-bottom: 10px;
-}
-
-.login .separator,
-.signup .separator {
-    margin-bottom: 15px;
-    width: 100%;
-    height: 1px;
-    background-color: rgba(0, 0, 0, .1);
-}
-
-.signup .separator {
-    margin-top: 15px;
-}
-
-.signup .signup-message {
+.login-modal > .section-separator {
     display: flex;
-    flex-direction: column;
-}
-
-.signup .signup-header {
-    justify-content: space-between;
-}
-
-.signup-header img {
-    width: 24px;
-    height: 24px;
-}
-
-.signup .tag {
-    display: flex;
-    height: 20px;
-    font-size: 13px;
-    padding: 5px;
-    margin-bottom: 5px;
-}
-
-.tag img {
-    position: relative;
-    width: 15px;
-    height: 15px;
-    top: 2.5px;
-    margin-left: 5px;
+    align-items: center;
+    border-bottom: 1px solid #dadde1;
+    margin: 20px 16px;
+    text-align: center;
 }

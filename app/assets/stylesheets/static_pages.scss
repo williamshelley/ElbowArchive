@@ -9,7 +9,9 @@ $lightest-gray: #f5f6f7;
 $light-border-gray: #dddfe2;
 $subtext-gray: #606770;
 
-html, div, p, h2 {
+@import url(//db.onlinewebfonts.com/c/aa12a710af434ef5e04f88fc37a4c7cc?family=Klavika+Bold);
+
+html, div, p, h2, img, form, label, body {
     all: unset;
     font-family: Helvetica, Arial, sans-serif;
 }
@@ -31,17 +33,38 @@ p {
     margin-top: 5px;
 }
 
-input,
-button,
+button:hover {
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+button {
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.small-icon {
+    width: 15px;
+    height: 15px;
+}
+
+.medium-icon {
+    width: 24px;
+    height: 24px;
+}
+
 div,
 form {
     font-size: inherit;
     font-family: inherit;
     font-weight: inherit;
-    padding: inherit;
-    margin: inherit;
-    box-sizing: inherit;
-    border-radius: inherit;
+    padding: 0;
+    margin: 0;
     width: 100%;
     display: inherit;
     flex-direction: inherit;
@@ -49,3 +72,12 @@ form {
     justify-content: inherit;
 }
 
+input[type=text],
+input[type=password],
+input[type=radio] {
+    border: 1px solid $light-border-gray;
+    padding: 14px 16px;
+    border-radius: 6px;
+    margin: 6px 0;
+    font-family: Helvetica, Arial, sans-serif;
+}

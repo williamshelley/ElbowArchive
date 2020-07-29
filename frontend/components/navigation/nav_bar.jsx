@@ -2,7 +2,11 @@ import React from "react";
 
 const NavBar = ({ logout }) => {
     return (
-        <div>-Navigation Bar Placeholder-</div>
+        <div className="nav-bar">
+            <div>Search Bar</div>
+            <div>Main Items</div>
+            <div>Account Items</div>
+        </div>
     );
 };
 

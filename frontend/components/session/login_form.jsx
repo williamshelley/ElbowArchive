@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as style from "../../styles/session";
+import { handleBadInput, errorMessage } from "../../util/form_util";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -13,6 +16,7 @@ class LoginForm extends React.Component {
 
         this.handleInput = this.handleInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.presentSignup = this.presentSignup.bind(this);
     }
 
     handleInput(field) {
@@ -37,35 +41,63 @@ class LoginForm extends React.Component {
             phone_number,
             password
         };
-        this.props.login(credentials);
+
+        this.props.login(credentials).then(()=>{}, ()=>{
+            this.setBorders(style.ERROR_INPUT_BORDER);
+        });;
+    }
+
+    setBorders(border) {
+        $(`#login-username`).css("border", border);
+        $(`#login-password`).css("border", border);
     }
 
     presentSignup(e) {
         e.preventDefault();
+        this.props.clearErrors();
+        this.setBorders(style.INPUT_BORDER);
         let signupForm = $(`.${style.SIGNUP_OVERLAY}`);
         signupForm.css("display", "flex");
     }
 
-    render() {
-        let { username, password } = this.state;
+    createInput(placeholder, field) {
+        const type = field === "password" ? "password" : "text";
 
+        let login = this.props.errors.login;
+        let error = undefined;
+        if (login) {
+            error = login[field];
+        }
+        let message = errorMessage(field);
+
+        return (
+            <div style={{position: "relative"}}>
+            <input
+                id={`login-${field}` }
+                type={type}
+                placeholder={error ? message : placeholder}
+                value={this.state[field]}
+                autoComplete="on"
+                onBlur={handleBadInput({ field, message, props: this.props })}
+                onChange={this.handleInput(field)} />
+            {   error ?
+                <FontAwesomeIcon 
+                className="error" 
+                icon={faExclamationCircle} 
+                /> : null
+            }
+            </div>
+        );
+    }
+
+    render() {
         return (
             <form
                 className={style.LOGIN_MODAL}
                 onSubmit={this.handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Email or Phone Number"
-                    value={username}
-                    autoComplete="on"
-                    onChange={this.handleInput("username")} />
 
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    autoComplete="on"
-                    onChange={this.handleInput("password")} />
+                {this.createInput("Email or Phone Number", "username")}
+                {this.createInput("Password", "password")}
 
                 <button
                     className={style.LOGIN_BUTTON}

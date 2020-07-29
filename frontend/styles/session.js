@@ -28,6 +28,7 @@ export const RECENT_LOGIN_CARD = "recent-login-card";
 export const RECENT_LOGIN_LIST = "recent-login-list";
 
 export const INPUT_BORDER = "1px solid #dddfe2";
+export const ERROR_INPUT_BORDER = "1px solid red";
 export const SMALL_MESSAGE = "small-message";
 
 const style = {
@@ -61,6 +62,7 @@ const style = {
     RECENT_LOGIN_LIST,
     INPUT_BORDER,
     SMALL_MESSAGE,
+    ERROR_INPUT_BORDER,
 }
 
 export default style;

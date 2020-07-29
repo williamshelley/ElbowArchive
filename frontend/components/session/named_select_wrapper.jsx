@@ -3,7 +3,7 @@ import * as style from "../../styles/session";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 
-const NamedSelectWrapper = ({ title, iconUrl, children }) => (
+const NamedSelectWrapper = ({ title, children }) => (
 
     
     <div className={style.NAMED_SELECTOR_CONTAINER}>

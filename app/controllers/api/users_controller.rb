@@ -10,7 +10,10 @@ class Api::UsersController < ApplicationController
             login!(@user)
             render :show
         else
-            render json: @user.errors.full_messages, status: 404
+            messages = @user.errors.messages
+            combined = messages[:email] + messages[:phone_number]
+            @username_errors = combined.empty? ? nil : combined
+            render :errors, status: 404
         end
     end
 

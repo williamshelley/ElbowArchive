@@ -2,12 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Moment from "moment";
 import * as style from "../../styles/session";
-import SectionHeaderMessage from "./section_header_message";
 import NamedSelectWrapper from "./named_select_wrapper";
+import SectionHeader from "./secion_header";
+import { faTimes, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { handleBadInput, errorMessage } from "../../util/form_util";
 
 const FEMALE = "Female";
 const MALE = "Male";
-const Q_MARK_URL = "https://www.marshall.edu/it/files/question-mark-circle-icon.png";
+const CUSTOM = "Custom";
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -18,7 +21,6 @@ class SignupForm extends React.Component {
         this.handleInput = this.handleInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.mergeDate = this.mergeDate.bind(this);
-        this.handleErrorPresence = this.handleErrorPresence.bind(this);
     }
 
     handleInput(field) {
@@ -34,7 +36,7 @@ class SignupForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        let { username } = this.state;
+        let { username, customGender } = this.state;
         let email = undefined;
         let phone_number = undefined;
         if (username.includes("@")) {
@@ -45,35 +47,43 @@ class SignupForm extends React.Component {
         let birth_date = this.mergeDate();
 
         let gender = this.state.gender;
-        if (this.state.customGender.length > 0) {
-            gender = this.state.customGender;
+        if (customGender.length > 0 && customGender !== CUSTOM) {
+            gender = customGender;
         }
 
         this.setState({ email, phone_number, birth_date, gender }, () => {
             let newUser = this.state;
-            this.props.signup(newUser);
+            this.props.signup(newUser).then(()=>{}, ()=>{
+                Object.keys(this.props.errors).forEach(field => {
+                    $(`#${field}`).css("border", style.ERROR_INPUT_BORDER);
+                });
+            });
         });
     }
 
+    createInput(placeholder, field) {
+        const type = field === "password" ? "password" : "text";
 
-    componentDidMount() {
-        let now = new Moment();
-        this.setState({
-            year: now.year(),
-            month: now.month(),
-            day: now.toDate().getDate()
-        })
-    }
+        let error = this.props.errors[field];
+        let message = errorMessage(field);
 
-    textInput(placeholder, field) {
         return (
+            <div style={{position: "relative"}}>
             <input
-                type="text"
-                placeholder={placeholder}
+                id={field}
+                type={type}
+                placeholder={error ? message : placeholder}
                 value={this.state[field]}
                 autoComplete="on"
-                onBlur={this.handleErrorPresence}
+                onBlur={handleBadInput({ field, message, props: this.props })}
                 onChange={this.handleInput(field)} />
+            {   error ?
+                <FontAwesomeIcon 
+                className="error" 
+                icon={faExclamationCircle} 
+                /> : null
+            }
+            </div>
         );
     }
 
@@ -88,7 +98,7 @@ class SignupForm extends React.Component {
                 </option>
 
                 {array.map((unit, idx) => (
-                    <option key={idx} value={idx}>{unit}</option>
+                    <option key={idx} value={unit}>{unit}</option>
                 ))}
             </select>
         );
@@ -104,93 +114,66 @@ class SignupForm extends React.Component {
                     value={gender}
                     checked={this.state.gender === gender}
                     onChange={this.handleInput("gender")}
-                    onBlur={this.handleErrorPresence}
-                    onClick={() => {
-                        this.setState({ customGender: "" })
-                    }}
+                    onClick={() => { this.setState({ customGender: "" })}}
                 />
             </div>
         );
     }
 
-
     hideForm(e) {
         e.preventDefault();
-        $(`.${style.SIGNUP_OVERLAY}`).css("display", "none");
-    }
-
-    handleErrorPresence(e) {
-        e.preventDefault();
-        if (e.target.value.length <= 0) {
-            $(e.target).css("border", "1px solid red");
-        } else {
-            $(e.target).css("border", style.INPUT_BORDER);
-        }
+        const _nullState = Object.assign({}, this.props.nullState);
+        this.setState(()=>_nullState , () =>{
+            $(`.${style.SIGNUP_OVERLAY}`).css("display", "none");
+            $("input").css("border", style.INPUT_BORDER);
+            this.props.clearErrors();
+        });
     }
 
     render() {
-        let { username, password, month, year } = this.state;
+        let { month, day, year } = this.state;
 
         let monthMoment = new Moment(`${year}-${month}`, "YYYY-MM");
-        // let numDaysInMonth = monthMoment.daysInMonth();
         let numDaysInMonth = 31;
-        let daysInMonth = Array.from({ length: numDaysInMonth }, (_, i) => (i + 1))
+        let daysInMonth = Array.from({ length: numDaysInMonth }, 
+            (_, i) => (i + 1));
         const numYears = 116;
         let thisYear = monthMoment.year();
         let years = Array.from({ length: numYears }, (_, i) => (thisYear - i));
-
+        let months = Moment.monthsShort();
+    
         return (year) ? (
             <div className={style.LOGIN_MODAL}>
-                <div className={style.SECTION_HEADER}>
-                    <SectionHeaderMessage
-                        title={"Sign Up"}
-                        description={"It's quick and easy."} />
-                    <img
-                        className="medium-icon"
-                        src="https://static.xx.fbcdn.net/rsrc.php/v3/yX/r/TdCEremeWv5.png" onClick={this.hideForm} />
-                </div>
+                <SectionHeader title="Sign Up" 
+                    description="It's quick and easy."
+                    faIcon={faTimes}
+                    onIconClick={this.hideForm.bind(this)}/>
+
 
                 <form
                     className={style.SIGNUP_FORM}
                     onSubmit={this.handleSubmit}>
                     <div className={style.SIGNUP_FORM_H_STACK}>
-                        {this.textInput("First name", "first_name")}
-                        {this.textInput("Last name", "last_name")}
+                        {this.createInput("First name", "first_name")}
+                        {this.createInput("Last name", "last_name")}
                     </div>
 
-                    <input
-                        type="text"
-                        placeholder="Mobile number or email"
-                        value={username}
-                        autoComplete="on"
-                        onBlur={this.handleErrorPresence}
-                        onChange={this.handleInput("username")} />
+                    {this.createInput("Mobile number or email", "username")}
+                    {this.createInput("New Password", "password")}
 
-                    <input
-                        type="password"
-                        placeholder="New password"
-                        value={password}
-                        autoComplete="on"
-                        onBlur={this.handleErrorPresence}
-                        onChange={this.handleInput("password")} />
-
-                    <NamedSelectWrapper
-                        title={"Birthday"}
-                        iconUrl={Q_MARK_URL}>
-                        {this.datePicker(Moment.monthsShort(), "month")}
+                    <NamedSelectWrapper title={"Birthday"}>
+                        {this.datePicker(months, "month")}
                         {this.datePicker(daysInMonth, "day")}
                         {this.datePicker(years, "year")}
                     </NamedSelectWrapper>
 
-                    <NamedSelectWrapper
-                        title={"Gender"}
-                        iconUrl={Q_MARK_URL}>
+                    <NamedSelectWrapper title={"Gender"}>
                         {this.genderSelect(FEMALE)}
                         {this.genderSelect(MALE)}
-                        {this.genderSelect("Custom")}
+                        {this.genderSelect(CUSTOM)}
                     </NamedSelectWrapper>
 
-                    {this.state.gender === "Custom" ? (
+                    {this.state.gender === CUSTOM ? (
                         <>
                             <div className={style.SMALL_MESSAGE}>
                                 Your pronoun is visible to everyone.

@@ -9,7 +9,7 @@ class Api::SessionsController < ApplicationController
             login!(@user)
             render :show
         else
-            render json: ["Invalid email/phone number or password."], status: 404
+            render :errors, status: 404
         end
     end
 

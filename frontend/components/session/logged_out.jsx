@@ -5,6 +5,8 @@ import LoginFormContainer from "./login_form_container";
 import SignupFormContainer from "./signup_form_container";
 import SectionHeaderMessage from "./section_header_message";
 
+const FB_LOGO = "https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg";
+const EA_LOGO = "logo.png";
 export default class LoggedOut extends React.Component {
     constructor(props) {
         super(props);
@@ -18,7 +20,9 @@ export default class LoggedOut extends React.Component {
                     <div className={style.LOGGED_OUT_BODY_RECENT_LOGINS}>
                         <img 
                             className={style.LOGGED_OUT_LOGO}
-                            src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" />
+                            src={FB_LOGO}
+                            // src={EA_LOGO}
+                            />
                         <SectionHeaderMessage title="Recent Logins"
                             description="Click your picture or add an account."
                         />

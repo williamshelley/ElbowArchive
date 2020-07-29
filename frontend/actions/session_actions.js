@@ -5,6 +5,9 @@ import * as SessionAPIUtil from "../util/session_api_util";
 export const RECEIVE_USER = "RECEIVE_USER";
 export const LOGOUT_USER = "LOGOUT_CURRENT_USER"
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS"
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const RECEIVE_ERROR = "RECEIVE_ERROR";
+export const REMOVE_ERROR = "REMOVE_ERROR";
 
 // regular action creators
 
@@ -21,6 +24,21 @@ export const receiveErrors = errors => ({
     type: RECEIVE_ERRORS,
     errors
 });
+
+export const clearErrors = () => ({
+    type: CLEAR_ERRORS
+});
+
+export const receiveError = (field, error) => ({
+    type: RECEIVE_ERROR,
+    field,
+    error
+});
+
+export const removeError = (field) => ({
+    type: REMOVE_ERROR,
+    field
+})
 
 
 // thunk action creators

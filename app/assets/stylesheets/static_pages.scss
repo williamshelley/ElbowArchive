@@ -9,7 +9,14 @@ $lightest-gray: #f5f6f7;
 $light-border-gray: #dddfe2;
 $subtext-gray: #606770;
 
-@import url(//db.onlinewebfonts.com/c/aa12a710af434ef5e04f88fc37a4c7cc?family=Klavika+Bold);
+$icon-bg: #4A4A4A;
+$icon-color: #CCCCCC;
+$bar-bg: #282828;
+$border-color: rgb(62, 64, 66); 
+$item-text: white;
+$item-hover-bg:  #828282;
+
+// @import url(//db.onlinewebfonts.com/c/aa12a710af434ef5e04f88fc37a4c7cc?family=Klavika+Bold);
 
 html, div, p, h2, img, form, label, body {
     all: unset;
@@ -21,6 +28,9 @@ html, div, p, h2, img, form, label, body {
     flex-direction: column;
     align-items: center;
     font-family: Helvetica, Arial, sans-serif;
+}
+html {
+    height: 100%;
 }
 
 h2 {
@@ -48,6 +58,11 @@ button {
     text-align: center;
 }
 
+body {
+    background-color: #1d1d1d;
+    height: 100%;
+}
+
 .small-icon {
     width: 15px;
     height: 15px;
@@ -57,7 +72,7 @@ button {
     width: 24px;
     height: 24px;
 }
-
+main,
 div,
 form {
     font-size: inherit;
@@ -70,6 +85,9 @@ form {
     flex-direction: inherit;
     align-items: inherit;
     justify-content: inherit;
+    background-color: inherit;
+    height: inherit;
+    box-sizing: inherit;
 }
 
 input[type=text],

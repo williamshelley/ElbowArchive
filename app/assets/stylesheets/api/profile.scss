@@ -1,0 +1,105 @@
+@import "../static_pages.scss";
+
+
+.profile {
+    $body-bg: #1d1d1d;
+
+    $bar-height: 60px;
+
+    display: flex;
+    flex-direction: column;
+    background-color: $body-bg;
+    color: $item-text;
+    height: 100vw;
+    box-sizing: border-box;
+
+    .header {
+        height: fit-content;
+
+        .photos {
+            max-height: 350px;
+            position: relative;
+
+            .cover-photo {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                border-bottom-left-radius: 8px;
+                border-bottom-right-radius: 8px;
+                border-bottom: 1px solid $border-color;
+
+                img {
+                    object-fit: contain;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .profile-photo {
+                position: absolute;
+                bottom: -20px;
+                width: 168px;
+                height: 168px;
+                background-color: $icon-bg;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 5px solid $bar-bg;
+
+                img {
+                    background-color: $item-hover-bg;
+                    margin: auto;
+                    object-fit: cover;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+
+        .bio {
+            height: fit-content;
+            background-color: $bar-bg;
+            border-bottom: 1px solid $border-color;
+        }
+
+        .navigation {
+            flex-direction: row;
+            background-color: $bar-bg;
+            height: $bar-height;
+            justify-content: space-between;
+            padding: 0 16px;
+
+            .left {
+                justify-content: flex-start;
+
+                .item {
+                    font-weight: bold;
+                    width: fit-content;
+                    height: unset;
+                    padding: 14px 12px;
+                    border-radius: 8px;
+                    font-size: 18px;
+                }
+
+                .item:hover {
+                    cursor: pointer;
+                    background-color: $item-hover-bg;
+                }
+            }
+
+            .right {
+                justify-content: flex-end;
+            }
+        }
+    }
+
+    .content {
+        background-color: $body-bg;
+        max-width: 940px;
+    }
+
+    .body {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-evenly;
+    }
+}

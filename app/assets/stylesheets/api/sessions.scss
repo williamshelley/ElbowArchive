@@ -5,17 +5,10 @@
 @import "../static_pages.scss";
 
 .login-modal {
-    .error+input {
-        // position: relative;
-    }
-
     .error {
-        // display: none;
         color: red;
         position: absolute;
         right: 20px;
-        // width: 0;
-        // overflow: visible;
     }
 
 }
@@ -111,7 +104,6 @@
     align-items: center;
 
     width: 396px;
-    // height: 345px;
     background-color: white;
     padding: 10px 16px 24px 16px;
 
@@ -120,6 +112,9 @@
     border-radius: 8px;
     box-sizing: border-box;
     margin: 40px 0 0 0;
+
+    height: unset;
+
 }
 
 .signup-overlay {
@@ -284,7 +279,7 @@
     }
 }
 
-.login-modal>.section-header {
+.login-modal > .section-header {
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;

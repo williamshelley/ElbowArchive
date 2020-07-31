@@ -10,7 +10,21 @@
 User.destroy_all
 User.reset_pk_sequence
 
-User.create!(
+Post.destroy_all
+Post.reset_pk_sequence
+
+hermione = User.create!(
+    first_name: "Hermione", 
+    last_name: "Granger", 
+    email: "hermione_granger@gmail.com", 
+    phone_number: "646-555-5678", 
+    password: "password", 
+    birth_date: "1981-04-10",
+    gender: "Female",
+    cover_photo: "https://upload.wikimedia.org/wikipedia/commons/3/38/Hogwarts_model_studio_tour.jpg",
+    profile_photo: "https://lh5.googleusercontent.com/2PNe-kCP6wYQu8MFsGmuKcpIkROCpx7P_zMC6fF6IQwyLaycNBTiuAZgCsi2QF7vwSs5muqFx9QOoh14-bdt4kUVUEIFQSwkPgzOg07luLyGtTXL0xceMqH6LRnlGPzPog")
+
+harry = User.create!(
     first_name: "Harry", 
     last_name: "Potter", 
     email: "harry_potter@gmail.com", 
@@ -18,8 +32,32 @@ User.create!(
     password: "password", 
     birth_date: "1981-07-31",
     gender: "Male",
-    profile_img_url: "")
+    cover_photo: "https://upload.wikimedia.org/wikipedia/commons/3/38/Hogwarts_model_studio_tour.jpg",
+    profile_photo: "https://images.ctfassets.net/usf1vwtuqyxm/2PY5u8jWLYSleOz1yFmdnV/28ac9117961a02ec65c9cd7ae3bc87eb/hpah_HP4_JKT_BC__1_.jpg?fm=jpg")
 
+Post.create!(
+    author_id: harry.id,
+    wall_id: harry.id,
+    body: "Hogwarts is great!"
+)
+
+Post.create!(
+    author_id: harry.id,
+    wall_id: harry.id,
+    body: "Hogwarts is amazing!"
+)
+
+Post.create!(
+    author_id: hermione.id,
+    wall_id: harry.id,
+    body: "Hogwarts is fabulous!"
+)
+
+Post.create!(
+    author_id: harry.id,
+    wall_id: hermione.id,
+    body: "Hogwarts is incredible!"
+)
 
 # (1..10).to_a.each do |n|
 #     User.create!(

@@ -16,7 +16,7 @@
     justify-content: space-between;
     height: $height;
     width: 100%;
-    background-color: $bar-bg;
+    background-color: $nav-bar-bg;
     border-bottom: 1px solid $border-color;
     position: relative;
 
@@ -65,7 +65,7 @@
         }
 
         p {
-            color: $icon-color;
+            color: $text-color;
         }
     }
 
@@ -122,7 +122,6 @@
         justify-content: center;
         width: 40px;
         height: 40px;
-        color: $icon-color;
         border-radius: 50%;
         background-color: $icon-bg;
 
@@ -134,7 +133,7 @@
 
     .icon:hover {
         cursor: pointer;
-        background-color: $item-hover-bg;
+        background-color: $icon-hover-bg;
     }
 
     .dropdown {
@@ -151,7 +150,6 @@
         z-index: 100;
 
         .item {
-            color: $item-text;
             flex-direction: row;
             justify-content: flex-start;
             height: fit-content;
@@ -161,7 +159,7 @@
         }
 
         .item:hover {
-            background-color: $item-hover-bg;
+            background-color: $icon-hover-bg;
             cursor: pointer;
         }
     }

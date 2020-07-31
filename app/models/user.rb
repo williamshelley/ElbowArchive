@@ -8,8 +8,9 @@ class User < ApplicationRecord
 
     after_initialize :ensure_session_token!
 
-    attr_reader :password
+    has_many :posts, foreign_key: :author_id
 
+    attr_reader :password
 
     def email_or_phone_number
         self.email || self.phone_number
@@ -26,6 +27,17 @@ class User < ApplicationRecord
         end
         return user if user && user.is_password?(password)
         nil
+    end
+
+    # posts that this user can modify
+    def modifiable_posts
+        posts = Post
+            .includes(:author)
+            .includes(:wall)
+            .select("*")
+            .where("(posts.author_id = ?) OR (posts.wall_id = ?)", self.id, self.id)
+            
+        posts
     end
 
     def password=(password)

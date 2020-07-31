@@ -38,7 +38,7 @@ export const receiveError = (field, error) => ({
 export const removeError = (field) => ({
     type: REMOVE_ERROR,
     field
-})
+});
 
 
 // thunk action creators
@@ -59,6 +59,13 @@ export const logout = () => dispatch => (
 
 export const signup = user => dispatch => (
     SessionAPIUtil.signup(user)
+        .then(
+            payload => dispatch(receiveUser(payload)),
+            errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
+);
+
+export const updateUser = user => dispatch => (
+    SessionAPIUtil.updateUser(user)
         .then(
             payload => dispatch(receiveUser(payload)),
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))

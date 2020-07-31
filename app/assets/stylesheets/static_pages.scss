@@ -9,18 +9,30 @@ $lightest-gray: #f5f6f7;
 $light-border-gray: #dddfe2;
 $subtext-gray: #606770;
 
-$icon-bg: #4A4A4A;
-$icon-color: #CCCCCC;
-$bar-bg: #282828;
-$border-color: rgb(62, 64, 66); 
-$item-text: white;
-$item-hover-bg:  #828282;
+// $icon-bg: #4A4A4A;
+// $icon-color: #CCCCCC;
+// $bar-bg: #282828;
+// $border-color: rgb(62, 64, 66); 
+// $item-text: white;
+// $item-hover-bg:  #828282;
+
+$nav-bar-bg: #242526;
+$icon-color: #3E3E3E;
+$icon-bg: #3A3B3C;
+$icon-hover-bg: #4E4F50;
+$icon-color-dim: #B1B3B8;
+$body-bg: #18191A;
+$section-bg: #242526;
+$border-color: #393A3B;
+$text-color: #E4E6EA;
 
 // @import url(//db.onlinewebfonts.com/c/aa12a710af434ef5e04f88fc37a4c7cc?family=Klavika+Bold);
 
 html, div, p, h2, img, form, label, body {
     all: unset;
     font-family: Helvetica, Arial, sans-serif;
+    color: $text-color;
+    outline: none;
 }
 
 .app {
@@ -56,6 +68,7 @@ button {
     border: none;
     border-radius: 6px;
     text-align: center;
+    outline: none;
 }
 
 body {

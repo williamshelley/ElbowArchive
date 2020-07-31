@@ -1,0 +1,77 @@
+@import "../static_pages.scss";
+
+.edit-modal,
+[class*=post-modal-] {
+    $overlay-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: auto;
+    z-index: 100;
+    background-color: $overlay-color;
+
+    form {
+        width: 700px;
+        height: fit-content;
+        background-color: $nav-bar-bg;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 16px;
+        padding: 16px;
+        border-radius: 8px;
+        position: relative;
+        margin-top: 60px;
+
+        .header {
+            flex-direction: row;
+            width: 100%;
+            height: fit-content;
+            justify-content: center;
+            padding: 8px 0;
+            border-bottom: 1px solid $border-color;
+
+            h3 {
+                padding: 8px 0;
+                width: fit-content;
+                height: fit-content;
+                margin: 0;
+            }
+
+            .icon {
+                width: 40px;
+                height: 40px;
+                position: absolute;
+                top: 16px;
+                right: 16px;
+                background-color: $icon-color;
+                border-radius: 50%;
+            }
+
+            .icon:hover {
+                cursor: pointer;
+                background-color: $icon-hover-bg;
+            }
+        }
+
+
+        .section {
+            height: fit-content;
+
+            .profile {
+                height: fit-content;
+                padding: 16px;
+                img {
+                    background-color: $icon-color;
+                    border-radius: 50%;
+                    border: none;
+                    width: 168px;
+                    height: 168px;
+                }
+            }
+        }
+    }
+
+}

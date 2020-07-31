@@ -3,8 +3,9 @@ import ProfileHeader from "./profile_header";
 import AboutContainer from "./about_container";
 import TimelineContainer from "./timeline_container";
 import { ProtectedRoute } from "../../util/route_util";
-import { Switch, Route, Redirect } from "react-router-dom";
-import NotFound404 from "../navigation/not_found_404";
+import { Switch, Redirect } from "react-router-dom";
+import EditProfileModalContainer from "./edit_profile_modal_container";
+import NewPostFormContainer from "../post/new_post_form_container";
 
 
 const Profile = ({ user }) => {
@@ -26,6 +27,9 @@ const Profile = ({ user }) => {
                         <Redirect to="/page-not-found" />
 
                     </Switch>
+
+                    <NewPostFormContainer />
+                    <EditProfileModalContainer />
                 </div>
             </div>
         </div>

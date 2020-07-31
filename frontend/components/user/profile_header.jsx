@@ -1,21 +1,24 @@
 import React from "react";
 import ProfileNavItemContainer from "./profile_nav_item_container";
-
-const COVER_PHOTO = "https://upload.wikimedia.org/wikipedia/commons/3/38/Hogwarts_model_studio_tour.jpg";
-
-const PROFILE_PHOTO = "https://images.ctfassets.net/usf1vwtuqyxm/2PY5u8jWLYSleOz1yFmdnV/28ac9117961a02ec65c9cd7ae3bc87eb/hpah_HP4_JKT_BC__1_.jpg?fm=jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const ProfileHeader = ({ user }) => {
+    const presentEditModal = (e) => {
+        e.preventDefault();
+        $(".edit-modal").css("display", "flex");
+    }
+
     return (
         <div className="header">
             <div className="content">
                 <div className="photos">
                     <div className="cover-photo">
-                        <img src={COVER_PHOTO} />
+                        <img src={user.cover_photo} style={user.cover_photo ? {} : {height: "35vw"}}/>
                     </div>
 
                     <div className="profile-photo">
-                        <img src={PROFILE_PHOTO} />
+                        <img src={user.profile_photo} />
                     </div>
                 </div>
 
@@ -31,7 +34,7 @@ const ProfileHeader = ({ user }) => {
 
                         <ProfileNavItemContainer label="About"
                             to="/profile/about" />
-                            
+
                         <ProfileNavItemContainer label="Friends"
                             to="/profile/friends" />
 
@@ -47,9 +50,11 @@ const ProfileHeader = ({ user }) => {
                     </div>
 
                     <div className="right">
-                        right
-                </div>
-
+                        <div className="item" onClick={presentEditModal}>
+                            <FontAwesomeIcon icon={faPencilAlt} />
+                            Edit Profile
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

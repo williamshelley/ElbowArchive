@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import LoginForm from "./login_form";
-import { login, clearErrors } from "../../actions/session_actions";
+import { login, clearErrors, removeError, receiveError } from "../../actions/session_actions";
 import { selectUsers, selectSessionErrors } from "../../reducers/selectors";
 
 const mapStateToProps = state => ({
@@ -12,6 +12,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     login: user => dispatch(login(user)),
     clearErrors: () => dispatch(clearErrors()),
+    removeError: field => dispatch(removeError(field)),
+    receiveError: (field, error) => dispatch(receiveError(field, error))
 });
 
 const LoginFormContainer = connect(mapStateToProps, mapDispatchToProps)(LoginForm);

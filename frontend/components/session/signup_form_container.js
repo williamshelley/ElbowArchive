@@ -8,17 +8,25 @@ const now = new Moment();
 
 const mapStateToProps = state => ({
     nullState: { 
+        phone_number: "",
+        email: "",
+        username: "", 
+
+        password: "", 
+
         first_name: "", 
         last_name: "",
+
         birth_date: "",
         month: now.month(),
         day: now.toDate().getDate(),
         year: now.year(),
+
         gender: "",
         customGender: "",
-        username: "", 
-        password: "", 
-        email: ""
+
+        profile_photo: "",
+        cover_photo: "",
     },
     errors: selectSessionErrors(state),
 });

@@ -8,4 +8,8 @@ export const selectCurrentUser = state => {
 
 export const selectUsers = state => {
     return state.entities.users;
-}
+};
+
+export const selectAllPosts = state => {
+    return state.entities.posts;
+};

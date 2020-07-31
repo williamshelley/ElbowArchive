@@ -1,11 +1,12 @@
 import React from "react";
 import { safePush } from "../../util/navigation_util";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ProfileNavItem = ({ history, label, children, to }) => {
+const ProfileNavItem = ({ history, label, icon, to }) => {
     return (
         <div className="item" onClick={() => safePush(history, to)}>
-            {label}
-            {children}
+            { icon ? <FontAwesomeIcon icon={icon} /> : null }
+            { label ? label : null }
         </div>
     );
 };

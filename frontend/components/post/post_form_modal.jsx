@@ -12,8 +12,6 @@ class PostFormModal extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.hide = this.hide.bind(this);
-
-        this.initialNumRows = 0;
     }
 
     componentDidMount() {
@@ -22,14 +20,13 @@ class PostFormModal extends React.Component {
             const handler = () => {
                 const maxCharsPerRow = 60;
                 const numChars = textarea.val().length;
-                // let rows = textarea.attr("rows");
                 let newNumRows = Math.ceil(numChars / maxCharsPerRow);
                 if (numChars > 20) {
                     textarea.css("font-size", "16px");
                 } else {
                     textarea.css("font-size", "24px");
                 }
-                textarea.attr("rows", newNumRows + this.initialNumRows);
+                textarea.attr("rows", newNumRows);
             };
             textarea.on("keypress", handler);
             textarea.on("keyup", handler);
@@ -68,6 +65,11 @@ class PostFormModal extends React.Component {
     render() {
         let { className, title, submitBtnName } = this.props;
         let { body } = this.state;
+        let hasContent = body.length > 0;
+        let submitBg = !hasContent ? "rgba(255, 255, 255, 0.3)" : "#1877f2";
+        let submitStyle = {
+            backgroundColor: submitBg
+        };
         return (
             <div className={className}>
                 <form id="new" onSubmit={this.handleSubmit}>
@@ -79,7 +81,12 @@ class PostFormModal extends React.Component {
                         placeholder="What's on your mind?"
                         onChange={this.handleInput("body")}
                     />
-                    <button type="submit">{submitBtnName}</button>
+                    <button 
+                        type="submit"
+                        style={submitStyle}
+                        disabled={!hasContent}>
+                            {submitBtnName}
+                    </button>
                 </form>
             </div>
         );

@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2020_07_30_193455) do
     t.integer "author_id", null: false
     t.integer "wall_id", null: false
     t.text "body", null: false
+    t.datetime "date_posted", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_posts_on_author_id"

@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-    validates :author_id, :wall_id, presence: true
+    validates :author_id, :wall_id, :date_posted, presence: true
     validates :body, presence: true, length: { minimum: 1 }
 
     belongs_to :author, class_name: :User

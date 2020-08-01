@@ -29,13 +29,21 @@ class User < ApplicationRecord
         nil
     end
 
-    # posts that this user can modify
-    def modifiable_posts
+    def timeline_posts
+        posts = Post
+            .includes(:wall)
+            .includes(:author)
+            .select('*')
+            .where("(posts.wall_id = ?) OR (posts.author_id = ?)", self.id, self.id)
+
+        posts
+    end
+
+    def editable_posts
         posts = Post
             .includes(:author)
-            .includes(:wall)
             .select("*")
-            .where("(posts.author_id = ?) OR (posts.wall_id = ?)", self.id, self.id)
+            .where("posts.author_id = ?", self.id)
             
         posts
     end

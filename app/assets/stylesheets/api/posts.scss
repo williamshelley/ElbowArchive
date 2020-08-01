@@ -4,6 +4,16 @@
 
 @import "../static_pages.scss";
 
-[class*=post-modal-] {
-    // position: fixed;
+.post-modal-new {
+    #new {
+        width: 500px;
+        box-sizing: border-box;
+        max-height: 750px;
+        textarea {
+            all: unset;
+            width: 100%;
+            min-height: 250px;
+            overflow-wrap: break-word;
+        }
+    }
 }

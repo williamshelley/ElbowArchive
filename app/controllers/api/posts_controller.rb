@@ -1,6 +1,11 @@
 class Api::PostsController < ApplicationController
     def index
-        @posts = Post.all
+        user_id = params[:user_id]
+        @posts = Post
+            .includes(:author, :wall)
+            .select("*")
+            .where("posts.author_id = ? OR posts.wall_id = ?", user_id, user_id)
+
         render :index
     end
 
@@ -15,6 +20,7 @@ class Api::PostsController < ApplicationController
 
     def create
         @post = Post.new(post_params)
+        @post.author_id = current_user.id
         if @post.save
             render :show
         else
@@ -24,7 +30,7 @@ class Api::PostsController < ApplicationController
 
     private
     def post_params
-        params.require(:post).permit(:author_id, :body)
+        params.require(:post).permit(:body, :date_posted, :wall_id)
     end
 
 end

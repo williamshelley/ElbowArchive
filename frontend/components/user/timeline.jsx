@@ -1,6 +1,8 @@
 import React from "react";
 import PostItem from "../post/post_item";
 import PostIndex from "../post/post_index";
+import NewPostFormContainer from "../post/new_post_form_container";
+import NotFound404 from "../navigation/not_found_404";
 
 const Section = ({ children }) => (
     <div className="section">{children}</div>
@@ -16,20 +18,30 @@ class Timeline extends React.Component {
 
     presentNewPostForm(e) {
         e.preventDefault();
-        $(".post-modal-new").css("display", "flex");
+        this.props.pushModal(<NewPostFormContainer />);
 
     }
-
+    
     componentDidMount() {
-        // this.props.fetchPosts();
+        this.props.fetchPosts(this.props.ownerId);
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        let nextId = nextProps.match.params.userId;
+        if (nextId !== this.props.ownerId) {
+            this.props.fetchPosts(nextId);
+        }
     }
 
     render() {
         let { user, posts } = this.props;
 
-        let profile_pic = user.profile_picture ? user.profile_picture : "https://img.icons8.com/ios-glyphs/96/000000/gender-neutral-user.png";
+        let profile_pic = "https://img.icons8.com/ios-glyphs/96/000000/gender-neutral-user.png";
+        if (user) {
+            profile_pic = user.profile_photo ? user.profile_photo : profile_pic;
+        }
 
-        return (
+        return user ? (
             <div className="timeline">
                 <div className="left">
                     <Section>
@@ -50,7 +62,6 @@ class Timeline extends React.Component {
                 </div>
 
                 <div className="right">
-                    Posts
                     <Section>
                         <div className="new-post">
                             <div className="top">
@@ -69,7 +80,7 @@ class Timeline extends React.Component {
                     <PostIndex posts={posts} />
                 </div>
             </div>
-        )
+        ) : <NotFound404 />
 
     }
 }

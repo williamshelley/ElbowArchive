@@ -38,29 +38,33 @@ harry = User.create!(
 Post.create!(
     author_id: harry.id,
     wall_id: harry.id,
-    body: "Hogwarts is great!"
+    body: "Hogwarts is great!",
+    date_posted: "1993-10-15"
 )
 
 Post.create!(
     author_id: harry.id,
     wall_id: harry.id,
-    body: "Hogwarts is amazing!"
+    body: "Hogwarts is amazing!",
+    date_posted: "1991-12-09"
 )
 
 Post.create!(
     author_id: hermione.id,
     wall_id: harry.id,
-    body: "Hogwarts is fabulous!"
+    body: "Hogwarts is fabulous!",
+    date_posted: "1991-09-07"
 )
 
 Post.create!(
     author_id: harry.id,
     wall_id: hermione.id,
-    body: "Hogwarts is incredible!"
+    body: "Hogwarts is incredible!",
+    date_posted: "1991-10-06"
 )
 
 # (1..10).to_a.each do |n|
-#     User.create!(
+#     user = User.create!(
 #         first_name: Faker::Name.first_name, 
 #         last_name: Faker::Name.last_name, 
 #         email: Faker::Internet.email, 

@@ -1,5 +1,7 @@
 import React from "react";
 import ModalHeader from "../user/modal_header";
+import Moment from "moment";
+import { text } from "@fortawesome/fontawesome-svg-core";
 
 class PostFormModal extends React.Component {
     constructor(props) {
@@ -8,25 +10,75 @@ class PostFormModal extends React.Component {
         this.state = this.props.post;
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleInput = this.handleInput.bind(this);
         this.hide = this.hide.bind(this);
+
+        this.initialNumRows = 0;
+    }
+
+    componentDidMount() {
+        $(document).ready(() => {
+            const textarea = $("textarea#resizable");
+            const handler = () => {
+                const maxCharsPerRow = 60;
+                const numChars = textarea.val().length;
+                // let rows = textarea.attr("rows");
+                let newNumRows = Math.ceil(numChars / maxCharsPerRow);
+                if (numChars > 20) {
+                    textarea.css("font-size", "16px");
+                } else {
+                    textarea.css("font-size", "24px");
+                }
+                textarea.attr("rows", newNumRows + this.initialNumRows);
+            };
+            textarea.on("keypress", handler);
+            textarea.on("keyup", handler);
+            textarea.on("keydown", handler);
+
+        });
+    }
+
+    handleInput(field) {
+        return e => this.setState({ [field]: e.target.value });
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        // this.props.submitPost(this.state);
+        let now = new Moment();
+        let year = now.year();
+        let month = now.month();
+        let day = now.toDate().getDate();
+        const post = {
+            body: this.state.body,
+            wall_id: this.props.match.params.userId,
+            date_posted: [year,month,day].join("-")
+        };
+        this.props.submitPost(post).then(()=>{
+            this.props.popModal();
+        }, ()=>{
+            alert("Oops! Something went wrong!");
+        });
     }
 
     hide(e) {
         e.preventDefault();
-        $(`.${this.props.className}`).css("display", "none");
+        this.props.popModal();
     }
 
     render() {
         let { className, title, submitBtnName } = this.props;
+        let { body } = this.state;
         return (
             <div className={className}>
-                <form onSubmit={this.handleSubmit}>
-                    <ModalHeader title={title} onExitClick={this.hide}/>
+                <form id="new" onSubmit={this.handleSubmit}>
+                    <ModalHeader title={title} onExitClick={this.hide} />
+                    <textarea
+                        id="resizable"
+                        rows={this.initialNumRows}
+                        value={body}
+                        placeholder="What's on your mind?"
+                        onChange={this.handleInput("body")}
+                    />
                     <button type="submit">{submitBtnName}</button>
                 </form>
             </div>

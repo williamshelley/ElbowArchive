@@ -2,12 +2,17 @@ import React from "react";
 import ProfileNavItemContainer from "./profile_nav_item_container";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import EditProfileModalContainer from "./edit_profile_modal_container";
+import { PROFILE_PATH } from "../../util/path_util";
 
-const ProfileHeader = ({ user }) => {
+const ProfileHeader = ({ user, pushModal }) => {
     const presentEditModal = (e) => {
         e.preventDefault();
-        $(".edit-modal").css("display", "flex");
+        pushModal(<EditProfileModalContainer />);
     }
+
+    // const PATH = PROFILE_PATH.bind(this, user);
+    const PATH = (next) => `/profile/${user.id}/${next ? next : ""}`;
 
     return (
         <div className="header">
@@ -30,19 +35,19 @@ const ProfileHeader = ({ user }) => {
 
                     <div className="left">
                         <ProfileNavItemContainer label="Timeline"
-                            to="/profile" />
+                            to={PATH()} />
 
                         <ProfileNavItemContainer label="About"
-                            to="/profile/about" />
+                            to={PATH("about")} />
 
                         <ProfileNavItemContainer label="Friends"
-                            to="/profile/friends" />
+                            to={PATH("friends")} />
 
                         <ProfileNavItemContainer label="Photos"
-                            to="/profile/photos" />
+                            to={PATH("photos")} />
 
                         <ProfileNavItemContainer label="Archive"
-                            to="/profile/archive" />
+                            to={PATH("archive")} />
 
                         {
                             // more dropdown

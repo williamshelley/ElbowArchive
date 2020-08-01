@@ -21,7 +21,7 @@ class EditProfileModal extends React.Component {
 
     hideForm(e) {
         e.preventDefault();
-        $(".edit-modal").css("display", "none");
+        this.props.popModal();
     }
 
     render() {

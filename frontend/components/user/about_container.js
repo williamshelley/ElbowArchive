@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import About from "./about";
-import { selectCurrentUser } from "../../reducers/selectors";
+import { selectCurrentUser, selectUser } from "../../reducers/selectors";
 
-const mapStateToProps = state => ({
-    user: selectCurrentUser(state)
+const mapStateToProps = (state, ownProps) => ({
+    user: selectUser(ownProps.match.params.userId, state)
 });
 
 const mapDispatchToProps = dispatch => ({ 

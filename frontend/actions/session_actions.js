@@ -3,8 +3,8 @@ import * as SessionAPIUtil from "../util/session_api_util";
 // action types
 
 export const RECEIVE_USER = "RECEIVE_USER";
-export const LOGOUT_USER = "LOGOUT_CURRENT_USER"
-export const RECEIVE_ERRORS = "RECEIVE_ERRORS"
+export const LOGOUT_USER = "LOGOUT_CURRENT_USER";
+export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const RECEIVE_ERROR = "RECEIVE_ERROR";
 export const REMOVE_ERROR = "REMOVE_ERROR";
@@ -59,13 +59,6 @@ export const logout = () => dispatch => (
 
 export const signup = user => dispatch => (
     SessionAPIUtil.signup(user)
-        .then(
-            payload => dispatch(receiveUser(payload)),
-            errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
-);
-
-export const updateUser = user => dispatch => (
-    SessionAPIUtil.updateUser(user)
         .then(
             payload => dispatch(receiveUser(payload)),
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))

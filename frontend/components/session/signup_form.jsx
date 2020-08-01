@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Moment from "moment";
 import * as style from "../../styles/session";
 import NamedSelectWrapper from "./named_select_wrapper";
-import SectionHeader from "./secion_header";
+import SectionHeader from "./section_header";
 import { faTimes, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleBadInput, errorMessage } from "../../util/form_util";
@@ -31,7 +31,7 @@ class SignupForm extends React.Component {
 
     mergeDate() {
         let { year, month, day } = this.state;
-        return [year, month, day].join("-");
+        return [year, Moment.months(month), day].join("-");
     }
 
     handleSubmit(e) {
@@ -52,10 +52,13 @@ class SignupForm extends React.Component {
         }
 
         this.setState({ email, phone_number, birth_date, gender }, () => {
+            console.log(this.state);
             let newUser = this.state;
             this.props.signup(newUser).then(()=>{}, ()=>{
                 Object.keys(this.props.errors).forEach(field => {
-                    $(`#${field}`).css("border", style.ERROR_INPUT_BORDER);
+                    this.setState({ [field]: "" }, () => {
+                        $(`#${field}`).css("border", style.ERROR_INPUT_BORDER);
+                    });
                 });
             });
         });
@@ -106,7 +109,7 @@ class SignupForm extends React.Component {
 
     genderSelect(gender) {
         return (
-            <div className={style.RADIO_OPTION}>
+            <div className={style.RADIO_OPTION} id="gender">
                 <label>{gender}</label>
                 <input
                     type="radio"
@@ -161,13 +164,13 @@ class SignupForm extends React.Component {
                     {this.createInput("Mobile number or email", "username")}
                     {this.createInput("New Password", "password")}
 
-                    <NamedSelectWrapper title={"Birthday"}>
+                    <NamedSelectWrapper id="birth_date" title={"Birthday"}>
                         {this.datePicker(months, "month")}
                         {this.datePicker(daysInMonth, "day")}
                         {this.datePicker(years, "year")}
                     </NamedSelectWrapper>
 
-                    <NamedSelectWrapper title={"Gender"}>
+                    <NamedSelectWrapper id="gender" title={"Gender"}>
                         {this.genderSelect(FEMALE)}
                         {this.genderSelect(MALE)}
                         {this.genderSelect(CUSTOM)}

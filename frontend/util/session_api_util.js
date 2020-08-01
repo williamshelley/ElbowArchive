@@ -14,9 +14,3 @@ export const signup = user => $.ajax({
     method: "POST",
     data: { user }
 });
-
-export const updateUser = user => $.ajax({
-    url: `api/users/${user.id}`,
-    method: "PATCH",
-    data: { user }
-});

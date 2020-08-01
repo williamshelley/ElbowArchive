@@ -4,36 +4,47 @@ import AboutContainer from "./about_container";
 import TimelineContainer from "./timeline_container";
 import { ProtectedRoute } from "../../util/route_util";
 import { Switch, Redirect } from "react-router-dom";
-import EditProfileModalContainer from "./edit_profile_modal_container";
-import NewPostFormContainer from "../post/new_post_form_container";
+import { PROFILE_PATH } from "../../util/path_util";
+import { render } from "react-dom";
 
 
-const Profile = ({ user }) => {
-    return (
-        <div className="profile">
+class Profile extends React.Component {
 
-            <ProfileHeader user={user} />
+    componentDidMount() {
+        this.props.fetchUser(this.props.match.params.userId);
+    }
 
-            <div className="body">
-                <div className="content">
-                    <Switch>
+    render() {
+        let { user, topModal, pushModal } = this.props;
+        let PATH = (next) => `/profile/:userId/${next ? next : ""}`;
 
-                        <ProtectedRoute exact path="/profile"
-                            component={TimelineContainer} />
+        return user ? (
+            <div className="profile">
 
-                        <ProtectedRoute path="/profile/about"
-                            component={AboutContainer} />
+                <ProfileHeader user={user} pushModal={pushModal} />
 
-                        <Redirect to="/page-not-found" />
+                <div className="body">
+                    <div className="content">
+                        <Switch>
 
-                    </Switch>
+                            <ProtectedRoute exact path={PATH()}
+                                component={TimelineContainer} />
 
-                    <NewPostFormContainer />
-                    <EditProfileModalContainer />
+                            <ProtectedRoute exact path={PATH("about")}
+                                component={AboutContainer} />
+
+                            <Redirect to="/page-not-found" />
+
+                        </Switch>
+
+                        {topModal}
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+
+        ) : null;
+    }
 }
+
 
 export default Profile;

@@ -4,7 +4,7 @@ export const createPost = post => $.ajax({
     data: { post }
 });
 
-export const fetchPosts = () => $.ajax({
-    url: "/api/posts",
+export const fetchPosts = userId => $.ajax({
+    url: `/api/users/${userId}/posts`,
     method: "GET"
 });

@@ -1,14 +1,17 @@
 import { connect } from "react-redux";
-import { selectCurrentUser } from "../../reducers/selectors";
-import { updateUser } from "../../actions/session_actions";
+import { selectCurrentUser, selectTopModal } from "../../reducers/selectors";
+import { updateUser } from "../../actions/user_actions";
 import EditProfileModal from "./edit_profile_modal";
+import { popModal } from "../../actions/ui_actions";
 
 const mapStateToProps = state => ({
-    user: selectCurrentUser(state)
+    user: selectCurrentUser(state),
+    topModal: selectTopModal(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateUser: user => dispatch(updateUser(user))
+    updateUser: user => dispatch(updateUser(user)),
+    popModal: () => dispatch(popModal())
 });
 
 const EditProfileModalContainer = connect(mapStateToProps, mapDispatchToProps)(EditProfileModal);

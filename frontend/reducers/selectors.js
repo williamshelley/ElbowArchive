@@ -13,3 +13,11 @@ export const selectUsers = state => {
 export const selectAllPosts = state => {
     return state.entities.posts;
 };
+
+export const selectTopModal = state => {
+    return state.ui[state.ui.length - 1];
+};
+
+export const selectUser = (userId, state) => {
+    return state.entities.users[userId];
+};

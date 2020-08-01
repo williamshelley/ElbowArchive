@@ -1,5 +1,5 @@
 @users.each do |user|
     json.set! user.id do 
-        json.partial! "/api/shared/user", user: user
+        json.extract! user, *user.keys
     end
 end

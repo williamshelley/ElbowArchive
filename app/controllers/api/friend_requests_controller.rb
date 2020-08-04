@@ -1,27 +1,56 @@
 class Api::FriendRequestsController < ApplicationController
+    def index
+        # @friend_requests = []
+        # @friend = nil
+
+        # if params[:friend_ids]
+        #     @friend_requests = FriendRequest.select("*")
+        #     .where("sender_id IN (?) OR recipient_id IN (?)", params[:friend_ids])
+        #     .where("sender_id = ? OR recipient_id = ?", current_user.id, current_user.id)
+        # else
+        user_id = params[:user_id] ? params[:user_id] : current_user.id
+        @friend_requests = FriendRequest.find_by_user_id(user_id)
+        # end
+        
+        render :index
+    end
+    
     def create
-        @user = Friend.new(user_id: self.id, friend_id: user.id)
-        if @user.save
+        @friend_request = FriendRequest.new(
+                sender_id: current_user.id, 
+                recipient_id: request_params[:recipient_id])
+
+        if @friend_request.save
             # success
             render :show
         else
             # failure
-            render json: @user.errors.full_messages, status: 404
+            # render json: @friend_request.errors.full_messages, status: 404
+            render :errors, status: 404
         end
     end
 
     def update
-        @user = Friend.find_by(user_id: user.id, friend_id: self.id)
-        if @user.update(pending: false)
+        # accepting request
+        @friend_request = Friend.find_by(
+                sender_id: request_params[:sender_id], 
+                recipient_id: current_user.id)
+
+        if @friend_request.update(accepted: true)
             # success
             render :show
         else
             # failure
-            render json: @user.errors.full_messages, status: 404
+            render json: @friend_request.errors.full_messages, status: 404
         end
     end
 
     def destroy
 
+    end
+
+    private
+    def request_params
+        params.require(:friend_request).permit(:recipient_id, :sender_id)
     end
 end

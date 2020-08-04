@@ -1,1 +1,1 @@
-json.partial! "/api/shared/user", user: @user
+json.extract! @friend_request, *@friend_request.keys

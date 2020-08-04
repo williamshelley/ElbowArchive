@@ -1,5 +1,4 @@
 import * as PostAPIUtil from "../util/post_api_util";
-import { receiveErrors } from "./session_actions";
 
 export const RECEIVE_POST = "RECEIVE_POST";
 export const RECEIVE_POSTS = "RECEIVE_POSTS";
@@ -18,7 +17,7 @@ export const receivePosts = posts => ({
     posts
 });
 
-export const receivePostErrors = errors => ({
+export const receiveErrors = errors => ({
     type: RECEIVE_POST_ERRORS,
     errors
 });

@@ -1,12 +1,30 @@
 class Api::UsersController < ApplicationController
     def index
-        start_of_name = params[:filters][:name] ? params[:filters][:name] : ""
-        @users = User
-                    .includes(
-                        :profile_photo_attachment,
-                        :cover_photo_attachment)
+        @users = [current_user]
+        
+        if filter_params
+            if filter_params[:page_owner_id]
+                @users << User.find_by_id(filter_params[:page_owner_id])
+            end
+            if filter_params[:user_ids]
+                @users += User
+                .includes(
+                    :profile_photo_attachment,
+                    :cover_photo_attachment)
+                    .select("*")
+                    .where("id IN (?)", filter_params[:user_ids])
+            elsif filter_params[:name]
+                start_of_name = filter_params[:name] ? filter_params[:name] : ""
+                @users += User
+                .includes(
+                    :profile_photo_attachment,
+                    :cover_photo_attachment)
                     .select("*")
                     .where("CONCAT(first_name, ' ', last_name) LIKE ?%", start_of_name)
+            elsif filter_params[:all_users]
+                @users = User.all
+            end
+        end
 
         render :index
     end
@@ -21,7 +39,6 @@ class Api::UsersController < ApplicationController
     end
 
     def create
-        debugger
         @user = User.new(user_params)
         if @user.save
             login!(@user)
@@ -49,5 +66,9 @@ class Api::UsersController < ApplicationController
     private
     def user_params
         params.require(:user).permit(:first_name, :last_name, :email, :password, :phone_number, :gender, :birth_date, :profile_photo, :cover_photo)
+    end
+
+    def filter_params
+        params.require(:filters).permit(:name, :all_users, :page_owner_id, user_ids: [])
     end
 end

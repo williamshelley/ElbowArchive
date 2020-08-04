@@ -1,18 +1,18 @@
-import { RECEIVE_ERRORS, RECEIVE_SESSION_USER, CLEAR_ERRORS, RECEIVE_ERROR, REMOVE_ERROR } from "../actions/session_actions";
+import { RECEIVE_SESSION_ERRORS, RECEIVE_SESSION_USER, CLEAR_SESSION_ERRORS, RECEIVE_SESSION_ERROR, REMOVE_SESSION_ERROR } from "../actions/session_actions";
 import { merge } from "lodash";
 
 const sessionErrorsReducer = (state = {}, action) => {
     Object.freeze(state);
     switch(action.type) {
-        case RECEIVE_ERRORS:
+        case RECEIVE_SESSION_ERRORS:
             return action.errors;
         case RECEIVE_SESSION_USER:
             return {};
-        case CLEAR_ERRORS:
+        case CLEAR_SESSION_ERRORS:
             return {};
-        case RECEIVE_ERROR:
+        case RECEIVE_SESSION_ERROR:
             return merge({}, state, { [action.field]: [action.error] });
-        case REMOVE_ERROR:
+        case REMOVE_SESSION_ERROR:
             let newState = Object.assign({}, state);
             delete newState[action.field];
             return newState;

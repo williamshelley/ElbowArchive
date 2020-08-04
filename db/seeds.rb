@@ -14,6 +14,9 @@ User.reset_pk_sequence
 Post.destroy_all
 Post.reset_pk_sequence
 
+FriendRequest.destroy_all
+FriendRequest.reset_pk_sequence
+
 # file = File.open("app/assets/images/logo.png")
 
 hermione = User.create!(
@@ -26,8 +29,8 @@ hermione = User.create!(
     gender: "Female"
 )
 
-hermione.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
-hermione.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
+# hermione.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
+# hermione.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
 
 harry = User.create!(
     first_name: "Harry", 
@@ -39,8 +42,8 @@ harry = User.create!(
     gender: "Male"    
 )
 
-harry.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
-harry.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
+# harry.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
+# harry.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
 
 # Post.create!(
 #     author_id: harry.id,
@@ -75,8 +78,10 @@ users = Set.new()
 users.add(harry)
 users.add(hermione)
 
+NUM_USERS = 100
 
-while users.length < 10 do
+p "start while loop"
+while users.length < NUM_USERS do
     name = Faker::Movies::HarryPotter.character.split(" ")
 
     user = User.new(
@@ -89,21 +94,32 @@ while users.length < 10 do
         gender: Faker::Gender.type
     )
 
+    if users.include?(user)
+        e = user.email.split("@")
+        user.email = "#{e[0]}#{users.size}@#{e[1]}"
+    end
     
-    user.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
-    user.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
+    # user.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
+    # user.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
     
-    users << user unless users.include?(user)
+    p user.id
+    user.save
+    users << user
 end
 
+p "start users_a"
 users_a = users.to_a
+users_a = users_a.select { |user| !user.nil? }
+
 users_a.each do |user|
+    p "#{user.id} post"
     (1...5).each do |n|
-        post = Post.create!(
+        post = Post.new(
             author_id: user.id,
             wall_id: users_a.sample.id,
             body: Faker::Movies::HarryPotter.quote,
             date_posted: Faker::Date.between(from: '1980-01-10', to: '2020-01-10')
         )
+        post.save
     end
 end

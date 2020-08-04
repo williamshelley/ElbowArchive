@@ -1,13 +1,10 @@
-import { RECEIVE_POST, RECEIVE_POSTS } from "../actions/post_actions";
-import { merge } from "lodash";
-import { RETRIEVE_USER } from "../actions/user_actions";
+import { combineReducers } from "redux";
+import acceptedFriendRequestReducer from "./accepted_friend_requests_reducer";
+import pendingFriendRequestsReducer from "./pending_friend_requests_reducer";
 
-const friendReqeustsReducer = (state = {}, action) => {
-    Object.freeze(state);
-    switch(action.type) {
-        default:
-            return state;
-    }
-};
+const friendRequestsReducer =  combineReducers({
+    accpeted: acceptedFriendRequestReducer,
+    pending: pendingFriendRequestsReducer
+});
 
-export default friendReqeustsReducer;
+export default friendRequestsReducer;

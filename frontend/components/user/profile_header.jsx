@@ -5,74 +5,97 @@ import { faPencilAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import EditProfileModalContainer from "./edit_profile_modal_container";
 import { PROFILE_PATH } from "../../util/path_util";
 
-const ProfileHeader = ({ loggedInUser, user, pushModal }) => {
-    const presentEditModal = (e) => {
-        e.preventDefault();
-        pushModal(<EditProfileModalContainer />);
+class ProfileHeader extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.presentEditModal = this.presentEditModal.bind(this);
+        this.addFriendHandler = this.addFriendHandler.bind(this);
     }
 
-    // const PATH = PROFILE_PATH.bind(this, user);
-    const PATH = (next) => `/profile/${user.id}/${next ? next : ""}`;
-    const isMyProfile = loggedInUser === user;
+    presentEditModal(e) {
+        e.preventDefault();
+        this.props.pushModal(<EditProfileModalContainer />);
+    }
 
-    return (
-        <div className="header">
-            <div className="content">
-                <div className="photos">
-                    <div className="cover-photo">
-                        <img src={user.cover_photo} style={user.cover_photo ? {} : {height: "35vw"}}/>
-                    </div>
+    addFriendHandler(e) {
+        e.preventDefault();
+        if (this.props.isFriended) {
+            console.log("Already friends!")
+        } else {
+            this.props.sendFriendRequest({ recipient_id: this.props.user.id });
+        }
+    }
 
-                    <div className="profile-photo">
-                        <img src={user.profile_photo} />
-                    </div>
-                </div>
+    componentDidMount() {
+        // this.props.fetchFriend(this.props.user.id);
+    }
 
-                <div className="bio">
-                    <h1>{user.first_name} {user.last_name}</h1>
-                </div>
+    render() {
+        let { PATH, loggedInUser, user } = this.props;
 
-                <div className="navigation">
+        // const PATH = (next) => `/profile/${user.id}/${next ? next : ""}`;
+        const isMyProfile = loggedInUser === user;
 
-                    <div className="left">
-                        <ProfileNavItemContainer label="Timeline"
-                            to={PATH()} />
-
-                        <ProfileNavItemContainer label="About"
-                            to={PATH("about")} />
-
-                        <ProfileNavItemContainer label="Friends"
-                            to={PATH("friends")} />
-
-                        <ProfileNavItemContainer label="Photos"
-                            to={PATH("photos")} />
-
-                        <ProfileNavItemContainer label="Archive"
-                            to={PATH("archive")} />
-
-                        {
-                            // more dropdown
-                        }
-                    </div>
-
-                    <div className="right">
-                        { isMyProfile ?
-                            <div className="item" onClick={presentEditModal}>
-                            <FontAwesomeIcon icon={faPencilAlt} />
-                            Edit Profile
+        return (
+            <div className="header">
+                <div className="content">
+                    <div className="photos">
+                        <div className="cover-photo">
+                            <img src={user.cover_photo} style={user.cover_photo ? {} : {height: "35vw"}}/>
                         </div>
-                        : 
-                        <div className="item" 
-                            onClick={() => {console.log("add friend")}}>
-                                <FontAwesomeIcon icon={faUserPlus} />
-                                Add Friend
+    
+                        <div className="profile-photo">
+                            <img src={user.profile_photo} />
                         </div>
-                        }
+                    </div>
+    
+                    <div className="bio">
+                        <h1>{user.first_name} {user.last_name}</h1>
+                    </div>
+    
+                    <div className="navigation">
+    
+                        <div className="left">
+                            <ProfileNavItemContainer label="Timeline"
+                                to={PATH()} />
+    
+                            <ProfileNavItemContainer label="About"
+                                to={PATH("about")} />
+    
+                            <ProfileNavItemContainer label="Friends"
+                                to={PATH("friends")} />
+    
+                            <ProfileNavItemContainer label="Photos"
+                                to={PATH("photos")} />
+    
+                            <ProfileNavItemContainer label="Archive"
+                                to={PATH("archive")} />
+    
+                            {
+                                // more dropdown
+                            }
+                        </div>
+    
+                        <div className="right">
+                            { isMyProfile ?
+                                <div className="item" onClick={this.presentEditModal}>
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                                Edit Profile
+                            </div>
+                            : 
+                            <div className="item" 
+                                onClick={this.addFriendHandler}>
+                                    <FontAwesomeIcon icon={faUserPlus} />
+                                    Add Friend
+                            </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    );
-};
+        );
+    }
+}
 
 export default ProfileHeader;

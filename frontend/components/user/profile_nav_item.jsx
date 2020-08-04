@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ProfileNavItem = ({ history, label, icon, to }) => {
     return (
-        <div className="item" onClick={() => safePush(history, to)}>
+        <div className="nav-item" onClick={() => safePush(history, to)}>
             { icon ? <FontAwesomeIcon icon={icon} /> : null }
             { label ? label : null }
         </div>

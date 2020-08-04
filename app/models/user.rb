@@ -54,6 +54,19 @@ class User < ApplicationRecord
         self.email || self.phone_number
     end
 
+    def get_friend(user_id)
+        requests = FriendRequest.select("*")
+        .where("sender_id = ? OR recipient_id = ?", user_id, user_id)
+        .where("sender_id = ? OR recipient_id = ?", self.id, self.id)
+
+        request = requests.first
+        if request
+            request.accepted ? User.find_by_id(user_id) : nil
+        else
+            nil
+        end
+    end
+
     # def send_friend_request(user)
     #     friend = Friend.new(user_id: self.id, friend_id: user.id)
     #     if friend.save

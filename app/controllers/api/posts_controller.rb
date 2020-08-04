@@ -1,8 +1,9 @@
 class Api::PostsController < ApplicationController
     def index
         user_id = params[:user_id]
+
         @posts = Post
-            .includes(:author, :wall)
+            .includes(:author, :wall, :photos_attachments)
             .select("*")
             .where("posts.author_id = ? OR posts.wall_id = ?", user_id, user_id)
 
@@ -10,7 +11,7 @@ class Api::PostsController < ApplicationController
     end
 
     def show
-        @post = Post.find_by(id: params[:id])
+        @post = Post.includes(:photos_attachments, :author, :wall).find_by(id: params[:id])
         render :show
     end
 
@@ -30,7 +31,7 @@ class Api::PostsController < ApplicationController
 
     private
     def post_params
-        params.require(:post).permit(:body, :date_posted, :wall_id)
+        params.require(:post).permit(:body, :date_posted, :wall_id, photos: [])
     end
 
 end

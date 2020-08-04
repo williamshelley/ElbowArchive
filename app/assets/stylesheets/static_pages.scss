@@ -41,6 +41,13 @@ html, div, p, h2, img, form, label, body {
     align-items: center;
     font-family: Helvetica, Arial, sans-serif;
 }
+
+._null {
+    position: absolute;
+    width: 0;
+    height: 100%;
+}
+
 html {
     height: 100%;
 }

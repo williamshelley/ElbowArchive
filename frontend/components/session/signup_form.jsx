@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Moment from "moment";
 import * as style from "../../styles/session";
 import NamedSelectWrapper from "./named_select_wrapper";
@@ -53,7 +53,16 @@ class SignupForm extends React.Component {
 
         this.setState({ email, phone_number, birth_date, gender }, () => {
             console.log(this.state);
-            let newUser = this.state;
+            const {
+                first_name, last_name, email, phone_number,
+                password, birth_date, gender
+            } = this.state;
+
+            const newUser = {
+                first_name, last_name, email, phone_number,
+                password, birth_date, gender
+            };
+
             this.props.signup(newUser).then(()=>{}, ()=>{
                 Object.keys(this.props.errors).forEach(field => {
                     this.setState({ [field]: "" }, () => {

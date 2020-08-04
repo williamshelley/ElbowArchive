@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :posts, only: [:index]
     end
     resources :posts, only: [:show, :destroy, :create, :update]
+    resources :friends, only: [:upate, :create, :destroy]
   end
 
 end

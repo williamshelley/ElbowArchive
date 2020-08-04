@@ -2,16 +2,12 @@ import { RECEIVE_POST, RECEIVE_POSTS } from "../actions/post_actions";
 import { merge } from "lodash";
 import { RETRIEVE_USER } from "../actions/user_actions";
 
-const postsReducer = (state = {}, action) => {
+const friendReqeustsReducer = (state = {}, action) => {
     Object.freeze(state);
     switch(action.type) {
-        case RECEIVE_POST:
-            return merge({}, state, { [action.post.id]: action.post });
-        case RECEIVE_POSTS:
-            return action.posts;
         default:
             return state;
     }
 };
 
-export default postsReducer;
+export default friendReqeustsReducer;

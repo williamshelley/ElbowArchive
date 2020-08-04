@@ -2,7 +2,7 @@ import * as SessionAPIUtil from "../util/session_api_util";
 
 // action types
 
-export const RECEIVE_USER = "RECEIVE_USER";
+export const RECEIVE_SESSION_USER = "RECEIVE_SESSION_USER";
 export const LOGOUT_USER = "LOGOUT_CURRENT_USER";
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
@@ -12,7 +12,7 @@ export const REMOVE_ERROR = "REMOVE_ERROR";
 // regular action creators
 
 export const receiveUser = user => ({
-    type: RECEIVE_USER,
+    type: RECEIVE_SESSION_USER,
     user
 });
 

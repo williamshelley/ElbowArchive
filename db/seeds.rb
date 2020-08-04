@@ -5,13 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-# require "faker"
+require "faker"
+require "set"
 
 User.destroy_all
 User.reset_pk_sequence
 
 Post.destroy_all
 Post.reset_pk_sequence
+
+# file = File.open("app/assets/images/logo.png")
 
 hermione = User.create!(
     first_name: "Hermione", 
@@ -20,9 +23,11 @@ hermione = User.create!(
     phone_number: "646-555-5678", 
     password: "password", 
     birth_date: "1981-04-10",
-    gender: "Female",
-    cover_photo: "https://upload.wikimedia.org/wikipedia/commons/3/38/Hogwarts_model_studio_tour.jpg",
-    profile_photo: "https://lh5.googleusercontent.com/2PNe-kCP6wYQu8MFsGmuKcpIkROCpx7P_zMC6fF6IQwyLaycNBTiuAZgCsi2QF7vwSs5muqFx9QOoh14-bdt4kUVUEIFQSwkPgzOg07luLyGtTXL0xceMqH6LRnlGPzPog")
+    gender: "Female"
+)
+
+hermione.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
+hermione.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
 
 harry = User.create!(
     first_name: "Harry", 
@@ -31,46 +36,74 @@ harry = User.create!(
     phone_number: "917-111-1234", 
     password: "password", 
     birth_date: "1981-07-31",
-    gender: "Male",
-    cover_photo: "https://upload.wikimedia.org/wikipedia/commons/3/38/Hogwarts_model_studio_tour.jpg",
-    profile_photo: "https://images.ctfassets.net/usf1vwtuqyxm/2PY5u8jWLYSleOz1yFmdnV/28ac9117961a02ec65c9cd7ae3bc87eb/hpah_HP4_JKT_BC__1_.jpg?fm=jpg")
-
-Post.create!(
-    author_id: harry.id,
-    wall_id: harry.id,
-    body: "Hogwarts is great!",
-    date_posted: "1993-10-15"
+    gender: "Male"    
 )
 
-Post.create!(
-    author_id: harry.id,
-    wall_id: harry.id,
-    body: "Hogwarts is amazing!",
-    date_posted: "1991-12-09"
-)
+harry.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
+harry.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
 
-Post.create!(
-    author_id: hermione.id,
-    wall_id: harry.id,
-    body: "Hogwarts is fabulous!",
-    date_posted: "1991-09-07"
-)
+# Post.create!(
+#     author_id: harry.id,
+#     wall_id: harry.id,
+#     body: "Hogwarts is great!",
+#     date_posted: "1993-10-15"
+# )
 
-Post.create!(
-    author_id: harry.id,
-    wall_id: hermione.id,
-    body: "Hogwarts is incredible!",
-    date_posted: "1991-10-06"
-)
+# Post.create!(
+#     author_id: harry.id,
+#     wall_id: harry.id,
+#     body: "Hogwarts is amazing!",
+#     date_posted: "1991-12-09"
+# )
 
-# (1..10).to_a.each do |n|
-#     user = User.create!(
-#         first_name: Faker::Name.first_name, 
-#         last_name: Faker::Name.last_name, 
-#         email: Faker::Internet.email, 
-#         phone_number: Faker::PhoneNumber.phone_number, 
-#         password: "password", 
-#         birth_date: Faker::Date.between(from: '1980-01-10', to: '2020-01-10'),
-#         gender: Faker::Gender.type,
-#         profile_img_url: "")
-# end
+# Post.create!(
+#     author_id: hermione.id,
+#     wall_id: harry.id,
+#     body: "Hogwarts is fabulous!",
+#     date_posted: "1991-09-07"
+# )
+
+# Post.create!(
+#     author_id: harry.id,
+#     wall_id: hermione.id,
+#     body: "Hogwarts is incredible!",
+#     date_posted: "1991-10-06"
+# )
+
+
+users = Set.new()
+users.add(harry)
+users.add(hermione)
+
+
+while users.length < 10 do
+    name = Faker::Movies::HarryPotter.character.split(" ")
+
+    user = User.new(
+        first_name: name.first, 
+        last_name: name.last, 
+        email: "#{name.first}.#{name.last}@gmail.com", 
+        phone_number: Faker::PhoneNumber.phone_number, 
+        password: "password", 
+        birth_date: Faker::Date.between(from: '1980-01-10', to: '2020-01-10'),
+        gender: Faker::Gender.type
+    )
+
+    
+    user.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
+    user.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
+    
+    users << user unless users.include?(user)
+end
+
+users_a = users.to_a
+users_a.each do |user|
+    (1...5).each do |n|
+        post = Post.create!(
+            author_id: user.id,
+            wall_id: users_a.sample.id,
+            body: Faker::Movies::HarryPotter.quote,
+            date_posted: Faker::Date.between(from: '1980-01-10', to: '2020-01-10')
+        )
+    end
+end

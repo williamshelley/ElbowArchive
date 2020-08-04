@@ -47,6 +47,15 @@ export const createPost = post => dispatch => (
         )
 );
 
+
+export const createPostFromFormData = formData => dispatch => (
+    PostAPIUtil.createPostFromFormData(formData)
+        .then(
+            payload => dispatch(receivePost(payload),
+            errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
+        )
+);
+
 export const fetchPosts = userId => dispatch => (
     PostAPIUtil.fetchPosts(userId)
         .then(

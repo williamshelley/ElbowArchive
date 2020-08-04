@@ -1,5 +1,6 @@
 import React from "react";
 import ModalHeader from "./modal_header";
+import UpdatePhotoModal from "./update_photo_modal";
 
 const Section = ({ children }) => (
     <div className="section">{children}</div>
@@ -25,7 +26,9 @@ class EditProfileModal extends React.Component {
     }
 
     render() {
-        let { user } = this.props;
+        let { user, topModal, popModal, pushModal } = this.props;
+        console.log($(topModal));
+        console.log($(this));
         let profile_pic = user.profile_img_url ? user.profile_img_url : "https://img.icons8.com/ios-glyphs/96/000000/gender-neutral-user.png";
         
         return (
@@ -37,6 +40,11 @@ class EditProfileModal extends React.Component {
                     <Section>Profile Picture
                         <div className="profile">
                             <img src={profile_pic} />
+                            <button onClick={() => pushModal(
+                            <UpdatePhotoModal user={user}
+                                popModal={popModal}/>)}>
+                            Edit
+                            </button>
                         </div>
                     </Section>
                     <Section>Cover Photo</Section>

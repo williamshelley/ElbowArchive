@@ -25,8 +25,8 @@ const mapStateToProps = state => ({
         gender: "",
         customGender: "",
 
-        profile_photo: "",
-        cover_photo: "",
+        profile_photo: null,
+        cover_photo: null,
     },
     errors: selectSessionErrors(state),
 });

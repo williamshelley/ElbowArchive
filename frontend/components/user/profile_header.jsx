@@ -1,11 +1,11 @@
 import React from "react";
 import ProfileNavItemContainer from "./profile_nav_item_container";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { faPencilAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import EditProfileModalContainer from "./edit_profile_modal_container";
 import { PROFILE_PATH } from "../../util/path_util";
 
-const ProfileHeader = ({ user, pushModal }) => {
+const ProfileHeader = ({ loggedInUser, user, pushModal }) => {
     const presentEditModal = (e) => {
         e.preventDefault();
         pushModal(<EditProfileModalContainer />);
@@ -13,6 +13,7 @@ const ProfileHeader = ({ user, pushModal }) => {
 
     // const PATH = PROFILE_PATH.bind(this, user);
     const PATH = (next) => `/profile/${user.id}/${next ? next : ""}`;
+    const isMyProfile = loggedInUser === user;
 
     return (
         <div className="header">
@@ -55,10 +56,18 @@ const ProfileHeader = ({ user, pushModal }) => {
                     </div>
 
                     <div className="right">
-                        <div className="item" onClick={presentEditModal}>
+                        { isMyProfile ?
+                            <div className="item" onClick={presentEditModal}>
                             <FontAwesomeIcon icon={faPencilAlt} />
                             Edit Profile
                         </div>
+                        : 
+                        <div className="item" 
+                            onClick={() => {console.log("add friend")}}>
+                                <FontAwesomeIcon icon={faUserPlus} />
+                                Add Friend
+                        </div>
+                        }
                     </div>
                 </div>
             </div>

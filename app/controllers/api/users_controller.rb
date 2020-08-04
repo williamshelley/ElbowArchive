@@ -1,15 +1,27 @@
 class Api::UsersController < ApplicationController
     def index
-        @users = User.includes(:timeline_posts, :editable_posts).all
+        start_of_name = params[:filters][:name] ? params[:filters][:name] : ""
+        @users = User
+                    .includes(
+                        :profile_photo_attachment,
+                        :cover_photo_attachment)
+                    .select("*")
+                    .where("CONCAT(first_name, ' ', last_name) LIKE ?%", start_of_name)
+
         render :index
     end
 
     def show
-        @user = User.find_by(id: params[:id])
+        @user = User.includes(
+                        :profile_photo_attachment,
+                        :cover_photo_attachment)
+                    .find_by(id: params[:id])
+
         render :show
     end
 
     def create
+        debugger
         @user = User.new(user_params)
         if @user.save
             login!(@user)

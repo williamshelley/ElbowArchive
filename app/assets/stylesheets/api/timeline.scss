@@ -83,6 +83,13 @@
                         .post-info {
                             flex-direction: row;
                             gap: 8px;
+                            .link {
+                                color: rgb(56, 88, 152);
+                                text-decoration: none;
+                            }
+                            .link:hover {
+                                text-decoration: underline;
+                            }
                         }
                         .date-posted {
                             align-items: flex-start;

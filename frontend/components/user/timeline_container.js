@@ -1,15 +1,17 @@
 import { connect } from "react-redux";
 import Timeline from "./timeline";
-import { selectCurrentUser, selectAllPosts } from "../../reducers/selectors";
-import { fetchPosts } from "../../actions/post_actions";
+import { selectCurrentUser, selectUserTimelinePosts, selectAllPosts } from "../../reducers/selectors";
 import { pushModal } from "../../actions/ui_actions";
 import { fetchUser } from "../../actions/user_actions";
 import { withRouter } from "react-router-dom";
+import { receivePosts, fetchPosts } from "../../actions/post_actions";
 
 const mapStateToProps = (state, ownProps) => {
+    const ownerId = ownProps.match.params.userId;
     return {
-        ownerId: ownProps.match.params.userId,
-        posts: Object.values(selectAllPosts(state)),
+        ownerId,
+        // need to sort by date instead of just reversing
+        posts: Object.values(selectAllPosts(state)).reverse(),
         user: selectCurrentUser(state)
     };
 };

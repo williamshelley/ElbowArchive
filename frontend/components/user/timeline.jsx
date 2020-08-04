@@ -24,6 +24,7 @@ class Timeline extends React.Component {
     
     componentDidMount() {
         this.props.fetchPosts(this.props.ownerId);
+        console.log("mounted")
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {

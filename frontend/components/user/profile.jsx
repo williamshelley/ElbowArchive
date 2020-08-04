@@ -14,14 +14,22 @@ class Profile extends React.Component {
         this.props.fetchUser(this.props.match.params.userId);
     }
 
+    UNSAFE_componentWillReceiveProps(newProps) {
+        let newId = newProps.match.params.userId;
+        let oldId = this.props.match.params.userId;
+        if (newId !== oldId) {
+            this.props.fetchUser(newId);
+        }
+    }
+
     render() {
-        let { user, topModal, pushModal } = this.props;
+        let { user, loggedInUser, topModal, modals, pushModal } = this.props;
         let PATH = (next) => `/profile/:userId/${next ? next : ""}`;
 
         return user ? (
             <div className="profile">
 
-                <ProfileHeader user={user} pushModal={pushModal} />
+                <ProfileHeader loggedInUser={loggedInUser} user={user} pushModal={pushModal} />
 
                 <div className="body">
                     <div className="content">
@@ -38,6 +46,15 @@ class Profile extends React.Component {
                         </Switch>
 
                         {topModal}
+                        {/* {modals.map((modal, idx) => {
+                            if (modal) {
+                                return (
+                                    <div className="_null" key={idx}>
+                                        {modal}
+                                    </div>
+                                );
+                            } else { return null; }
+                        })} */}
                     </div>
                 </div>
             </div>

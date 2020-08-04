@@ -5,6 +5,9 @@ class Post < ApplicationRecord
     belongs_to :author, class_name: :User
     belongs_to :wall, class_name: :User
 
+    has_many_attached :photos
+    # has_one_attached :photo
+
     # has_many :comments
     # has_many :likes
 end

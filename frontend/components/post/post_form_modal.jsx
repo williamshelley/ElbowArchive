@@ -2,6 +2,8 @@ import React from "react";
 import ModalHeader from "../user/modal_header";
 import Moment from "moment";
 import { text } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPhotoVideo } from "@fortawesome/free-solid-svg-icons";
 
 class PostFormModal extends React.Component {
     constructor(props) {
@@ -12,6 +14,7 @@ class PostFormModal extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.hide = this.hide.bind(this);
+        this.appendPhoto = this.appendPhoto.bind(this);
     }
 
     componentDidMount() {
@@ -31,7 +34,6 @@ class PostFormModal extends React.Component {
             textarea.on("keypress", handler);
             textarea.on("keyup", handler);
             textarea.on("keydown", handler);
-
         });
     }
 
@@ -45,16 +47,40 @@ class PostFormModal extends React.Component {
         let year = now.year();
         let month = now.month();
         let day = now.toDate().getDate();
-        const post = {
-            body: this.state.body,
-            wall_id: this.props.match.params.userId,
-            date_posted: [year,month,day].join("-")
-        };
-        this.props.submitPost(post).then(()=>{
+
+        const post = new FormData();
+        post.append("post[body]", this.state.body);
+        post.append("post[wall_id]", this.props.match.params.userId);
+        post.append("post[date_posted]", [year, month, day].join("-"));
+
+        let {photos} = this.state;
+        for (let i = 0; i < photos.length; i++) {
+            post.append("post[photos][]", photos[i]);
+          }
+        // post.append("post[photos]", this.state.photos);
+
+        // const post = {
+        //     body: this.state.body,
+        //     wall_id: this.props.match.params.userId,
+        //     date_posted: [year, month, day].join("-"),
+        //     photos: this.state.photos
+        // };
+
+
+        this.props.submitPost(post).then(() => {
+            // this.props.receivePost(post);
             this.props.popModal();
-        }, ()=>{
+        }, () => {
             alert("Oops! Something went wrong!");
         });
+    }
+
+    appendPhoto(e) {
+        e.preventDefault();
+
+        let newPhotos = this.state.photos;
+        newPhotos.push(e.target.files[0]);
+        this.setState({ photos: newPhotos });
     }
 
     hide(e) {
@@ -81,11 +107,31 @@ class PostFormModal extends React.Component {
                         placeholder="What's on your mind?"
                         onChange={this.handleInput("body")}
                     />
-                    <button 
+
+                    {/* <ul>
+                        { photos.map(photo => <img src={photo} />)}
+                    </ul> */}
+
+                    <div className="options">
+                        <p>Add to Your Post</p>
+                        <div>
+                            <div className="icon">
+                                <label htmlFor="file-input">
+                                    <FontAwesomeIcon
+                                        icon={faPhotoVideo} />
+                                </label>
+                                <input id="file-input"
+                                    onChange={this.appendPhoto}
+                                    type="file" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button
                         type="submit"
                         style={submitStyle}
                         disabled={!hasContent}>
-                            {submitBtnName}
+                        {submitBtnName}
                     </button>
                 </form>
             </div>

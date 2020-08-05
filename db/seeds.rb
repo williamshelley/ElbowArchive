@@ -117,8 +117,8 @@ end
 
 p "start users_a"
 users_a = users.to_a
-users_a = users_a.select { |user| !user.nil? }
-users_a.each { |user| user.save }
+users_a = users_a.select { |user| !user.nil? and user.save }
+# users_a.each { |user| user.save }
 
 users_a.each do |user|
     p "#{user.id} post"

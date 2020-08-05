@@ -26,7 +26,6 @@ class Api::FriendRequestsController < ApplicationController
             render :show
         else
             # failure
-            # render json: @friend_request.errors.full_messages, status: 404
             render :errors, status: 404
         end
     end

@@ -19,7 +19,8 @@
             position: relative;
 
             .cover-photo {
-                background: linear-gradient(rgba(0,0,0,0), black);
+                background: linear-gradient(
+                    rgba(50,50,50,255), rgba(0,0,0,255));
                 width: 100%;
                 // height: 100%;
                 height: 35vw;

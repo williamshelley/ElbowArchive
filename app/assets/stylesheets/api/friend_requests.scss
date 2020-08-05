@@ -181,12 +181,16 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: flex-start;
+                h3 {
+                    margin: 0;
+                }
             }
 
             img {
                 object-fit: contain;
                 width: 80px;
                 height: 80px;
+                border-radius: 8px;
             }
 
             img:hover {

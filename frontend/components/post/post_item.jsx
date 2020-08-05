@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import Moment from "moment";
 import { Link } from "react-router-dom";
+import { ProfileImage } from "../../util/resources_util";
+import { safePush } from "../../util/navigation_util";
 
 const PostItem = ({ post, path }) => {
     let { author, wall, photos } = post;
@@ -19,7 +21,8 @@ const PostItem = ({ post, path }) => {
             <div className="post">
                 <div className="header">
                     <div className="h-stack">
-                        <img src={author.profile_photo} />
+                        {/* <img src={author.profile_photo} /> */}
+                        <ProfileImage user={author}/>
                         <div className="v-stack">
                             <div className="post-info">
                                 <Link className="link" to={TO(author.id)}>

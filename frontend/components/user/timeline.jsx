@@ -3,6 +3,7 @@ import PostItem from "../post/post_item";
 import PostIndex from "../post/post_index";
 import NewPostFormContainer from "../post/new_post_form_container";
 import NotFound404 from "../navigation/not_found_404";
+import { ProfileImage } from "../../util/resources_util";
 
 const Section = ({ style, children }) => (
     <div style={style} className="section">{children}</div>
@@ -69,7 +70,8 @@ class Timeline extends React.Component {
                         (<Section style={{ marginBottom: "16px" }}>
                             <div className="new-post">
                                 <div className="top">
-                                    <img src={profile_pic} />
+                                    {/* <img src={profile_pic} /> */}
+                                    <ProfileImage user={currentUser}/>
                                     <button onClick={this.presentNewPostForm}>
                                         What's on your mind?
                                 </button>

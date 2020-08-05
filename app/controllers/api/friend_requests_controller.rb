@@ -1,18 +1,7 @@
 class Api::FriendRequestsController < ApplicationController
     def index
-        # @friend_requests = []
-        # @friend = nil
-
-        # if params[:friend_ids]
-        #     @friend_requests = FriendRequest.select("*")
-        #     .where("sender_id IN (?) OR recipient_id IN (?)", params[:friend_ids])
-        #     .where("sender_id = ? OR recipient_id = ?", current_user.id, current_user.id)
-        # else
         user_id = params[:user_id] ? params[:user_id] : current_user.id
-        # debugger
         @friend_requests = FriendRequest.find_by_user_id(user_id)
-        # end
-        # debugger
         render :index
     end
     
@@ -30,14 +19,10 @@ class Api::FriendRequestsController < ApplicationController
 
     def update
         # accepting request
-
         @friend_request = FriendRequest
             .find_by_user_id(request_params[:sender_id])
             .find_by(recipient_id: current_user.id)
 
-        # debugger
-
-            
         if @friend_request.update(accepted: true)
             # success
             render :show
@@ -46,10 +31,6 @@ class Api::FriendRequestsController < ApplicationController
             render json: @friend_request.errors.full_messages, status: 404
         end
     end
-
-    # def destroy
-
-    # end
 
     private
     def request_params

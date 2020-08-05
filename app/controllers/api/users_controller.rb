@@ -13,12 +13,14 @@ class Api::UsersController < ApplicationController
                 .includes(:profile_photo_attachment, :cover_photo_attachment)
                 .select("*")
                 .where("id IN (?)", filter_params[:user_ids])
+                
             elsif filter_params[:name]
                 start_of_name = filter_params[:name] ? filter_params[:name] : ""
                 @users += User
                 .includes(:profile_photo_attachment, :cover_photo_attachment)
                 .select("*")
                 .where("CONCAT(first_name, ' ', last_name) LIKE ?%", start_of_name)
+                
             elsif filter_params[:all_users]
                 @users = User.includes(:profile_photo_attachment,:cover_photo_attachment).all
             end

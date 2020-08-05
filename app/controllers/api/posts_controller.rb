@@ -15,10 +15,6 @@ class Api::PostsController < ApplicationController
         render :show
     end
 
-    # def destroy
-
-    # end
-
     def create
         @post = Post.new(post_params)
         @post.author_id = current_user.id

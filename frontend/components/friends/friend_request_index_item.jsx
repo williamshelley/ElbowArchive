@@ -1,9 +1,11 @@
 import React from "react";
+import { ProfileImage } from "../../util/resources_util";
 
 const FriendRequestIndexItem = ({ acceptMessage, user, onClick, addHandler, removeHandler }) => {
     return (
         <div className="item" onClick={onClick}>
-            <img src={user.profile_photo} />
+            {/* <img src={user.profile_photo} /> */}
+            <ProfileImage user={user} />
             <div className="right">
                 <h3>{user.first_name} {user.last_name}</h3>
                 <p>Number of mutual friends</p>

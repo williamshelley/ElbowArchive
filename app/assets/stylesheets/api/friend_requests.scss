@@ -10,6 +10,13 @@
         border-top: 1px solid $border-color;
         border-bottom: 1px solid $border-color;
         padding: 24px 0;
+        .item {
+            .right {
+                .add {
+                    font-size: small;
+                }
+            }
+        }
     }
 
     .friend-requests-list {
@@ -49,7 +56,6 @@
                 width: 60px;
                 height: 60px;
                 border-radius: 50%;
-                overflow: hidden;
                 background-color: $icon-bg;
             }
 

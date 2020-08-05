@@ -4,30 +4,23 @@ class Api::UsersController < ApplicationController
         
         if filter_params
             if filter_params[:page_owner_id]
-                @users << User.includes(
-                    :profile_photo_attachment,
-                    :cover_photo_attachment)
+                @users << User.includes(:profile_photo_attachment,:cover_photo_attachment)
                 .find_by_id(filter_params[:page_owner_id])
             end
+
             if filter_params[:user_ids]
                 @users += User
-                .includes(
-                    :profile_photo_attachment,
-                    :cover_photo_attachment)
-                    .select("*")
-                    .where("id IN (?)", filter_params[:user_ids])
+                .includes(:profile_photo_attachment, :cover_photo_attachment)
+                .select("*")
+                .where("id IN (?)", filter_params[:user_ids])
             elsif filter_params[:name]
                 start_of_name = filter_params[:name] ? filter_params[:name] : ""
                 @users += User
-                .includes(
-                    :profile_photo_attachment,
-                    :cover_photo_attachment)
-                    .select("*")
-                    .where("CONCAT(first_name, ' ', last_name) LIKE ?%", start_of_name)
+                .includes(:profile_photo_attachment, :cover_photo_attachment)
+                .select("*")
+                .where("CONCAT(first_name, ' ', last_name) LIKE ?%", start_of_name)
             elsif filter_params[:all_users]
-                @users = User.includes(
-                    :profile_photo_attachment,
-                    :cover_photo_attachment).all
+                @users = User.includes(:profile_photo_attachment,:cover_photo_attachment).all
             end
         end
 
@@ -35,10 +28,9 @@ class Api::UsersController < ApplicationController
     end
 
     def show
-        @user = User.includes(
-                        :profile_photo_attachment,
-                        :cover_photo_attachment)
-                    .find_by(id: params[:id])
+        @user = User
+            .includes(:profile_photo_attachment, :cover_photo_attachment)
+            .find_by(id: params[:id])
 
         render :show
     end

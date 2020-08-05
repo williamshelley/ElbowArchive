@@ -7,6 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require "faker"
 require "set"
+require "open-uri"
+require "activerecord-reset-pk-sequence"
 
 User.destroy_all
 User.reset_pk_sequence
@@ -26,8 +28,7 @@ hermione = User.create!(
     phone_number: "646-555-5678", 
     password: "password", 
     birth_date: "1981-04-10",
-    gender: "Female"
-)
+    gender: "Female")
 
 # hermione.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
 # hermione.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
@@ -39,8 +40,7 @@ harry = User.create!(
     phone_number: "917-111-1234", 
     password: "password", 
     birth_date: "1981-07-31",
-    gender: "Male"    
-)
+    gender: "Male")
 
 # harry.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
 # harry.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
@@ -91,8 +91,7 @@ while users.length < NUM_USERS do
         phone_number: Faker::PhoneNumber.phone_number, 
         password: "password", 
         birth_date: Faker::Date.between(from: '1980-01-10', to: '2020-01-10'),
-        gender: Faker::Gender.type
-    )
+        gender: Faker::Gender.type)
 
     users.to_a.each do |u|
         if u.first_name == user.first_name
@@ -110,7 +109,7 @@ while users.length < NUM_USERS do
     # user.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
     # user.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
     
-    p user.id
+    p user.email
     # user.save
     users << user
 end
@@ -127,8 +126,7 @@ users_a.each do |user|
             author_id: user.id,
             wall_id: users_a.sample.id,
             body: Faker::Movies::HarryPotter.quote,
-            date_posted: Faker::Date.between(from: '1980-01-10', to: '2020-01-10')
-        )
+            date_posted: Faker::Date.between(from: '1980-01-10', to: '2020-01-10'))
         post.save
     end
 end

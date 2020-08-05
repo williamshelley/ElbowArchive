@@ -15,9 +15,9 @@ class Api::PostsController < ApplicationController
         render :show
     end
 
-    def destroy
+    # def destroy
 
-    end
+    # end
 
     def create
         @post = Post.new(post_params)

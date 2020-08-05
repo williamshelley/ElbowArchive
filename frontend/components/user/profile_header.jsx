@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import EditProfileModalContainer from "./edit_profile_modal_container";
 import { ProfileImage } from "../../util/resources_util";
+import ProfileHeaderButton from "./profile_header_button";
 
 class ProfileHeader extends React.Component {
     constructor(props) {
@@ -20,6 +21,8 @@ class ProfileHeader extends React.Component {
 
     addFriendHandler(e) {
         e.preventDefault();
+
+        //NEED TO UPDATE THIS LOGIC, NEVER PRINTS AS IT IS RIGHT NOW
         if (this.props.isFriended) {
             console.log("Already friends!")
         } else {
@@ -27,14 +30,8 @@ class ProfileHeader extends React.Component {
         }
     }
 
-    componentDidMount() {
-        // this.props.fetchFriend(this.props.user.id);
-    }
-
     render() {
         let { PATH, loggedInUser, user, children } = this.props;
-
-        // const PATH = (next) => `/profile/${user.id}/${next ? next : ""}`;
         const isMyProfile = loggedInUser.id === user.id;
 
         return (
@@ -46,7 +43,7 @@ class ProfileHeader extends React.Component {
                         </div>
 
                         <div className="profile-photo">
-                            <ProfileImage user={user}/>
+                            <ProfileImage user={user} />
                         </div>
                     </div>
 
@@ -83,16 +80,13 @@ class ProfileHeader extends React.Component {
 
                         <div className="right">
                             {isMyProfile ?
-                                <div className="item" onClick={this.presentEditModal}>
-                                    <FontAwesomeIcon icon={faPencilAlt} />
-                                Edit Profile
-                            </div>
+                                <ProfileHeaderButton icon={faPencilAlt}
+                                    message="Edit Profile"
+                                    onClick={this.presentEditModal} />
                                 :
-                                <div className="item"
-                                    onClick={this.addFriendHandler}>
-                                    <FontAwesomeIcon icon={faUserPlus} />
-                                    Add Friend
-                            </div>
+                                <ProfileHeaderButton icon={faUserPlus}
+                                    message="Add friend"
+                                    onClick={this.addFriendHandler} />
                             }
                         </div>
                     </div>

@@ -184,6 +184,10 @@
                 h3 {
                     margin: 0;
                 }
+
+                h3:hover {
+                    text-decoration: underline;
+                }
             }
 
             img {
@@ -203,6 +207,10 @@
                 width: fit-content;
                 padding: 8px 18px;
                 background-color: $icon-bg;
+            }
+
+            button:hover {
+                background-color: $icon-hover-bg;
             }
         }
     }

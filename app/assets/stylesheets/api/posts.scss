@@ -9,6 +9,10 @@ div {
 }
 
 .post {
+    p {
+        border-bottom: 1px solid $border-color;
+        padding-bottom: 16px;
+    }
     ul {
         list-style-type: none;
         padding: 0;

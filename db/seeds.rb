@@ -111,13 +111,14 @@ while users.length < NUM_USERS do
     # user.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
     
     p user.id
-    user.save
+    # user.save
     users << user
 end
 
 p "start users_a"
 users_a = users.to_a
 users_a = users_a.select { |user| !user.nil? }
+users_a.each { |user| user.save }
 
 users_a.each do |user|
     p "#{user.id} post"

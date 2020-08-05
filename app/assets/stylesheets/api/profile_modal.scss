@@ -1,0 +1,29 @@
+@import "../static_pages.scss";
+
+.profile-modal {
+    all: inherit;
+    overflow-y: scroll;
+
+    .header {
+        .navigation {
+            .left {
+                gap: 8px;
+                button {
+                    background-color: $icon-bg;
+                    font-weight: bold;
+                    width: fit-content;
+                    height: unset;
+                    padding: 14px 12px;
+                    border-radius: 8px;
+                    font-size: 16px;
+                    gap: 6px;
+                }
+    
+                button:hover {
+                    cursor: pointer;
+                    background-color: $icon-hover-bg;
+                }
+            }
+        }
+    }
+}

@@ -1,9 +1,10 @@
 import React from "react";
+import { safePush } from "../../util/navigation_util";
 
-const FriendIndexItem = ({ user }) => {
+const FriendIndexItem = ({ history, user, message }) => {
     return (
         <div className="item">
-            <img src={user.profile_photo} />
+            <img src={user.profile_photo} onClick={() => safePush(history, `/profile/${user.id}`)} />
 
             <div className="info">
                 <p>{user.first_name} {user.last_name}</p>
@@ -11,7 +12,7 @@ const FriendIndexItem = ({ user }) => {
             </div>
 
             <button onClick={() => console.log("display dropdown") }>
-                Friends
+                {message ? message : "Friends"}
             </button>
         </div>
     );

@@ -94,10 +94,18 @@ while users.length < NUM_USERS do
         gender: Faker::Gender.type
     )
 
-    if users.include?(user)
-        e = user.email.split("@")
-        user.email = "#{e[0]}#{users.size}@#{e[1]}"
+    users.to_a.each do |u|
+        if u.first_name == user.first_name
+            user.first_name += "#{users.size}"
+            e = user.email.split("@")
+            user.email = "#{e[0]}#{users.size}@#{e[1]}"
+        end
     end
+
+    # if users.include?(user)
+    #     e = user.email.split("@")
+    #     user.email = "#{e[0]}#{users.size}@#{e[1]}"
+    # end
     
     # user.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
     # user.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")

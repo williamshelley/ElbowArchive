@@ -5,38 +5,100 @@
     flex-direction: row;
     width: 100%;
     height: 100%;
+
+    .pending-requests {
+        border-top: 1px solid $border-color;
+        border-bottom: 1px solid $border-color;
+        padding: 24px 0;
+    }
+
     .friend-requests-list {
         flex-direction: column;
         width: 360px;
+        min-width: 360px;
         height: 100%;
         background-color: $nav-bar-bg;
         border: 1px solid $border-color;
+        overflow-y: scroll;
+        padding: 12px;
+
+        h3 {
+            width: 100%;
+            margin: 12px 0;
+            align-items: flex-start;
+            height: 100%;
+            padding-top: 12px;
+        }
+
+        .item:hover {
+            cursor: pointer;
+            background-color: $icon-hover-bg;
+            border-radius: 5px;
+            border: 1px solid $border-color;
+        }
 
         .item {
             flex-direction: row;
+            height: 105px;
+            box-sizing: border-box;
+            padding: 8px;
+
+
             img {
                 object-fit: contain;
                 width: 60px;
                 height: 60px;
                 border-radius: 50%;
-                background-color: red;
+                overflow: hidden;
+                background-color: $icon-bg;
             }
-            .photo {
 
-            }
             .right {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                box-sizing: border-box;
+
                 h3 {
-
+                    box-sizing: border-box;
+                    width: 100%;
+                    align-items: flex-start;
+                    margin: 0;
+                    padding: 0 24px;
                 }
+
                 p {
-
+                    box-sizing: border-box;
+                    padding: 0 24px;
+                    width: 100%;
+                    align-items: flex-start;
                 }
-                .buttons {
-                    button {
-                        
-                    }
-                    .add {
 
+                .buttons {
+                    width: 100%;
+                    height: 100%;
+                    flex-direction: row;
+                    gap: 12px;
+                    justify-content: center;
+
+                    button {
+                        align-items: center;
+                        justify-content: center;
+                        background-color: $icon-bg;
+                        box-sizing: border-box;
+                        height: 36px;
+                        // max-width: 124px;
+                        min-width: 100px;
+                        padding: 12px;
+                    }
+
+                    button:hover {
+                        background-color: rgba(0, 0, 0, 0.4);
+                    }
+
+                    .add {
+                        background-color: $blue;
+                        min-width: 124px;
                     }
                 }
             }
@@ -45,13 +107,13 @@
 }
 
 .nav-item {
-        font-weight: bold;
-        width: fit-content;
-        height: unset;
-        padding: 14px 12px;
-        border-radius: 8px;
-        font-size: 16px;
-        gap: 6px;
+    font-weight: bold;
+    width: fit-content;
+    height: unset;
+    padding: 14px 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    gap: 6px;
 }
 
 .nav-item:hover {
@@ -62,9 +124,11 @@
 .friends {
     display: flex;
     flex-direction: column;
+
     .header {
         flex-direction: row;
         justify-content: space-between;
+
         div {
             height: 100%;
             width: fit-content;
@@ -80,39 +144,62 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 12px;
-    
-    .item {
-        margin-top: 12px;
-        align-items: center;
-        width: 50%;
-        height: 116px;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
-        background-color: $nav-bar-bg;
-        padding: 18px;
-        border-radius: 8px;
-        gap: 8px;
+    column-gap: 12px;
+    height: fit-content;
+    padding-bottom: 50%;
+    overflow-y: scroll;
 
-        .info {
-            margin: 0 12px;
-            height: 100%;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-        }
+    .accepted,
+    .pending {
+        // margin: 12px 0;
+        // padding-top: 12px;
+        padding-bottom: 12px;
+
+        width: inherit;
+        flex-direction: inherit;
+        flex-wrap: inherit;
+        justify-content: inherit;
+        align-items: inherit;
+        column-gap: inherit;
+        // overflow-y: scroll;
+        // height: inherit;
         
-        img {
-            object-fit: contain;
-            width: 80px;
-            height: 80px;
-        }
-
-        button {
+        .item {
+            margin-top: 12px;
+            align-items: center;
+            width: 49%;
+            height: 116px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
+            background-color: $nav-bar-bg;
+            padding: 18px;
             border-radius: 8px;
-            font-size: 15px;
-            width: fit-content;
-            padding: 8px 18px;
-            background-color: $icon-bg;
+            gap: 8px;
+
+            .info {
+                margin: 0 12px;
+                height: 100%;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+            }
+
+            img {
+                object-fit: contain;
+                width: 80px;
+                height: 80px;
+            }
+
+            img:hover {
+                cursor: pointer;
+            }
+
+            button {
+                border-radius: 8px;
+                font-size: 15px;
+                width: fit-content;
+                padding: 8px 18px;
+                background-color: $icon-bg;
+            }
         }
     }
 }

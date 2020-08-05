@@ -3,7 +3,7 @@ import About from "./about";
 import { selectCurrentUser, selectUser } from "../../reducers/selectors";
 
 const mapStateToProps = (state, ownProps) => ({
-    user: selectUser(ownProps.match.params.userId, state)
+    user: ownProps.user ? ownProps.user : selectUser(ownProps.match.params.userId, state)
 });
 
 const mapDispatchToProps = dispatch => ({ 

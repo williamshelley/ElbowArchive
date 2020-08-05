@@ -32,60 +32,64 @@ class ProfileHeader extends React.Component {
     }
 
     render() {
-        let { PATH, loggedInUser, user } = this.props;
+        let { PATH, loggedInUser, user, children } = this.props;
 
         // const PATH = (next) => `/profile/${user.id}/${next ? next : ""}`;
-        const isMyProfile = loggedInUser === user;
+        const isMyProfile = loggedInUser.id === user.id;
 
         return (
             <div className="header">
                 <div className="content">
                     <div className="photos">
                         <div className="cover-photo">
-                            <img src={user.cover_photo} style={user.cover_photo ? {} : {height: "35vw"}}/>
+                            <img src={user.cover_photo} style={user.cover_photo ? {} : { height: "35vw" }} />
                         </div>
-    
+
                         <div className="profile-photo">
                             <img src={user.profile_photo} />
                         </div>
                     </div>
-    
+
                     <div className="bio">
                         <h1>{user.first_name} {user.last_name}</h1>
                     </div>
-    
+
                     <div className="navigation">
-    
+
                         <div className="left">
-                            <ProfileNavItemContainer label="Timeline"
-                                to={PATH()} />
-    
-                            <ProfileNavItemContainer label="About"
-                                to={PATH("about")} />
-    
-                            <ProfileNavItemContainer label="Friends"
-                                to={PATH("friends")} />
-    
-                            <ProfileNavItemContainer label="Photos"
-                                to={PATH("photos")} />
-    
-                            <ProfileNavItemContainer label="Archive"
-                                to={PATH("archive")} />
-    
+                            {!children ?
+                                (<>
+                                    <ProfileNavItemContainer label="Timeline"
+                                        to={PATH()} />
+
+                                    <ProfileNavItemContainer label="About"
+                                        to={PATH("about")} />
+
+                                    <ProfileNavItemContainer label="Friends"
+                                        to={PATH("friends")} />
+
+                                    <ProfileNavItemContainer label="Photos"
+                                        to={PATH("photos")} />
+
+                                    <ProfileNavItemContainer label="Archive"
+                                        to={PATH("archive")} />
+                                </>)
+                                : children
+                            }
                             {
                                 // more dropdown
                             }
                         </div>
-    
+
                         <div className="right">
-                            { isMyProfile ?
+                            {isMyProfile ?
                                 <div className="item" onClick={this.presentEditModal}>
-                                <FontAwesomeIcon icon={faPencilAlt} />
+                                    <FontAwesomeIcon icon={faPencilAlt} />
                                 Edit Profile
                             </div>
-                            : 
-                            <div className="item" 
-                                onClick={this.addFriendHandler}>
+                                :
+                                <div className="item"
+                                    onClick={this.addFriendHandler}>
                                     <FontAwesomeIcon icon={faUserPlus} />
                                     Add Friend
                             </div>

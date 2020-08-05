@@ -8,29 +8,18 @@ class FriendsIndex extends React.Component {
     }
 
     componentDidMount() {
-        // console.log("mount")
-        // console.log(this.props.pageOwnerId);
         this.props.fetchFriendRequests(this.props.pageOwnerId).then(() => {
-            this.props.fetchUsers(this.props.friendIds, this.props.pageOwnerId);
+            // debugger;
+            if (this.props.match.params.userId) {
+                // console.log(props.userIds);
+                // console.log(this.props.pageOwnerId);
+                this.props.fetchUsers(this.props.userIds, this.props.pageOwnerId);
+            }
         });
     }
 
-    UNSAFE_componentWillReceiveProps(newProps) {
-        // let newPageOwnerId = parseInt(newProps.match.params.userId);
-        // if (newPageOwnerId !== this.props.pageOwnerId) {
-        //     this.props.fetchFriendRequests(newPageOwnerId).then(() => {
-        //         this.props.fetchUsers(this.props.friendIds, newPageOwnerId);
-        //     });
-        // }
-    }
-
     render() {
-        let { loggedInUser, pageOwnerId, friends, friendIds, sendFriendRequest } = this.props;
-        let friendIdObj = {};
-        if (friendIds) {
-            friendIds.forEach(id => friendIdObj[id] = true);
-        }
-
+        let { history, currentUser, pageOwnerId, acceptedFriends, pendingFriends, sendFriendRequest } = this.props;
         return (
             <div className="friends">
                 <div className="header">
@@ -39,25 +28,41 @@ class FriendsIndex extends React.Component {
                     </div>
 
                     <div className="right">
-                        { loggedInUser.id === parseInt(pageOwnerId) ?<ProfileNavItemContainer label="Friend Requests" 
-                            history={this.props.history}
+                        { currentUser.id === parseInt(pageOwnerId) ?<ProfileNavItemContainer label="Friend Requests" 
+                            history={history}
                             to={"/friend_requests"}/>
                         : null
                         }
                     </div>
                 </div>
                 <div className="friends-collection">
-                    {Object.values(friends).map((user, idx) => {
-                        // console.log(user.id, friendIdObj[user.id]);
+                    <div className="accepted">
 
-                        if (friendIdObj[user.id]) {
-                            return (<FriendIndexItem
-                                key={idx}
-                                user={user}
-                                sendFriendRequest={sendFriendRequest} />
-                            );
-                        }
-                    })}
+                    {Object.values(acceptedFriends).map((user, idx) => {
+                            if (user) {
+                                return (<FriendIndexItem
+                                    history={history}
+                                    key={idx}
+                                    user={user}
+                                    sendFriendRequest={sendFriendRequest} />
+                                    );
+                                }
+                            })}
+                    </div>
+
+                    <div className="pending">
+                    {Object.values(pendingFriends).map((user, idx) => {
+                            if (user) {
+                                return (<FriendIndexItem
+                                history={history}
+                                message={"Pending"}
+                                    key={idx}
+                                    user={user}
+                                    sendFriendRequest={sendFriendRequest} />
+                                    );
+                                }
+                            })}
+                    </div>
                 </div>
             </div>
         );

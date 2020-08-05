@@ -9,9 +9,10 @@ class Api::FriendRequestsController < ApplicationController
         #     .where("sender_id = ? OR recipient_id = ?", current_user.id, current_user.id)
         # else
         user_id = params[:user_id] ? params[:user_id] : current_user.id
+        # debugger
         @friend_requests = FriendRequest.find_by_user_id(user_id)
         # end
-        
+        # debugger
         render :index
     end
     
@@ -32,10 +33,14 @@ class Api::FriendRequestsController < ApplicationController
 
     def update
         # accepting request
-        @friend_request = Friend.find_by(
-                sender_id: request_params[:sender_id], 
-                recipient_id: current_user.id)
 
+        @friend_request = FriendRequest
+            .find_by_user_id(request_params[:sender_id].to_i)
+            .find_by(recipient_id: current_user.id)
+
+        # debugger
+
+            
         if @friend_request.update(accepted: true)
             # success
             render :show

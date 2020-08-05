@@ -4,7 +4,10 @@ class Api::UsersController < ApplicationController
         
         if filter_params
             if filter_params[:page_owner_id]
-                @users << User.find_by_id(filter_params[:page_owner_id])
+                @users << User.includes(
+                    :profile_photo_attachment,
+                    :cover_photo_attachment)
+                .find_by_id(filter_params[:page_owner_id])
             end
             if filter_params[:user_ids]
                 @users += User
@@ -22,7 +25,9 @@ class Api::UsersController < ApplicationController
                     .select("*")
                     .where("CONCAT(first_name, ' ', last_name) LIKE ?%", start_of_name)
             elsif filter_params[:all_users]
-                @users = User.all
+                @users = User.includes(
+                    :profile_photo_attachment,
+                    :cover_photo_attachment).all
             end
         end
 

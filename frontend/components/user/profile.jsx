@@ -22,7 +22,6 @@ class Profile extends React.Component {
 
     componentDidMount() {
         this.props.fetchUser(this.props.match.params.userId).then(() => {
-            console.log(this.props.user);
             this.setState({ mountedUser: this.props.user });
         });
     }

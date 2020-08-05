@@ -7,12 +7,13 @@ import { withRouter } from "react-router-dom";
 import { receivePosts, fetchPosts } from "../../actions/post_actions";
 
 const mapStateToProps = (state, ownProps) => {
-    const ownerId = ownProps.match.params.userId;
+    const ownerId = ownProps.user ? ownProps.user.id : ownProps.match.params.userId;
     return {
         ownerId,
         // need to sort by date instead of just reversing
         posts: Object.values(selectAllPosts(state)).reverse(),
-        user: selectCurrentUser(state)
+        user: ownProps.user ? ownProps.user : selectCurrentUser(state),
+        currentUser: selectCurrentUser(state)
     };
 };
 

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       resources :posts, only: [:index]
     end
     resources :posts, only: [:show, :destroy, :create, :update]
-    resources :friend_requests, only: [:index, :upate, :create, :destroy]
+    resources :friend_requests, only: [:index, :update, :create, :destroy]
   end
 
 end

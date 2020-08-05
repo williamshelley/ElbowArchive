@@ -4,8 +4,8 @@ import PostIndex from "../post/post_index";
 import NewPostFormContainer from "../post/new_post_form_container";
 import NotFound404 from "../navigation/not_found_404";
 
-const Section = ({ children }) => (
-    <div className="section">{children}</div>
+const Section = ({ style, children }) => (
+    <div style={style} className="section">{children}</div>
 );
 
 class Timeline extends React.Component {
@@ -21,20 +21,23 @@ class Timeline extends React.Component {
         this.props.pushModal(<NewPostFormContainer />);
 
     }
-    
+
     componentDidMount() {
+        // debugger;
         this.props.fetchPosts(this.props.ownerId);
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        let nextId = nextProps.match.params.userId;
+        // debugger;
+        // let nextId = nextProps.match.params.userId;
+        let nextId = nextProps.ownerId;
         if (nextId !== this.props.ownerId) {
             this.props.fetchPosts(nextId);
         }
     }
 
     render() {
-        let { user, posts } = this.props;
+        let { user, posts, ownerId, currentUser } = this.props;
 
         let profile_pic = "https://img.icons8.com/ios-glyphs/96/000000/gender-neutral-user.png";
         if (user) {
@@ -62,20 +65,22 @@ class Timeline extends React.Component {
                 </div>
 
                 <div className="right">
-                    <Section>
-                        <div className="new-post">
-                            <div className="top">
-                                <img src={profile_pic} />
-                                <button onClick={this.presentNewPostForm}>
-                                    What's on your mind?
+                    { (currentUser.id === user.id || currentUser.id === parseInt(ownerId)) ?
+                        (<Section style={{ marginBottom: "16px" }}>
+                            <div className="new-post">
+                                <div className="top">
+                                    <img src={profile_pic} />
+                                    <button onClick={this.presentNewPostForm}>
+                                        What's on your mind?
                                 </button>
-                            </div>
+                                </div>
 
-                            <div className="post-types">
+                                <div className="post-types">
 
+                                </div>
                             </div>
-                        </div>
-                    </Section>
+                        </Section>) : null
+                    }
 
                     <PostIndex posts={posts} />
                 </div>

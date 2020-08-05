@@ -87,6 +87,30 @@ const friendIdsFromRequests = (userId, requests) => {
     ));
 }
 
+const senderIdsOfRecipient = (recipientId, requests) => {
+    // return Object.values(requests).map(req => (
+    //     parseInt(userId) === req.sender_id ? req.sender_id : 
+    // ));
+
+    let senderIds = [];
+    Object.values(requests).map(req => {
+        if (parseInt(recipientId) === req.recipient_id) {
+            senderIds.push(req.sender_id)
+        }
+    })
+    return senderIds;
+}
+
+const recipientIdsOfSender = (senderId, requests) => {
+    let recipientIds = [];
+    Object.values(requests).map(req => {
+        if (parseInt(senderId) === req.senderId) {
+            recipientIds.push(req.recipient_id)
+        }
+    })
+    return recipientIds;
+}
+
 export const selectAcceptedFriendIds = (userId, state) => {
     let requests = selectAccpetedFriendRequests(state);
     return friendIdsFromRequests(userId, requests);
@@ -104,6 +128,31 @@ export const selectPendingFriendIds = (userId, state) => {
     // ));
 }
 
+export const selectAcceptedIdsWithSender = (senderId, state) => {
+    let requests = selectAccpetedFriendRequests(state);
+    return recipientIdsOfSender(senderId, requests);
+}
+
+export const selectAcceptedIdsWithRecipient = (recipientId, state) => {
+    let requests = selectAccpetedFriendRequests(state);
+    return senderIdsOfRecipient(recipientId, requests);
+}
+
+export const selectPendingIdsWithSender = (senderId, state) => {
+    let requests = selectPendingFriendRequests(state);
+    return recipientIdsOfSender(senderId, requests);
+}
+
+
+export const selectPendingIdsWithRecipient = (recipientId, state) => {
+    let requests = selectPendingFriendRequests(state);
+    return senderIdsOfRecipient(recipientId, requests);
+}
+
+export const selectFriends = (state) => {
+    return state.entities.friends;
+}
+
 export const selectNonFriends = state => {
     let currentUser = selectCurrentUser(state);
     let pendingArr = selectPendingFriendIds(currentUser.id, state);
@@ -117,10 +166,19 @@ export const selectNonFriends = state => {
 
     let nonFriends = {};
     users.forEach(user => {
-        if (!pending[user.id] && !accepted[user.id]) {
+        if (!pending[user.id] && !accepted[user.id] && user.id !== currentUser.id) {
             nonFriends[user.id] = user;
         }
     });
 
     return nonFriends;
+}
+
+export const selectUsersFromIds = (userIds, state) => {
+    let users = {};
+    userIds.forEach(id => {
+        users[id] = selectUser(id, state);
+    });
+
+    return users;
 }

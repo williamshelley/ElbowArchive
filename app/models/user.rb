@@ -13,15 +13,6 @@ class User < ApplicationRecord
     has_one_attached :profile_photo
     has_one_attached :cover_photo
 
-    # has_many :friends
-    # has_many :friended, 
-    #     through: :friends,
-    #     source: :friend
-
-    # has_many :friended_by,
-    #     through: :friends,
-    #     source: :user
-
     has_many :friend_requests
 
     has_many :sent_requests,
@@ -46,10 +37,6 @@ class User < ApplicationRecord
         self.friends_as_recipient + self.friends_as_sender
     end
 
-    def pending_requests
-        
-    end
-
     def email_or_phone_number
         self.email || self.phone_number
     end
@@ -67,24 +54,6 @@ class User < ApplicationRecord
         end
     end
 
-    # def send_friend_request(user)
-    #     friend = Friend.new(user_id: self.id, friend_id: user.id)
-    #     if friend.save
-    #         # success
-    #     else
-    #         # failure
-    #     end
-    # end
-
-    # def accept_friend_request(user)
-    #     request = Friend.find_by(user_id: user.id, friend_id: self.id)
-    #     if request.update(pending: false)
-    #         # success
-    #     else
-    #         # failure
-    #     end
-    # end
-
     def self.find_by_credentials(credentials)
         email = credentials[:email]
         phone_number = credentials[:phone_number]
@@ -96,29 +65,6 @@ class User < ApplicationRecord
         end
         return user if user && user.is_password?(password)
         nil
-    end
-
-    # def newsfeed_posts
-        # where a user has posted or has been posted on
-        # where a user's friend has posted or has been posted on
-    # end
-
-    def timeline_posts
-        posts = Post
-            .includes(:wall, :author, :photos_attachments)
-            .select('*')
-            .where("(posts.wall_id = ?) OR (posts.author_id = ?)", self.id, self.id)
-
-        posts
-    end
-
-    def editable_posts
-        posts = Post
-            .includes(:author, :photos_attachments)
-            .select("*")
-            .where("posts.author_id = ?", self.id)
-            
-        posts
     end
 
     def password=(password)

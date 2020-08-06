@@ -13,6 +13,10 @@ class FriendsIndex extends React.Component {
             if (this.props.match.params.userId) {
                 // console.log(props.userIds);
                 // console.log(this.props.pageOwnerId);
+                if (this.props.user) {
+                    // this.props.fetchFriends(this.props.userIds, this.props.pageOwnerId);
+                } else {
+                }
                 this.props.fetchUsers(this.props.userIds, this.props.pageOwnerId);
             }
         });

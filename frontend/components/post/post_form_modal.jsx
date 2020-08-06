@@ -10,6 +10,7 @@ class PostFormModal extends React.Component {
         super(props);
 
         this.state = this.props.post;
+        this.state.photoUrls = [];
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInput = this.handleInput.bind(this);
@@ -53,22 +54,14 @@ class PostFormModal extends React.Component {
         post.append("post[wall_id]", this.props.match.params.userId);
         post.append("post[date_posted]", [year, month, day].join("-"));
 
-        let {photos} = this.state;
+        let { photos } = this.state;
         for (let i = 0; i < photos.length; i++) {
             post.append("post[photos][]", photos[i]);
-          }
-        // post.append("post[photos]", this.state.photos);
-
-        // const post = {
-        //     body: this.state.body,
-        //     wall_id: this.props.match.params.userId,
-        //     date_posted: [year, month, day].join("-"),
-        //     photos: this.state.photos
-        // };
+        }
 
 
         this.props.submitPost(post).then(() => {
-            // this.props.receivePost(post);
+            this.props.fetchPosts(this.props.match.params.userId);
             this.props.popModal();
         }, () => {
             alert("Oops! Something went wrong!");
@@ -78,9 +71,23 @@ class PostFormModal extends React.Component {
     appendPhoto(e) {
         e.preventDefault();
 
-        let newPhotos = this.state.photos;
-        newPhotos.push(e.target.files[0]);
-        this.setState({ photos: newPhotos });
+        const reader = new FileReader();
+        const photo = e.target.files[0];
+        reader.onloadend = () => {
+            let newPhotoUrls = this.state.photoUrls;
+            newPhotoUrls.push(reader.result);
+
+            let newPhotos = this.state.photos;
+            newPhotos.push(photo);
+
+            this.setState({ photos: newPhotos,  photoUrls: newPhotoUrls });
+        }
+
+        if (photo) {
+            reader.readAsDataURL(photo);
+        } else {
+            console.log("Something went wrong!");
+        }
     }
 
     hide(e) {
@@ -90,12 +97,10 @@ class PostFormModal extends React.Component {
 
     render() {
         let { className, title, submitBtnName } = this.props;
-        let { body } = this.state;
+        let { body, photoUrls } = this.state;
         let hasContent = body.length > 0;
         let submitBg = !hasContent ? "rgba(255, 255, 255, 0.3)" : "#1877f2";
-        let submitStyle = {
-            backgroundColor: submitBg
-        };
+        let submitStyle = { backgroundColor: submitBg };
         return (
             <div className={className}>
                 <form id="new" onSubmit={this.handleSubmit}>
@@ -108,9 +113,12 @@ class PostFormModal extends React.Component {
                         onChange={this.handleInput("body")}
                     />
 
-                    {/* <ul>
-                        { photos.map(photo => <img src={photo} />)}
-                    </ul> */}
+                    {photoUrls.length > 0 ?
+                        (<div className="image-previews">
+                            {photoUrls.map((url,idx) => <img key={idx} src={url} />)}
+                        </div>)
+                        : null
+                    }
 
                     <div className="options">
                         <p>Add to Your Post</p>

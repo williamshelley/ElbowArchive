@@ -29,8 +29,8 @@ const mdp = dispatch => {
         fetchFriendRequests: userId => dispatch(fetchFriendRequests(userId)),
         fetchUsers: (user_ids, page_owner_id) => (
             dispatch(fetchUsers({ user_ids, page_owner_id }))),
-        // fetchFriends: (user_ids, page_owner_id) => (
-            // dispatch(fetchFriends({ user_ids, page_owner_id }))),
+        fetchFriends: (user_ids, page_owner_id) => (
+            dispatch(fetchFriends({ user_ids, page_owner_id }))),
     };
 }
 

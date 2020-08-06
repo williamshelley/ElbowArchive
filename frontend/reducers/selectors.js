@@ -61,7 +61,7 @@ export const selectFriendRequest = (currentUserId, friendId, state) => {
 };
 
 export const selectAccpetedFriendRequests = state => {
-    return state.entities.friendRequests.accpeted;
+    return state.entities.friendRequests.accepted;
 };
 
 export const selectPendingFriendRequests = state => {
@@ -162,7 +162,19 @@ export const selectNonFriends = state => {
     pendingArr.forEach(id => pending[id] = true);
     acceptedArr.forEach(id => accepted[id] = true);
 
+
+    // console.log(pendingArr.length);
+    // console.log(acceptedArr.length);
+
+    // console.log(pendingArr);
+    // console.log(acceptedArr);
+
     let users = Object.values(selectUsers(state));
+    // console.log(users);
+
+    // console.log(pending);
+    // console.log(accepted);
+    // console.log(state.entities.friendRequests.pending);
 
     let nonFriends = {};
     users.forEach(user => {
@@ -171,6 +183,7 @@ export const selectNonFriends = state => {
         }
     });
 
+    // console.log(nonFriends);
     return nonFriends;
 }
 
@@ -181,4 +194,12 @@ export const selectUsersFromIds = (userIds, state) => {
     });
 
     return users;
+}
+
+export const selectPostLikes = (postId, state) => {
+    return state.entities.posts[postId].likes;
+}
+
+export const selectAllFriends = (state) => {
+    return state.entities.friends;
 }

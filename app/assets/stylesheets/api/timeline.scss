@@ -134,10 +134,16 @@
         gap: 16px;
         width: fit-content;
 
-        // .section {
-            // .post {
 
-            // }
-        // }
+        .section {
+            .post {
+                .buttons {
+                    border-top: 1px solid $border-color;
+                    flex-direction: row;
+                    justify-content: space-evenly;
+
+                }
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import ModalHeader from "./modal_header";
 import UpdatePhotoModal from "./update_photo_modal";
+import { ProfileImage } from "../../util/resources_util";
 
 const Section = ({ children }) => (
     <div className="section">{children}</div>
@@ -17,19 +18,22 @@ class EditProfileModal extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.updateUser(this.state);
+        
+        // this.props.updateUser(this.state);
+        this.props.fetchUser(this.props.user.id).then(() => {
+            this.props.popModal();
+        });
     }
 
     hideForm(e) {
         e.preventDefault();
-        this.props.popModal();
+        this.props.fetchUser(this.props.user.id).then(() => {
+            this.props.popModal();
+        });
     }
 
     render() {
-        let { user, topModal, popModal, pushModal } = this.props;
-        console.log($(topModal));
-        console.log($(this));
-        let profile_pic = user.profile_img_url ? user.profile_img_url : "https://img.icons8.com/ios-glyphs/96/000000/gender-neutral-user.png";
+        let { user, topModal, popModal, pushModal, updateUserFromFormData } = this.props;
         
         return (
             <div className="edit-modal">
@@ -39,9 +43,10 @@ class EditProfileModal extends React.Component {
                         
                     <Section>Profile Picture
                         <div className="profile">
-                            <img src={profile_pic} />
+                            <ProfileImage user={user} />
                             <button onClick={() => pushModal(
                             <UpdatePhotoModal user={user}
+                            updateUserFromFormData={updateUserFromFormData}
                                 popModal={popModal}/>)}>
                             Edit
                             </button>

@@ -16,11 +16,18 @@ class FriendRequestIndex extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchUsers().then(() => {
+        console.log("mount");
+        // this.props.fetchFriends()
+        this.props.fetchUsers()
+        .then(() => {
         this.props.fetchFriendRequests(this.props.currentUser.id).then(() => {
                 // console.log(this.props.nonFriends);
-            })
+            });
         });
+    }
+
+    UNSAFE_componentWillReceiveProps(newProps) {
+        // console.log(newProps.currentUser)
     }
 
     sendRequest(recipient) {
@@ -51,8 +58,9 @@ class FriendRequestIndex extends React.Component {
                         {pendingFriends.length > 0 ? (pendingFriends.map((user, idx) => {
                             return (
                                 <FriendRequestIndexItem
-                                    acceptMessage="Accept Friend Request"
-                                    onClick={() => this.setState({ mountedUser: user })}
+                                    acceptMessage="Accept"
+                                    onClick={() => this.setState({ 
+                                        mountedUser: user })}
                                     addHandler={this.acceptRequest}
                                     removeHandler={this.removeHandler}
                                     key={idx} user={user} />
@@ -66,7 +74,8 @@ class FriendRequestIndex extends React.Component {
                     {nonFriends.map((user, idx) => {
                         return (
                             <FriendRequestIndexItem
-                                onClick={() => this.setState({ mountedUser: user })}
+                                onClick={() => this.setState({ 
+                                    mountedUser: user })}
                                 addHandler={this.sendRequest}
                                 removeHandler={this.removeHandler}
                                 key={idx} user={user} />

@@ -27,6 +27,14 @@ export const updateUser = user => dispatch => (
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
 );
 
+export const updateUserFromFormData = (userId, formData) => dispatch => (
+    UserAPIUtil.updateUserFromFormData(userId, formData)
+        .then(
+            payload => dispatch(receiveUser(payload),
+            errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
+        )
+);
+
 export const fetchUser = userId => dispatch => (
     UserAPIUtil.fetchUser(userId)
         .then(
@@ -39,11 +47,11 @@ export const fetchUsers = filters => dispatch => (
         .then(
             payload => dispatch(receiveUsers(payload)),
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
-)
+);
 
 export const fetchFriends = filters => dispatch => (
     UserAPIUtil.fetchUsers(filters)
         .then(
             payload => dispatch(receiveFriends(payload)),
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
-)
+);

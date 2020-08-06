@@ -29,9 +29,14 @@ class Profile extends React.Component {
     UNSAFE_componentWillReceiveProps(newProps) {
         let newId = newProps.match.params.userId;
         let oldId = this.props.match.params.userId;
-        if (newId !== oldId) {
+        let oldUser = this.props.user;
+        let newUser = newProps.user;
+        let bothProfilePhotosExist = oldUser && newUser;
+        let profilePhotosAreSame = bothProfilePhotosExist ? (oldUser.profile_photo == newUser.profile_photo) : bothProfilePhotosExist;
+
+        if (newId !== oldId || !profilePhotosAreSame) {
             this.props.fetchUser(newId).then(() => {
-                this.setState({ mountedUser: this.props.user });
+                this.setState({ mountedUser: newProps.user });
             });
         }
     }
@@ -64,15 +69,6 @@ class Profile extends React.Component {
                         </Switch>
 
                         {topModal}
-                        {/* {modals.map((modal, idx) => {
-                            if (modal) {
-                                return (
-                                    <div className="_null" key={idx}>
-                                        {modal}
-                                    </div>
-                                );
-                            } else { return null; }
-                        })} */}
                     </div>
                 </div>
             </div>

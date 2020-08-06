@@ -1,7 +1,7 @@
 import React from "react";
 import ProfileNavItemContainer from "./profile_nav_item_container";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPencilAlt, faUserPlus, faUserCheck, faRetweet, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 import EditProfileModalContainer from "./edit_profile_modal_container";
 import { ProfileImage } from "../../util/resources_util";
 import ProfileHeaderButton from "./profile_header_button";
@@ -12,6 +12,12 @@ class ProfileHeader extends React.Component {
 
         this.presentEditModal = this.presentEditModal.bind(this);
         this.addFriendHandler = this.addFriendHandler.bind(this);
+        this.removeFriendHandler = this.removeFriendHandler.bind(this);
+        this.friendButton = this.friendButton.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.fetchFriends(this.props.user.id);
     }
 
     presentEditModal(e) {
@@ -30,8 +36,35 @@ class ProfileHeader extends React.Component {
         }
     }
 
+    removeFriendHandler(e) {
+        e.preventDefault();
+        console.log("remove friend");
+    }
+
+    friendButton(isMyProfile) {
+        if (isMyProfile) {
+            return (
+                <ProfileHeaderButton icon={faPencilAlt}
+                                    message="Edit Profile"
+                                    onClick={this.presentEditModal} />
+            );
+        } else {
+
+            if (this.props.isPendingFriend || this.props.isFriended) {
+                let { isFriended } = this.props;
+                return (<ProfileHeaderButton icon={isFriended ? faUserCheck : faRedoAlt}
+                    message={isFriended ? "Friends" : "Pending Request"}
+                    onClick={this.removeFriendHandler} />);
+            } else {
+                return (<ProfileHeaderButton icon={faUserPlus}
+                message="Add Friend"
+                onClick={this.addFriendHandler} />);
+            }
+        }
+    }
+
     render() {
-        let { PATH, loggedInUser, user, children } = this.props;
+        let { PATH, loggedInUser, user, children, isPendingFriend } = this.props;
         const isMyProfile = loggedInUser.id === user.id;
 
         return (
@@ -79,15 +112,20 @@ class ProfileHeader extends React.Component {
                         </div>
 
                         <div className="right">
-                            {isMyProfile ?
+                            { this.friendButton(isMyProfile) }
+                            {/* {
+                            
+                            isMyProfile ?
                                 <ProfileHeaderButton icon={faPencilAlt}
                                     message="Edit Profile"
                                     onClick={this.presentEditModal} />
-                                :
-                                <ProfileHeaderButton icon={faUserPlus}
-                                    message="Add friend"
-                                    onClick={this.addFriendHandler} />
-                            }
+                                : (isPendingFriend ?
+                                    :
+                                    <ProfileHeaderButton icon={faUserPlus}
+                                        message="Add friend"
+                                        onClick={this.addFriendHandler} />
+                                )
+                            } */}
                         </div>
                     </div>
                 </div>

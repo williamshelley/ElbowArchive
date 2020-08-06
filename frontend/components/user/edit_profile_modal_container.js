@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { selectCurrentUser, selectTopModal } from "../../reducers/selectors";
-import { updateUser } from "../../actions/user_actions";
+import { updateUser, receiveUser, updateUserFromFormData, fetchUser } from "../../actions/user_actions";
 import EditProfileModal from "./edit_profile_modal";
 import { popModal, pushModal } from "../../actions/ui_actions";
 
@@ -10,9 +10,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateUser: user => dispatch(updateUser(user)),
+    fetchUser: userId => dispatch(fetchUser(userId)),
+    updateUserFromFormData: (userId, formData) => dispatch(updateUserFromFormData(userId, formData)),
     popModal: () => dispatch(popModal()),
-    pushModal: modal => dispatch(pushModal(modal))
+    pushModal: modal => dispatch(pushModal(modal)),
+    receiveUser: user => dispatch(receiveUser(user)),
 });
 
 const EditProfileModalContainer = connect(mapStateToProps, mapDispatchToProps)(EditProfileModal);

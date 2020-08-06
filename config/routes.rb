@@ -8,9 +8,9 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :show, :create, :update] do
       resources :posts, only: [:index]
     end
-    # add back in destroy for posts and frind_requests
-    resources :posts, only: [:show, :create, :update]
-    resources :friend_requests, only: [:index, :update, :create]
+    resources :posts, only: [:show, :destroy, :create, :update]
+    resources :friend_requests, only: [:index, :destroy, :update, :create]
+    resources :likes, only: [:create, :destroy, :index]
   end
 
 end

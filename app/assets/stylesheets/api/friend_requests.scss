@@ -13,7 +13,7 @@
         .item {
             .right {
                 .add {
-                    font-size: small;
+                    text-overflow: ellipsis;
                 }
             }
         }
@@ -94,7 +94,7 @@
                         box-sizing: border-box;
                         height: 36px;
                         // max-width: 124px;
-                        min-width: 100px;
+                        min-width: 124px;
                         padding: 12px;
                     }
 
@@ -130,6 +130,7 @@
 .friends {
     display: flex;
     flex-direction: column;
+    height: fit-content;
 
     .header {
         flex-direction: row;
@@ -153,7 +154,7 @@
     column-gap: 12px;
     height: fit-content;
     padding-bottom: 50%;
-    overflow-y: scroll;
+    // overflow-y: scroll;
 
     .accepted,
     .pending {

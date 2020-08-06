@@ -6,8 +6,12 @@ class Post < ApplicationRecord
     belongs_to :wall, class_name: :User
 
     has_many_attached :photos
-    # has_one_attached :photo
 
-    # has_many :comments
-    # has_many :likes
+    has_many :likes, as: :likeable
+
+    has_many :users_who_liked, dependent: :destroy,
+        through: :likes,
+        source: :user
+
+    
 end

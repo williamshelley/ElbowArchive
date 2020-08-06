@@ -1,5 +1,4 @@
 import React from "react";
-import PostItem from "../post/post_item";
 import PostIndex from "../post/post_index";
 import NewPostFormContainer from "../post/new_post_form_container";
 import NotFound404 from "../navigation/not_found_404";

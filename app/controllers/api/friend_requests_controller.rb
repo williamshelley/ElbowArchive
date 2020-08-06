@@ -1,7 +1,11 @@
 class Api::FriendRequestsController < ApplicationController
     def index
         user_id = params[:user_id] ? params[:user_id] : current_user.id
-        @friend_requests = FriendRequest.find_by_user_id(user_id)
+        if params[:all] 
+            @friend_requests = FriendRequest.all
+        else
+            @friend_requests = FriendRequest.find_by_user_id(user_id)
+        end
         render :index
     end
     
@@ -29,6 +33,17 @@ class Api::FriendRequestsController < ApplicationController
         else
             # failure
             render json: @friend_request.errors.full_messages, status: 404
+        end
+    end
+
+    def destroy
+        # deleting friends or requests
+        @friend_request = current_user.friend_requests.find_by(id: params[:id])
+        if @friend_request
+            @friend_request.destroy
+            render :show
+        else
+            render json: ["Something went wrong trying to delete friend!"], status: 404
         end
     end
 

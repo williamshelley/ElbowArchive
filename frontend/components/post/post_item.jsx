@@ -5,7 +5,6 @@ import { faCaretRight, faEllipsisH, faThumbsUp, faComment } from "@fortawesome/f
 import Moment from "moment";
 import { Link } from "react-router-dom";
 import { ProfileImage } from "../../util/resources_util";
-import { safePush } from "../../util/navigation_util";
 import ProfileHeaderButton from "../user/profile_header_button";
 
 class PostItem extends React.Component {
@@ -14,24 +13,58 @@ class PostItem extends React.Component {
 
         this.likeHandler = this.likeHandler.bind(this);
         this.commentHandler = this.likeHandler.bind(this);
-        this.likeHandler = this.likeHandler.bind(this);
+        this.onLike = this.onLike.bind(this);
+        this.onUnlike = this.onUnlike.bind(this);
     }
 
-    likeHandler(e) {
+    onLike(e) {
         e.preventDefault();
-        console.log("Like!");
+        this.props.likePost(this.props.post.id);
     }
+
+    onUnlike(e) {
+        e.preventDefault();
+        this.props.unlikePost(this.props.likeId);
+    }
+
+    likeHandler(liked) {
+        if (liked) {
+            return this.onUnlike;
+        }
+        return this.onLike;
+    }
+
+    componentDidMount() {
+        // if (!this.props.post.photos) {
+            // console.log("something is happening")
+            // this.props.fetchPost(this.props.post.id);
+        // }
+    }
+
+
 
     render() {
-        let { post, path } = this.props;
+        let { post, isLikedByCurrentUser } = this.props;
         let { author, wall, photos } = post;
-        let moment = new Moment(post.date_posted);
         let numCharsBeforeResize = 60;
-        let style = {}
+        let style = {};
+        let TO = (destinationId) => `/profile/${destinationId}`;
+        let numLikes = 0;
+
+        let moment = new Moment(post.date_posted);
         if (post.body.length > numCharsBeforeResize) {
             style = { fontSize: "15px" };
         }
-        let TO = (destinationId) => `/profile/${destinationId}`;
+        if (post.likes) {
+            numLikes = Object.keys(post.likes).length;
+        }
+
+        let likeButtonStyle = isLikedByCurrentUser ? ({
+            color: "#1877f2"
+        }) : ({
+            color: "#B1B3B8"
+        });
+
         return (
             <div className="section">
                 <div className="post">
@@ -68,9 +101,12 @@ class PostItem extends React.Component {
                         </ul>)
                      : null
                     }
+                    { (post.likes && numLikes > 0) ? `${numLikes} others` : null }
                     <div className="buttons">
+                        
                         <ProfileHeaderButton icon={faThumbsUp} message="Like"
-                            onClick={this.likeHandler}/>
+                            style={likeButtonStyle} 
+                            onClick={this.likeHandler(isLikedByCurrentUser)}/>
 
                         <ProfileHeaderButton icon={faComment} message="Comment"
                             onClick={this.commentHandler}/>

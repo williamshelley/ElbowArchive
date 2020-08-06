@@ -1,5 +1,5 @@
 import { merge } from "lodash";
-import { RECEIVE_FRIEND_REQUESTS, RECEIVE_FRIEND_REQUEST, ACCEPT_FRIEND_REQUEST } from "../actions/friend_request_actions";
+import { RECEIVE_FRIEND_REQUESTS, RECEIVE_FRIEND_REQUEST, ACCEPT_FRIEND_REQUEST, REMOVE_FRIEND_REQUEST } from "../actions/friend_request_actions";
 
 const pendingFriendRequestsReducer = (state = {}, action) => {
     Object.freeze(state);
@@ -21,6 +21,11 @@ const pendingFriendRequestsReducer = (state = {}, action) => {
         case RECEIVE_FRIEND_REQUEST:
             if (action.friendRequest.accepted) { return state; }
             return merge({}, state, { [action.friendRequest.id]: action.friendRequest });
+
+        case REMOVE_FRIEND_REQUEST:
+            newState = merge({}, state);
+            delete newState[action.userId];
+            return newState;
 
         default:
             return state;

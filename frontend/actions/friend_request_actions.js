@@ -8,9 +8,15 @@ export const RECEIVE_FRIEND_REQUESTS = "RECEIVE_FRIEND_REQUESTS";
 export const RECEIVE_FRIEND_REQUEST_ERRORS = "RECEIVE_FRIEND_REQUEST_ERRORS";
 export const REMOVE_FRIEND_REQUEST = "REMOVE_FRIEND_REQUEST";
 export const RECEIVE_MERGE_FRIEND_REQUESTS = "RECEIVE_MERGE_FRIEND_REQUESTS";
+export const SEND_A_FRIEND_REQUEST = "SEND_A_FRIEND_REQUEST";
 
 export const receiveFriendRequest = friendRequest => ({
     type: RECEIVE_FRIEND_REQUEST,
+    friendRequest
+});
+
+export const sendAFriendRequest = friendRequest => ({
+    type: SEND_A_FRIEND_REQUEST,
     friendRequest
 });
 
@@ -34,9 +40,9 @@ export const receiveFriend = user => ({
     user
 });
 
-export const removeFriendRequest = userId => ({
+export const removeFriendRequest = friendRequest => ({
     type: REMOVE_FRIEND_REQUEST,
-    userId
+    friendRequest
 });
 
 export const acceptFriendRequest = friendRequest => ({
@@ -61,7 +67,7 @@ export const fetchMergeFriendRequests = userId => dispatch => (
 export const sendFriendRequest = friendRequest => dispatch => (
     FRAPIUtil.sendFriendRequest(friendRequest)
         .then(
-            payload => dispatch(receiveFriendRequest(payload)),
+            payload => dispatch(sendAFriendRequest(payload)),
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
 );
 
@@ -75,7 +81,7 @@ export const updateFriendRequest = friendRequest => dispatch => (
 export const fetchFriend = friendId => dispatch => (
     FRAPIUtil.fetchFriend(friendId)
         .then(
-            payload => dispatch(receiveFriend(payload)),
+            payload => dispatch(receiveMergeFriendRequests(payload)),
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
 );
 

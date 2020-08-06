@@ -42,7 +42,7 @@ export default class NavBar extends React.Component {
                 </div>
 
                 <div className="middle">
-                    <NavBarIcon icon={faHome}/>
+                    <NavBarIcon icon={faHome} onClick={this.navigate("/")}/>
                     <NavBarIcon icon={faTv} />
                     <NavBarIcon icon={faShoppingBag} />
                     <NavBarIcon icon={faUsers} />

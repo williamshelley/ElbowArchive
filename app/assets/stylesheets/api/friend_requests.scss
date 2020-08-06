@@ -154,12 +154,9 @@
     column-gap: 12px;
     height: fit-content;
     padding-bottom: 50%;
-    // overflow-y: scroll;
 
     .accepted,
     .pending {
-        // margin: 12px 0;
-        // padding-top: 12px;
         padding-bottom: 12px;
 
         width: inherit;
@@ -168,19 +165,20 @@
         justify-content: inherit;
         align-items: inherit;
         column-gap: inherit;
-        // overflow-y: scroll;
-        // height: inherit;
         
         .item {
             margin-top: 12px;
             align-items: center;
+            min-width: fit-content;
             width: 49%;
-            height: 116px;
+            min-height: 116px;
+            height: fit-content;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
             background-color: $nav-bar-bg;
             padding: 18px;
             border-radius: 8px;
             gap: 8px;
+            box-sizing: border-box;
 
             .info {
                 margin: 0 12px;
@@ -188,6 +186,7 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: flex-start;
+                word-wrap: break-word;
                 h3 {
                     margin: 0;
                 }

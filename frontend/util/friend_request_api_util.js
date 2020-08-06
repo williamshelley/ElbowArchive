@@ -20,7 +20,7 @@ export const updateFriendRequest = friendRequest => $.ajax({
 export const fetchFriend = userId => $.ajax({
     url: "/api/friend_requests/",
     method: "GET",
-    data: { user_id: userId }
+    data: { friend_id: userId }
 });
 
 export const deleteFriendRequest = friendRequestId => $.ajax({

@@ -5,6 +5,12 @@ const acceptedFriendRequestsReducer = (state = {}, action) => {
     Object.freeze(state);
     let newState = {};
     switch(action.type) {
+
+        case REMOVE_FRIEND_REQUEST:
+            newState = merge({}, state);
+            delete newState[action.friendRequest.id];
+            return newState;
+
         case ACCEPT_FRIEND_REQUEST:
             return merge({}, state, { [action.friendRequest.id]: action.friendRequest});
 
@@ -20,9 +26,6 @@ const acceptedFriendRequestsReducer = (state = {}, action) => {
             if (action.friendRequests.accepted) {
                 Object.values(action.friendRequests.accepted).map(request => {
                     newState[request.id] = request;
-                    if (!action.friendRequests.pending[request.id]) {
-                        // console.log(state);
-                    }
                 });
             }
             return merge({}, state, newState);
@@ -32,11 +35,6 @@ const acceptedFriendRequestsReducer = (state = {}, action) => {
                 return merge({}, state, { [action.friendRequest.id]: action.friendRequest });
             }
             return state;
-
-        case REMOVE_FRIEND_REQUEST:
-                newState = merge({}, state);
-                delete newState[action.userId];
-                return newState;
                 
         default:
             return state;

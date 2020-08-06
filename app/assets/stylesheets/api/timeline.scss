@@ -61,89 +61,85 @@
                 }
             }
         }
+    }
+}
 
-        .post {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
-            background-color: $nav-bar-bg;
-            padding: 0px;
-            border-radius: 8px;
+.posts-list {
+    // margin-top: 16px;
+    gap: 16px;
+    width: fit-content;
+}
 
-            .header {
-                justify-content: flex-start;
+.post {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
+    background-color: $nav-bar-bg;
+    padding: 0px;
+    border-radius: 8px;
+    box-sizing: border-box;
+
+
+    .buttons {
+        border-top: 1px solid $border-color;
+        flex-direction: row;
+        justify-content: space-evenly;
+
+    }
+
+    .header {
+        justify-content: flex-start;
+        flex-direction: column;
+        .h-stack {
+            gap: 8px;
+            display: flex;
+            flex-direction: row;
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            .v-stack {
                 flex-direction: column;
-                .h-stack {
-                    gap: 8px;
-                    display: flex;
+                .post-info {
                     flex-direction: row;
-                    img {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        object-fit: cover;
+                    gap: 8px;
+                    .link {
+                        color: rgb(56, 88, 152);
+                        text-decoration: none;
                     }
-                    .v-stack {
-                        flex-direction: column;
-                        .post-info {
-                            flex-direction: row;
-                            gap: 8px;
-                            .link {
-                                color: rgb(56, 88, 152);
-                                text-decoration: none;
-                            }
-                            .link:hover {
-                                text-decoration: underline;
-                            }
-                        }
-                        .date-posted {
-                            align-items: flex-start;
-                            width: 100%;
-                            font-size: 13px;
-                            color: rgb(176, 179, 184);
-                        }
-                    }
-                    .icon {
-                        align-items: center;
-                        justify-content: center;
-                        width: 36px;
-                        height: 36px;
-                        border-radius: 50%;
-                        padding: 8px;
-                    }
-
-                    .icon:hover {
-                        cursor: pointer;
-                        background-color: $icon-hover-bg;
+                    .link:hover {
+                        text-decoration: underline;
                     }
                 }
+                .date-posted {
+                    align-items: flex-start;
+                    width: 100%;
+                    font-size: 13px;
+                    color: rgb(176, 179, 184);
+                }
+            }
+            .icon {
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                padding: 8px;
             }
 
-            p {
-                width: 100%;
-                font-size: 24px;
-                color: rgb(228, 230, 235);
-                overflow-wrap: break-word;
-                max-height: 250px;
-                overflow-y: scroll;
-                font-weight: 400;
+            .icon:hover {
+                cursor: pointer;
+                background-color: $icon-hover-bg;
             }
         }
     }
 
-    .posts-list {
-        // margin-top: 16px;
-        gap: 16px;
-        width: fit-content;
-
-
-        .section {
-            .post {
-                .buttons {
-                    border-top: 1px solid $border-color;
-                    flex-direction: row;
-                    justify-content: space-evenly;
-
-                }
-            }
-        }
+    p {
+        width: 100%;
+        font-size: 24px;
+        color: rgb(228, 230, 235);
+        overflow-wrap: break-word;
+        max-height: 250px;
+        font-weight: 400;
     }
 }

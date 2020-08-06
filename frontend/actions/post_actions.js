@@ -70,3 +70,11 @@ export const fetchPost = postId => dispatch => (
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
         )
 );
+
+export const fetchNewsfeedPosts = userId => (
+    PostAPIUtil.fetchNewsfeedPosts(userId)
+    .then(
+        payload => dispatch(receivePosts(payload)),
+        errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
+    )
+)

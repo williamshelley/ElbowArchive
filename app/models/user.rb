@@ -13,7 +13,7 @@ class User < ApplicationRecord
     has_one_attached :profile_photo
     has_one_attached :cover_photo
 
-    has_many :friend_requests
+    # has_many :friend_requests
 
     has_many :sent_requests,
         foreign_key: :sender_id,

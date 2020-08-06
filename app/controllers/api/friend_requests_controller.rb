@@ -3,6 +3,14 @@ class Api::FriendRequestsController < ApplicationController
         user_id = params[:user_id] ? params[:user_id] : current_user.id
         if params[:all] 
             @friend_requests = FriendRequest.all
+        elsif params[:friend_id]
+            friend_id = params[:friend_id]
+            @friend_requests = FriendRequest
+            .select("*")
+            .where("sender_id = ? OR recipient_id = ?", user_id, user_id)
+            .where("sender_id = ? OR recipient_id = ?", friend_id, friend_id)
+
+            # debugger
         else
             @friend_requests = FriendRequest.find_by_user_id(user_id)
         end
@@ -38,10 +46,16 @@ class Api::FriendRequestsController < ApplicationController
 
     def destroy
         # deleting friends or requests
-        @friend_request = current_user.friend_requests.find_by(id: params[:id])
+        @friend_request = FriendRequest.find_by(id: params[:id])
         if @friend_request
-            @friend_request.destroy
-            render :show
+            is_sender = @friend_request.sender_id == current_user.id
+            is_recipient = @friend_request.recipient_id == current_user.id
+            if (is_sender or is_recipient)
+                @friend_request.destroy
+                render :show
+            else
+                render json: @friend_request.errors.full_messages, status: 404
+            end
         else
             render json: ["Something went wrong trying to delete friend!"], status: 404
         end

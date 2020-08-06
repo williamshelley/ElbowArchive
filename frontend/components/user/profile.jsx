@@ -8,6 +8,7 @@ import { PROFILE_PATH } from "../../util/path_util";
 import { render } from "react-dom";
 import ProfileHeaderContainer from "./profile_header_container";
 import FriendsIndexContainer from "./friends_index_container";
+import { safePush } from "../../util/navigation_util";
 
 
 class Profile extends React.Component {
@@ -33,6 +34,12 @@ class Profile extends React.Component {
         let newUser = newProps.user;
         let bothProfilePhotosExist = oldUser && newUser;
         let profilePhotosAreSame = bothProfilePhotosExist ? (oldUser.profile_photo == newUser.profile_photo) : bothProfilePhotosExist;
+        var numbers = /^[0-9]+$/;
+
+        if ((newId && !newId.match(numbers)) 
+            || (oldId && !oldId.match(numbers))) {
+            safePush(this.props.history, "/invalid-user");
+        }
 
         if (newId !== oldId || !profilePhotosAreSame) {
             this.props.fetchUser(newId).then(() => {

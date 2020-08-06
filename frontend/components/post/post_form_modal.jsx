@@ -44,21 +44,17 @@ class PostFormModal extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        let now = new Moment();
-        let year = now.year();
-        let month = now.month();
-        let day = now.toDate().getDate();
 
         const post = new FormData();
         post.append("post[body]", this.state.body);
         post.append("post[wall_id]", this.props.match.params.userId);
-        post.append("post[date_posted]", [year, month, day].join("-"));
+        let date = new Date();
+        post.append("post[date_posted]", date.toString());
 
         let { photos } = this.state;
         for (let i = 0; i < photos.length; i++) {
             post.append("post[photos][]", photos[i]);
         }
-
 
         this.props.submitPost(post).then(() => {
             this.props.fetchPosts(this.props.match.params.userId);

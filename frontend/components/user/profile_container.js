@@ -3,7 +3,7 @@ import Profile from "./profile";
 import { selectCurrentUser, selectTopModal, selectUser, selectModals } from "../../reducers/selectors";
 import { pushModal } from "../../actions/ui_actions";
 import { fetchUser } from "../../actions/user_actions";
-import { fetchFriendRequests } from "../../actions/friend_request_actions";
+import { fetchFriendRequests, fetchFriend } from "../../actions/friend_request_actions";
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -16,7 +16,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({ 
     pushModal: modal => dispatch(pushModal(modal)),
     fetchUser: userId => dispatch(fetchUser(userId)),
-    fetchFriendRequests: () => dispatch(fetchFriendRequests())
+    fetchFriendRequests: () => dispatch(fetchFriendRequests()),
+    fetchFriend: userId => dispatch(fetchFriend(userId))
 });
 
 const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(Profile);

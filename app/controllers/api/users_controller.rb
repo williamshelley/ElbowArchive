@@ -33,11 +33,20 @@ class Api::UsersController < ApplicationController
     end
 
     def show
-        @user = User
-        .includes(:profile_photo_attachment, :cover_photo_attachment)
-        .find_by(id: params[:id])
+        if params[:id].scan(/\D/).empty?
+            @user = User
+            .includes(:profile_photo_attachment, :cover_photo_attachment)
+            .find_by(id: params[:id])
+        else
+            @user = nil
+        end
 
-        render :show
+        if @user
+            render :show
+        else
+            render json: ["User could not be found."], status: 404
+        end
+
     end
 
     def create

@@ -60,7 +60,7 @@ export const selectFriendRequest = (currentUserId, friendId, state) => {
     return undefined;
 };
 
-export const selectAccpetedFriendRequests = state => {
+export const selectAcceptedFriendRequests = state => {
     return state.entities.friendRequests.accepted;
 };
 
@@ -125,7 +125,7 @@ const recipientIdsOfSender = (senderId, requests) => {
 }
 
 export const selectAcceptedFriendIds = (userId, state) => {
-    let requests = selectAccpetedFriendRequests(state);
+    let requests = selectAcceptedFriendRequests(state);
     return friendIdsFromRequests(userId, requests);
     // return Object.values(requests).map(req => (
     //     parseInt(userId) !== req.sender_id ? req.sender_id : req.recipient_id
@@ -142,12 +142,12 @@ export const selectPendingFriendIds = (userId, state) => {
 }
 
 export const selectAcceptedIdsWithSender = (senderId, state) => {
-    let requests = selectAccpetedFriendRequests(state);
+    let requests = selectAcceptedFriendRequests(state);
     return recipientIdsOfSender(senderId, requests);
 }
 
 export const selectAcceptedIdsWithRecipient = (recipientId, state) => {
-    let requests = selectAccpetedFriendRequests(state);
+    let requests = selectAcceptedFriendRequests(state);
     return senderIdsOfRecipient(recipientId, requests);
 }
 
@@ -215,4 +215,27 @@ export const selectPostLikes = (postId, state) => {
 
 export const selectAllFriends = (state) => {
     return state.entities.friends;
+}
+
+const selectSingleRequest = (requests, idA, idB) => {
+    let foundRequest = undefined;
+    Object.values(requests).forEach(req => {
+        if ((req.sender_id === idA) || (req.recipient_id === idA)) {
+            if ((req.sender_id === idB) || (req.recipient_id === idB)) {
+                foundRequest = req;
+                return foundRequest;
+            }
+        }
+    });
+    return foundRequest;
+}
+
+export const selectAcceptedFriendRequest = (idA, idB, state) => {
+    let requests = selectAcceptedFriendRequests(state);
+    return selectSingleRequest(requests, idA, idB);
+}
+
+export const selectPendingFriendRequest = (idA, idB, state) => {
+    let requests = selectPendingFriendRequests(state);
+    return selectSingleRequest(requests, idA, idB);
 }

@@ -9,6 +9,7 @@ const msp = state => {
     let currentUser = selectCurrentUser(state);
     let pendingIds = selectPendingIdsWithRecipient(currentUser.id, state);
     let pendingFriends = Object.values(selectUsersFromIds(pendingIds, state));
+    // debugger;
 
     // let pendingFriends = [];
 
@@ -22,8 +23,8 @@ const msp = state => {
     //     });
     // }
     
-    let nonFriends = Object.values(selectNonFriends(state))
-    // console.log(nonFriends.length)
+    let nonFriends = Object.values(selectNonFriends(state));
+    // console.log(nonFriends)
 
     // console.log(pendingIds)
     return {

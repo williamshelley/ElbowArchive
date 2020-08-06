@@ -16,8 +16,8 @@ class FriendRequestIndex extends React.Component {
     }
 
     componentDidMount() {
-        console.log("mount");
         // this.props.fetchFriends()
+        // console.log("mounted");
         this.props.fetchUsers()
         .then(() => {
         this.props.fetchFriendRequests(this.props.currentUser.id).then(() => {
@@ -28,6 +28,7 @@ class FriendRequestIndex extends React.Component {
 
     UNSAFE_componentWillReceiveProps(newProps) {
         // console.log(newProps.currentUser)
+        // console.log("receive props")
     }
 
     sendRequest(recipient) {
@@ -56,7 +57,7 @@ class FriendRequestIndex extends React.Component {
                     <h2>Friends</h2>
                     <div className="pending-requests">
                         {pendingFriends.length > 0 ? (pendingFriends.map((user, idx) => {
-                            return (
+                            return user ? (
                                 <FriendRequestIndexItem
                                     acceptMessage="Accept"
                                     onClick={() => this.setState({ 
@@ -64,7 +65,7 @@ class FriendRequestIndex extends React.Component {
                                     addHandler={this.acceptRequest}
                                     removeHandler={this.removeHandler}
                                     key={idx} user={user} />
-                            );
+                            ) : null;
                         }))
                             : (<p>No new requests</p>)
                         }
@@ -72,14 +73,14 @@ class FriendRequestIndex extends React.Component {
 
                     <h3>People you may know</h3>
                     {nonFriends.map((user, idx) => {
-                        return (
+                        return user ? (
                             <FriendRequestIndexItem
                                 onClick={() => this.setState({ 
                                     mountedUser: user })}
                                 addHandler={this.sendRequest}
                                 removeHandler={this.removeHandler}
                                 key={idx} user={user} />
-                        );
+                        ) : null;
                     })}
                 </div>
                 {

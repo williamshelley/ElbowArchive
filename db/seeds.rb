@@ -19,6 +19,9 @@ Post.reset_pk_sequence
 FriendRequest.destroy_all
 FriendRequest.reset_pk_sequence
 
+Like.destroy_all
+Like.reset_pk_sequence
+
 # file = File.open("app/assets/images/logo.png")
 
 hermione = User.create!(

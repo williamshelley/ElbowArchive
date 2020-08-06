@@ -17,7 +17,7 @@ class ProfileHeader extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchFriends(this.props.user.id);
+        // this.props.fetchFriends(this.props.user.id);
     }
 
     presentEditModal(e) {

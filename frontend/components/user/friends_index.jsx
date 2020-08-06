@@ -8,18 +8,31 @@ class FriendsIndex extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchFriendRequests(this.props.pageOwnerId).then(() => {
-            // debugger;
+        // this.props.fetchFriendRequests(this.props.pageOwnerId).then(() => {
+        let { currentUser, pageOwnerId, user, match,
+            fetchFriendRequests, fetchMergeFriendRequests } = this.props;
+        let defUser = user ? user : { id: null }
+        let userId = match ? match.params.userId : undefined;
+        userId = userId ? parseInt(userId) : undefined;
+        let pageOwnerIdInt = pageOwnerId;
+        let shouldNotMerge = userId || (currentUser.id === pageOwnerIdInt);
+        const action = shouldNotMerge ? fetchFriendRequests : fetchMergeFriendRequests;
+
+        action(this.props.pageOwnerId).then(() =>{   
             if (this.props.match.params.userId) {
-                // console.log(props.userIds);
-                // console.log(this.props.pageOwnerId);
-                if (this.props.user) {
-                    // this.props.fetchFriends(this.props.userIds, this.props.pageOwnerId);
-                } else {
-                }
                 this.props.fetchUsers(this.props.userIds, this.props.pageOwnerId);
             }
         });
+    }
+
+    UNSAFE_componentWillReceiveProps(newProps) {
+        // if ((newProps.pendingFriends !== this.props.pendingFriends) || 
+        // newProps.acceptedFriends !== this.props.acceptedFriends) {
+            // console.log(newProps);
+            // this.props.fetchMergeFriendRequests(this.props.pageOwnerId);
+            // debugger;
+            // this.props.receiveUsers(this.props.acceptedFriends);
+        // }
     }
 
     render() {
@@ -32,7 +45,7 @@ class FriendsIndex extends React.Component {
                     </div>
 
                     <div className="right">
-                        { currentUser.id === parseInt(pageOwnerId) ?<ProfileNavItemContainer label="Friend Requests" 
+                        { currentUser.id === pageOwnerId ?<ProfileNavItemContainer label="Friend Requests" 
                             history={history}
                             to={"/friend_requests"}/>
                         : null

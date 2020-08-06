@@ -7,6 +7,7 @@ export const RECEIVE_FRIEND = "RECEIVE_FRIEND";
 export const RECEIVE_FRIEND_REQUESTS = "RECEIVE_FRIEND_REQUESTS";
 export const RECEIVE_FRIEND_REQUEST_ERRORS = "RECEIVE_FRIEND_REQUEST_ERRORS";
 export const REMOVE_FRIEND_REQUEST = "REMOVE_FRIEND_REQUEST";
+export const RECEIVE_MERGE_FRIEND_REQUESTS = "RECEIVE_MERGE_FRIEND_REQUESTS";
 
 export const receiveFriendRequest = friendRequest => ({
     type: RECEIVE_FRIEND_REQUEST,
@@ -15,6 +16,11 @@ export const receiveFriendRequest = friendRequest => ({
 
 export const receiveFriendRequests = friendRequests => ({
     type: RECEIVE_FRIEND_REQUESTS,
+    friendRequests
+});
+
+export const receiveMergeFriendRequests = friendRequests => ({
+    type: RECEIVE_MERGE_FRIEND_REQUESTS,
     friendRequests
 });
 
@@ -43,6 +49,13 @@ export const fetchFriendRequests = userId => dispatch => (
         .then(
             payload => dispatch(receiveFriendRequests(payload)),
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
+);
+
+export const fetchMergeFriendRequests = userId => dispatch => (
+    FRAPIUtil.fetchFriendRequests(userId)
+    .then(
+        payload => dispatch(receiveMergeFriendRequests(payload)),
+        errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
 );
 
 export const sendFriendRequest = friendRequest => dispatch => (

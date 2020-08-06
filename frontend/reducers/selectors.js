@@ -82,9 +82,22 @@ const friendIdsFromRequests = (userId, requests) => {
     // }
     // return friend_ids;
 
-    return Object.values(requests).map(req => (
-        parseInt(userId) !== req.sender_id ? req.sender_id : req.recipient_id
-    ));
+    let ids = [];
+    Object.values(requests).forEach(req => {
+        if (req.sender_id === userId || req.recipient_id === userId) {
+            if (req.sender_id === userId) { ids.push(req.recipient_id); }
+            else { ids.push(req.sender_id); }
+        }
+    });
+
+    // console.log("requests:", requests);
+    // console.log("ids: ", ids);
+    // console.log("userId: ", userId);
+    // let ids = Object.values(requests).map(req => (
+    //     parseInt(userId) !== req.sender_id ? req.sender_id : req.recipient_id
+    // ));
+    // debugger;
+    return ids;
 }
 
 const senderIdsOfRecipient = (recipientId, requests) => {

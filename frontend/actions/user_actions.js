@@ -4,6 +4,8 @@ import * as UserAPIUtil from "../util/user_api_util";
 export const RECEIVE_USER = "RECEIVE_USER";
 export const RECEIVE_USERS = "RECEIVE_USERS";
 export const RECEIVE_FRIENDS = "RECEIVE_FRIENDS";
+export const RECEIVE_SEARCHED_USERS = "RECEIVE_SEARCHED_USERS";
+export const CLEAR_SEARCHED_USERS = "CLEAR_SEARCHED_USERS";
 
 export const receiveUser = user => ({
     type: RECEIVE_USER,
@@ -18,6 +20,15 @@ export const receiveFriends = users => ({
 export const receiveUsers = users => ({
     type: RECEIVE_USERS,
     users
+});
+
+export const receiveSearchedUsers = users => ({
+    type: RECEIVE_SEARCHED_USERS,
+    users
+})
+
+export const clearSearchedUsers = () => ({
+    type: CLEAR_SEARCHED_USERS
 });
 
 export const updateUser = user => dispatch => (
@@ -41,6 +52,14 @@ export const fetchUser = userId => dispatch => (
             payload => dispatch(receiveUser(payload)),
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
 );
+
+export const searchUsers = filters => dispatch => (
+    UserAPIUtil.fetchUsers(filters)
+        .then(
+            payload => dispatch(receiveSearchedUsers(payload)),
+            errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
+);
+
 
 export const fetchUsers = filters => dispatch => (
     UserAPIUtil.fetchUsers(filters)

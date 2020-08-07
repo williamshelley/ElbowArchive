@@ -18,12 +18,12 @@ class Api::UsersController < ApplicationController
                 .where("id IN (?)", filter_params[:user_ids]))
                 
             elsif filter_params[:name]
-                start_of_name = filter_params[:name] ? filter_params[:name] : ""
-                @users += (User
+                start_of_name = filter_params[:name] ? "%#{filter_params[:name]}%" : ""
+                @users = (User
                 .with_attached_profile_photo
                 .with_attached_cover_photo
                 .select("*")
-                .where("CONCAT(first_name, ' ', last_name) LIKE ?%", start_of_name))
+                .where("UPPER(CONCAT(first_name, ' ', last_name)) LIKE UPPER(?)", start_of_name))
                 
             elsif filter_params[:all_users]
                 @users = (User

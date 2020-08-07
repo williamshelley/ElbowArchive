@@ -1,24 +1,9 @@
 # ElbowArchive
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a clone of Facebook. It implements posting, commenting, liking, friending, searching for users, profile photo uploading, and posting photos.
 
-Things you may want to cover:
+[Link to live site](https://elbow-archive.herokuapp.com/#/)
 
-* Ruby version
+ElbowArchive uses the Ruby on Rails framework for the backend, and it uses React and Redux for the frontend.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Implementing the friending system was a challenge. In this implementation, the slice of state 'friendRequests' holds 'accepted' and 'pending' requests. Based on the requests' 'sender_ids' and 'recipient_ids,' requests were made to the backend so that the 'users' slice of state was updated with the correct users.

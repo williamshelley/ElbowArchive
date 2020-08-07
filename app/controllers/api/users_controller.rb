@@ -5,26 +5,30 @@ class Api::UsersController < ApplicationController
         if filter_params
             if filter_params[:page_owner_id]
                 @users << (User
-                .includes(:profile_photo_attachment, :cover_photo_attachment)
+                .with_attached_profile_photo
+                .with_attached_cover_photo
                 .find_by_id(filter_params[:page_owner_id]))
             end
 
             if filter_params[:user_ids]
                 @users += (User
-                .includes(:profile_photo_attachment, :cover_photo_attachment)
+                .with_attached_profile_photo
+                .with_attached_cover_photo
                 .select("*")
                 .where("id IN (?)", filter_params[:user_ids]))
                 
             elsif filter_params[:name]
                 start_of_name = filter_params[:name] ? filter_params[:name] : ""
                 @users += (User
-                .includes(:profile_photo_attachment, :cover_photo_attachment)
+                .with_attached_profile_photo
+                .with_attached_cover_photo
                 .select("*")
                 .where("CONCAT(first_name, ' ', last_name) LIKE ?%", start_of_name))
                 
             elsif filter_params[:all_users]
                 @users = (User
-                .includes(:profile_photo_attachment, :cover_photo_attachment)
+                .with_attached_profile_photo
+                .with_attached_cover_photo
                 .all)
             end
         end
@@ -35,7 +39,8 @@ class Api::UsersController < ApplicationController
     def show
         if params[:id].scan(/\D/).empty?
             @user = User
-            .includes(:profile_photo_attachment, :cover_photo_attachment)
+            .with_attached_profile_photo
+            .with_attached_cover_photo
             .find_by(id: params[:id])
         else
             @user = nil

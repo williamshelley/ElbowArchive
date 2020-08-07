@@ -8,6 +8,17 @@ json.likes do
     end
 end
 
+json.comments do
+    @post.comments.each do |comment|
+        json.set! comment.id do
+            json.extract! comment, *comment.keys
+            json.author do 
+                json.extract! comment.user, :id, :first_name, :last_name
+            end
+        end
+    end
+end
+
 json.author do
     json.extract! @post.author, *@post.author.keys
 end

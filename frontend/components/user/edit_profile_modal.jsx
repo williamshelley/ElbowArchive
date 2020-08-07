@@ -33,7 +33,7 @@ class EditProfileModal extends React.Component {
     }
 
     render() {
-        let { user, topModal, popModal, pushModal, updateUserFromFormData } = this.props;
+        let { user, receiveUser, popModal, pushModal, updateUserFromFormData } = this.props;
         
         return (
             <div className="edit-modal">
@@ -46,8 +46,9 @@ class EditProfileModal extends React.Component {
                             <ProfileImage user={user} />
                             <button onClick={() => pushModal(
                             <UpdatePhotoModal user={user}
+                            receiveUser={receiveUser}
                             updateUserFromFormData={updateUserFromFormData}
-                                popModal={popModal}/>)}>
+                            popModal={popModal}/>)}>
                             Edit
                             </button>
                         </div>

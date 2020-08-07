@@ -13,6 +13,7 @@ class NewsFeed extends React.Component {
     render() {
         let { posts } = this.props;
 
+        console.log(posts);
         return (
             <div className="newsfeed">
                 <PostIndex posts={posts}/>

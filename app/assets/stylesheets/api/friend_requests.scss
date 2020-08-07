@@ -105,6 +105,7 @@
                     .add {
                         background-color: $blue;
                         min-width: 124px;
+                        min-height: 36px;
                     }
                 }
             }
@@ -197,7 +198,7 @@
             }
 
             img {
-                object-fit: contain;
+                object-fit: cover;
                 width: 80px;
                 height: 80px;
                 border-radius: 8px;

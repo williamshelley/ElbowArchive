@@ -34,7 +34,9 @@ class User < ApplicationRecord
     attr_reader :password
 
     def friends
-        self.friends_as_recipient + self.friends_as_sender
+        User.select("*")
+        .joins("JOIN friend_requests ON friend_requests.sender_id = users.id")
+        .where("friend_requests.accepted AND friend_requests.sender_id = ? OR friend_requests.recipient_id = ?", self.id, self.id)
     end
 
     def email_or_phone_number

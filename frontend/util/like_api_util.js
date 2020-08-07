@@ -1,9 +1,9 @@
 // list: [{ likeableType, likeableId }]
-export const fetchLikes = filters => $.ajax({
-    url: "/api/likes",
-    method: "GET",
-    data: { filters }
-});
+// export const fetchLikes = filters => $.ajax({
+//     url: "/api/likes",
+//     method: "GET",
+//     data: { filters }
+// });
 
 export const like = likeable => $.ajax({
     url: "/api/likes",

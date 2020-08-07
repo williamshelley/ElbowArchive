@@ -6,17 +6,10 @@ class Api::PostsController < ApplicationController
         if user_id.scan(/\D/).empty?
             current_id = current_user.id
             if params[:newsfeed]
-                friends = User
-                .select("*")
-                .joins(:sent_requests, :received_requests)
-                .where("friend_requests.sender_id = ? OR friend_requests.recipient_id = ?", current_id, current_id)
-                .where("friend_requests.accepted = TRUE")
-                
-                # friend_ids = current_user.friends.map { |friend| friend.id }
-                friend_ids = friends.map { |friend| friend.id }
+                friend_ids = current_user.friends.map { |friend| friend.id }
                 friend_ids << current_user.id
                 @posts = Post
-                    .includes(:author, :wall, :likes)
+                    .includes(:author, :wall, :likes, :comments, comments: :user)
                     .select("*")
                     .where("author_id IN (?) OR wall_id IN (?)", friend_ids, friend_ids)
                     .with_attached_photos
@@ -24,7 +17,7 @@ class Api::PostsController < ApplicationController
             else
 
                 @posts = Post
-                    .includes(:author, :wall, :likes)
+                    .includes(:author, :wall, :likes, :comments, comments: :user)
                     .select("*")
                     .where("posts.author_id = ? OR posts.wall_id = ?", user_id, user_id)
                     .with_attached_photos
@@ -37,7 +30,7 @@ class Api::PostsController < ApplicationController
 
     def show
         @post = Post
-            .includes(:author, :wall, :likes, :user)
+            .includes(:author, :wall, :likes, :comments, :user)
             .with_attached_photos
             .find_by(id: params[:id])
         render :show
@@ -55,7 +48,10 @@ class Api::PostsController < ApplicationController
     end
 
     def update
-        @post = Post.find_by(id: params[:id]).with_attached_photos
+        @post = Post
+            .includes(:author, :wall, :likes, :comments, :user)
+            .find_by(id: params[:id])
+            .with_attached_photos
         if @post.update(post_params)
             render :show
         else

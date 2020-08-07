@@ -4,6 +4,8 @@ import Moment from "moment";
 import { text } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhotoVideo } from "@fortawesome/free-solid-svg-icons";
+import { v4 as uuidv4 } from 'uuid';
+import { addTextResizableListener } from "../../util/jquery_util";
 
 class PostFormModal extends React.Component {
     constructor(props) {
@@ -16,26 +18,12 @@ class PostFormModal extends React.Component {
         this.handleInput = this.handleInput.bind(this);
         this.hide = this.hide.bind(this);
         this.appendPhoto = this.appendPhoto.bind(this);
+
+        this.id = uuidv4();
     }
 
     componentDidMount() {
-        $(document).ready(() => {
-            const textarea = $("textarea#resizable");
-            const handler = () => {
-                const maxCharsPerRow = 60;
-                const numChars = textarea.val().length;
-                let newNumRows = Math.ceil(numChars / maxCharsPerRow);
-                if (numChars > 20) {
-                    textarea.css("font-size", "16px");
-                } else {
-                    textarea.css("font-size", "24px");
-                }
-                textarea.attr("rows", newNumRows);
-            };
-            textarea.on("keypress", handler);
-            textarea.on("keyup", handler);
-            textarea.on("keydown", handler);
-        });
+        addTextResizableListener(this.id, 77);
     }
 
     handleInput(field) {
@@ -102,7 +90,7 @@ class PostFormModal extends React.Component {
                 <form id="new" onSubmit={this.handleSubmit}>
                     <ModalHeader title={title} onExitClick={this.hide} />
                     <textarea
-                        id="resizable"
+                        id={`resizable-${this.id}`}
                         rows={this.initialNumRows}
                         value={body}
                         placeholder="What's on your mind?"

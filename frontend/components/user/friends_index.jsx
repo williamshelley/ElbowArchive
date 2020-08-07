@@ -1,6 +1,7 @@
 import React from "react";
 import FriendIndexItem from "./friend_index_item";
 import ProfileNavItemContainer from "./profile_nav_item_container";
+import { merge } from "lodash";
 
 class FriendsIndex extends React.Component {
     constructor(props) {
@@ -8,31 +9,32 @@ class FriendsIndex extends React.Component {
     }
 
     componentDidMount() {
-        // this.props.fetchFriendRequests(this.props.pageOwnerId).then(() => {
-        let { currentUser, pageOwnerId, user, match,
+        let { currentUser, pageOwnerId, match,
             fetchFriendRequests, fetchMergeFriendRequests } = this.props;
-        let defUser = user ? user : { id: null }
+
         let userId = match ? match.params.userId : undefined;
         userId = userId ? parseInt(userId) : undefined;
         let pageOwnerIdInt = pageOwnerId;
         let shouldNotMerge = userId || (currentUser.id === pageOwnerIdInt);
         const action = shouldNotMerge ? fetchFriendRequests : fetchMergeFriendRequests;
 
-        action(this.props.pageOwnerId).then(() =>{   
-            if (this.props.match.params.userId) {
-                this.props.fetchUsers(this.props.userIds, this.props.pageOwnerId);
+
+        action(this.props.pageOwnerId).then((action) => { 
+            let { match, fetchUsers } = this.props;
+            let accepted = action.friendRequests.accepted;
+            let pending = action.friendRequests.pending;
+            let requests = merge({}, accepted, pending);
+            let userIds = Object.values(requests).map(req => {
+                if (req.sender_id === pageOwnerId) {
+                    return req.recipient_id;
+                } else if (req.recipient_id === pageOwnerId) {
+                    return req.sender_id;
+                }
+            });
+            if (match.params.userId) {
+                fetchUsers(userIds, pageOwnerId);
             }
         });
-    }
-
-    UNSAFE_componentWillReceiveProps(newProps) {
-        // if ((newProps.pendingFriends !== this.props.pendingFriends) || 
-        // newProps.acceptedFriends !== this.props.acceptedFriends) {
-            // console.log(newProps);
-            // this.props.fetchMergeFriendRequests(this.props.pageOwnerId);
-            // debugger;
-            // this.props.receiveUsers(this.props.acceptedFriends);
-        // }
     }
 
     render() {

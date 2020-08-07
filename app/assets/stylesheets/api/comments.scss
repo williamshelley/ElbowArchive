@@ -1,0 +1,71 @@
+@import "../static_pages.scss";
+
+.new-comment {
+    margin-top: 24px;
+    form {
+        height: fit-content;
+        textarea {
+            box-sizing: border-box;
+            background-color: $icon-bg;
+            border-radius: 30px;
+            padding: 20px;
+        }
+    }
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-height: 300px;
+    overflow-y: scroll;
+    height: fit-content;
+    width: 100%;
+
+
+    .comment {
+        flex-direction: row;
+        width: 100%;
+        height: fit-content;
+        margin-bottom: 8px;
+
+        box-sizing: border-box;
+        align-items: flex-start;
+        justify-content: flex-start;
+        column-gap: 4px;
+
+        img {
+            object-fit: contain;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .info {
+            width: fit-content;
+            flex-direction: column;
+            background-color: $icon-bg;
+            border-radius: 16px;
+            padding: 8px 12px;
+            max-height: fit-content;
+
+            h3 {
+                margin: 0;
+                font-size: 14px;
+            }
+            
+            p {
+                font-size: 18px;
+                padding-bottom: 0;
+                width: 100%;
+                word-break: break-all;
+                overflow-y: scroll;;
+                height: 100%;
+            }
+        }
+    }
+}
+

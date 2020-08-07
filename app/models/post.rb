@@ -7,11 +7,12 @@ class Post < ApplicationRecord
 
     has_many_attached :photos
 
-    has_many :likes, as: :likeable
+    has_many :likes, as: :likeable, dependent: :destroy
 
     has_many :users_who_liked, dependent: :destroy,
         through: :likes,
         source: :user
 
+    has_many :comments, as: :commentable, dependent: :destroy
     
 end

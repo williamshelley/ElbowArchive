@@ -12,8 +12,11 @@ div {
     p {
         border-bottom: 1px solid $border-color;
         padding-bottom: 16px;
+        width: unset;
+
     }
     ul {
+        // width: unset;
         list-style-type: none;
         padding: 0;
         display: flex;
@@ -21,14 +24,22 @@ div {
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        height: 100%;
+        // height: 100%;
 
         img {
             object-fit: contain;
-            width: 50%;
-            height: auto;
+            height: 200px;
+            width: 200px;
+            // width: 50%;
+            // height: auto;
         }
     }
+}
+
+[id*=resizable-] {
+    all: unset;
+    width: 100%;
+    overflow-wrap: break-word;
 }
 
 .post-modal-new {
@@ -103,6 +114,7 @@ div {
             font-size: 15px;
             width: 100%;
             height: 35px;
+            min-height: 35px;
         }
     }
 }

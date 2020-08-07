@@ -1,8 +1,9 @@
 import { RECEIVE_POST, RECEIVE_POSTS } from "../actions/post_actions";
 import { merge } from "lodash";
-import { RETRIEVE_USER } from "../actions/user_actions";
 import { RECEIVE_LIKE, DELETE_LIKE } from "../actions/like_actions";
 import likeableMerger from "./likeable_merger";
+import { RECEIVE_COMMENT } from "../actions/comment_actions";
+import commentableMerger from "./commentable_merger";
 
 const postsReducer = (state = {}, action) => {
     Object.freeze(state);
@@ -23,6 +24,12 @@ const postsReducer = (state = {}, action) => {
         case DELETE_LIKE:
             delete newState[action.like.likeable_id].likes[action.like.user_id]
             return newState;
+
+        case RECEIVE_COMMENT:
+            if (action.comment.commentable_type === "Post") {
+                return commentableMerger(state, action.comment);
+            }
+            return state;
             
         default:
             return state;

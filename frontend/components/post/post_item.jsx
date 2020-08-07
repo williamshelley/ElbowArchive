@@ -1,18 +1,20 @@
 
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretRight, faEllipsisH, faThumbsUp, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faCaretRight, faEllipsisH, faThumbsUp, faComment, faShareAlt, faShareSquare } from "@fortawesome/free-solid-svg-icons";
 import Moment from "moment";
 import { Link } from "react-router-dom";
 import { ProfileImage } from "../../util/resources_util";
 import ProfileHeaderButton from "../user/profile_header_button";
+import CommentContainer from "../comment/comment_container";
+import NewCommentFormContainer from "../comment/new_comment_form_container";
 
 class PostItem extends React.Component {
     constructor(props) {
         super(props);
 
         this.likeHandler = this.likeHandler.bind(this);
-        this.commentHandler = this.likeHandler.bind(this);
+        this.commentHandler = this.commentHandler.bind(this);
         this.onLike = this.onLike.bind(this);
         this.onUnlike = this.onUnlike.bind(this);
     }
@@ -34,14 +36,10 @@ class PostItem extends React.Component {
         return this.onLike;
     }
 
-    componentDidMount() {
-        // if (!this.props.post.photos) {
-            // console.log("something is happening")
-            // this.props.fetchPost(this.props.post.id);
-        // }
+    commentHandler(e) {
+        e.preventDefault();
+        console.log("Comment Handler");
     }
-
-
 
     render() {
         let { post, isLikedByCurrentUser } = this.props;
@@ -52,11 +50,13 @@ class PostItem extends React.Component {
         let numLikes = 0;
 
         let moment = new Moment(post.date_posted);
-        if (post.body.length > numCharsBeforeResize) {
-            style = { fontSize: "15px" };
-        }
-        if (post.likes) {
-            numLikes = Object.keys(post.likes).length;
+        if (post && post.body) {
+            if (post.body.length > numCharsBeforeResize) {
+                style = { fontSize: "15px" };
+            }
+            if (post.likes) {
+                numLikes = Object.keys(post.likes).length;
+            }
         }
 
         let likeButtonStyle = isLikedByCurrentUser ? ({
@@ -70,16 +70,15 @@ class PostItem extends React.Component {
                 <div className="post">
                     <div className="header">
                         <div className="h-stack">
-                            {/* <img src={author.profile_photo} /> */}
-                            <ProfileImage user={author}/>
+                            <ProfileImage user={author} />
                             <div className="v-stack">
                                 <div className="post-info">
                                     <Link className="link" to={TO(author.id)}>
                                         {author.first_name} {author.last_name}
                                     </Link>
-    
+
                                     <FontAwesomeIcon icon={faCaretRight} />
-    
+
                                     <Link className="link" to={TO(wall.id)}>
                                         {wall.first_name} {wall.last_name}
                                     </Link>
@@ -94,26 +93,39 @@ class PostItem extends React.Component {
                         </div>
                     </div>
                     <p style={style}>{post.body}</p>
-                    {photos && photos.length > 0 ? 
+                    {photos && photos.length > 0 ?
                         (<ul>
                             {photos.map((photo, idx) => <img key={idx} src={photo} />)
                             }
                         </ul>)
-                     : null
+                        : null
                     }
-                    { (post.likes && numLikes > 0) ? `${numLikes} others` : null }
+                    {(post.likes && numLikes > 0) ? `${numLikes} others` : null}
                     <div className="buttons">
-                        
+
                         <ProfileHeaderButton icon={faThumbsUp} message="Like"
-                            style={likeButtonStyle} 
-                            onClick={this.likeHandler(isLikedByCurrentUser)}/>
+                            style={likeButtonStyle}
+                            onClick={this.likeHandler(isLikedByCurrentUser)} />
 
                         <ProfileHeaderButton icon={faComment} message="Comment"
-                            onClick={this.commentHandler}/>
+                            onClick={this.commentHandler} />
 
-                        <ProfileHeaderButton icon={faComment} message="Share"
-                            onClick={this.commentHandler}/>
+                        <ProfileHeaderButton icon={faShareSquare} message="Share"onClick={this.commentHandler} />
                     </div>
+
+                    {post.comments ? (
+                        <div className="comments-list">
+
+                            {Object.values(post.comments).map(comment => (
+                                <CommentContainer key={comment.id} 
+                                    comment={comment} />
+                            ))}
+                            
+                        </div>
+                    ) : null}
+
+                    <NewCommentFormContainer parentId={post.id}
+                        parentType="Post" />
                 </div>
             </div>
         );

@@ -53,25 +53,11 @@ class UpdatePhotoModal extends React.Component {
 
         const formData = new FormData();
         formData.append("user[profile_photo]", this.state.photoFile);
-
-
-        // this.props.submitPost(post).then(() => {
-        //     this.props.fetchPosts(this.props.match.params.userId);
-        //     this.props.popModal();
-        // }, () => {
-        //     alert("Oops! Something went wrong!");
-        // });
-
         this.props.updateUserFromFormData(this.props.user.id, formData).then(() => {
             this.props.popModal();
         }, () => {
             alert("Oops! Something went wrong!");
         });
-
-        // this.props.receiveUser({
-        //     id: this.props.user.id,
-        //     profile_photo: this.state.photoUrl
-        // })
     }
 
     render() {
@@ -103,15 +89,15 @@ class UpdatePhotoModal extends React.Component {
 
                     <ProfileImage user={{ profile_photo: photoUrl }} />
 
-                    <div className="header">
+                    <div className="footer">
                         <button
                             type="submit"
                             onClick={this.handleSubmit}
-                            className="save">Save</button>
+                            className="blue">Save</button>
 
                         <button type="submit"
                             onClick={() => {
-                                this.receiveUser({ 
+                                this.props.receiveUser({ 
                                     id: user.id, 
                                     profile_photo: user.profile_photo 
                                 });

@@ -29,5 +29,5 @@ Implementing the friending system was a challenge. In this implementation, the s
 | <img width="800" alt="profile" src="https://user-images.githubusercontent.com/38144750/90829499-da040d00-e30d-11ea-838a-72fef2700267.png"> | <img width="300" alt="searchbar" src="https://user-images.githubusercontent.com/38144750/90829500-da9ca380-e30d-11ea-9046-ef799c05b696.png"> |
 
 | Newsfeed |
-| :---: | :---: |
+| :---: |
 | <img width="800" alt="newsfeed" src="https://user-images.githubusercontent.com/38144750/90829501-da9ca380-e30d-11ea-9e77-4397de29d622.png"> |

@@ -20,8 +20,8 @@ export default class LoggedOut extends React.Component {
                     <div className={style.LOGGED_OUT_BODY_RECENT_LOGINS}>
                         <img 
                             className={style.LOGGED_OUT_LOGO}
-                            src={FB_LOGO}
-                            // src={EA_LOGO}
+                            // src={FB_LOGO}
+                            src={EA_LOGO}
                             />
                         <SectionHeaderMessage title="Recent Logins"
                             description="Click your picture or add an account."

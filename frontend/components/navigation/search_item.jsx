@@ -38,7 +38,6 @@ class SearchItem extends React.Component {
         this.setState({ name: e.target.value });
     }
 
-
     handleFocus(e) {
         e.preventDefault();
         this.setState({ typing: true });

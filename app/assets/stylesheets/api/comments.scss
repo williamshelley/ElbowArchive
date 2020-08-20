@@ -10,6 +10,23 @@
             border-radius: 30px;
             padding: 20px;
         }
+
+        p {
+            border-radius: 30px;
+            background-color: $icon-bg;
+            width: 100%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            overflow-wrap: break-word;
+            justify-content: center;
+            align-items: center;
+            padding: 8px;
+            span {
+                padding: inherit;
+                outline: none;
+                
+            }
+        }
     }
 }
 

@@ -7,69 +7,43 @@ class NewCommentForm extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            comment: this.props.comment,
-            textAreaStyle: { lineHeight: 0 }
-        };
+        this.state =  this.props.comment;
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleInput = this.handleInput.bind(this);
 
         this.id = uuidv4();
+        this.textFocus = React.createRef();
     }
 
     componentDidMount() {
-        addTextResizableListener(this.id, 65, "no resize");
+        // addTextResizableListener(this.id, 65, "no resize");
+        $(`#${this.id}`).text("Write a comment...");
     }
 
     handleSubmit(e) {
         if (e.key === 'Enter' || e.which === 13) {
-            this.props.createComment(this.state.comment).then(() => {
-                const newComment = merge({}, this.props.comment, { body: "" });
-                this.setState({ comment: newComment });
+            const textbox = $(e.target);
+            const newComment = merge({}, this.state, { body: textbox.text() })
+            this.props.createComment(newComment).then(() => {
+                textbox.text("Write a comment...");
+                this.textFocus.blur();
             });
         }
     }
 
-    handleInput(e) {
-        e.preventDefault();
-        const newComment = merge({}, this.props.comment, { body: e.target.value });
-        this.setState({ comment: newComment });
-    }
-
     render() {
-        let { body } = this.state.comment;
-        let { textAreaStyle } = this.state;
         return (
             <div className="new-comment">
                 <form onSubmit={this.handleSubmit}>
-                    <textarea
-                        id={`resizable-${this.id}`}
-                        type="text"
-                        value={body}
-                        style={textAreaStyle}
-                        placeholder="What's on your mind?"
-                        onChange={this.handleInput}
+                    <p onClick={() => this.textFocus.focus() }><span
+                        id={this.id}
+                        ref={(focused) => this.textFocus = focused}
+                        role="textbox"
+                        onFocus={(e) => $(e.target).text("")}
+                        onBlur={(e) => $(e.target).text("Write a comment...")}
                         onKeyPress={this.handleSubmit}
-                        onFocus={() => {
-                            if (textAreaStyle.lineHeight !== "25px") {
-                                this.setState({
-                                    textAreaStyle: {
-                                        lineHeight: "25px"
-                                    }
-                                })
-                            }
-                        }}
-                        onBlur={() => {
-                            if (body.length <= 0) {
-                                this.setState({
-                                    textAreaStyle: {
-                                        lineHeight: "0px"
-                                    }
-                                })
-                            }
-                        }}
-                    />
+                        contentEditable
+                    ></span></p>
                 </form>
             </div>
         );

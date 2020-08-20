@@ -23,17 +23,11 @@ Implementing the friending system was a challenge. In this implementation, the s
 ### Users
 - User can view their own and other users' profile pages
 - User can search for other users with the search bar
-| Profile | Search for Users |
-| :---: | :---: |
-| <img width="800" alt="profile" src="https://user-images.githubusercontent.com/38144750/90829499-da040d00-e30d-11ea-838a-72fef2700267.png"> | <img width="300" alt="searchbar" src="https://user-images.githubusercontent.com/38144750/90829500-da9ca380-e30d-11ea-9046-ef799c05b696.png"> |
-
 - User can update profile photo
-| Edit Profile | Upload Photos |
-| :---: | :---: |
-| <img width="500" alt="edit-profile" src="https://user-images.githubusercontent.com/38144750/90829495-d96b7680-e30d-11ea-9344-f32cfde63bf2.png"> | <img width="500" alt="upload-photo" src="https://user-images.githubusercontent.com/38144750/90829492-d96b7680-e30d-11ea-87b9-40e228ab91be.png"> | 
 
-
-
+| Profile | Search for Users | Edit Profile | Update Profile Photo |
+| :---: | :---: | :---: | :---: |
+| <img width="800" alt="profile" src="https://user-images.githubusercontent.com/38144750/90829499-da040d00-e30d-11ea-838a-72fef2700267.png"> | <img width="300" alt="searchbar" src="https://user-images.githubusercontent.com/38144750/90829500-da9ca380-e30d-11ea-9046-ef799c05b696.png"> | <img width="500" alt="edit-profile" src="https://user-images.githubusercontent.com/38144750/90829495-d96b7680-e30d-11ea-9344-f32cfde63bf2.png"> | <img width="500" alt="upload-photo" src="https://user-images.githubusercontent.com/38144750/90829492-d96b7680-e30d-11ea-87b9-40e228ab91be.png"> | 
 
 
 ### Posts

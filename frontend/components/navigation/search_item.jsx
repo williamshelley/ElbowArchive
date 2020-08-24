@@ -1,13 +1,10 @@
 import React from "react";
 import NavBarIcon from "./nav_bar_icon";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import FriendsIndexContainer from "../user/friends_index_container";
-import DropdownItem from "./dropdown_item";
-import FriendIndexItem from "../user/friend_index_item";
 import { ProfileImage } from "../../util/resources_util";
 import { safePush } from "../../util/navigation_util";
 
-const WAIT_TIME = 250;
+const WAIT_TIME = 300;
 const DISAPPEAR_WAIT_TIME = 100;
 
 class SearchItem extends React.Component {
@@ -33,7 +30,9 @@ class SearchItem extends React.Component {
     handleInput(e) {
         clearTimeout(this.timer);
         e.preventDefault();
-        let _timeout = () => { this.props.searchUsers(this.state.name); };
+        let _timeout = () => { 
+            this.props.searchUsers(this.state.name); 
+        };
         this.timer = setTimeout(_timeout, WAIT_TIME);
         this.setState({ name: e.target.value });
     }

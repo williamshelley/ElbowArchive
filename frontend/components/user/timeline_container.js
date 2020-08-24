@@ -4,7 +4,7 @@ import { selectCurrentUser, selectUserTimelinePosts, selectAllPosts } from "../.
 import { pushModal } from "../../actions/ui_actions";
 import { fetchUser } from "../../actions/user_actions";
 import { withRouter } from "react-router-dom";
-import { receivePosts, fetchPosts } from "../../actions/post_actions";
+import { receivePosts, fetchPosts, fetchAndMergePosts, fetchPagePosts } from "../../actions/post_actions";
 
 const mapStateToProps = (state, ownProps) => {
     const ownerId = ownProps.user ? ownProps.user.id : ownProps.match.params.userId;
@@ -18,9 +18,10 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({ 
-    fetchPosts: userId => dispatch(fetchPosts(userId)),
+    fetchPosts: userId => dispatch(fetchPagePosts({ userId, page: 1 })),
     pushModal: modal => dispatch(pushModal(modal)),
-    fetchUser: userId => dispatch(fetchUser(userId))
+    fetchUser: userId => dispatch(fetchUser(userId)),
+    mergePosts: (userId, page) => dispatch(fetchAndMergePosts({ userId, page }))
 });
 
 const TimelineContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(Timeline));

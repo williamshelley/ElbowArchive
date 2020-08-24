@@ -61,10 +61,27 @@ export const createPostFromFormData = formData => dispatch => (
         )
 );
 
-export const fetchPosts = userId => dispatch => (
+export const fetchPosts = (userId) => dispatch => (
     PostAPIUtil.fetchPosts(userId)
         .then(
             payload => dispatch(receivePosts(payload)),
+            errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
+        )
+);
+
+export const fetchPagePosts = ({ userId, page }) => dispatch => {
+    return (
+    PostAPIUtil.fetchPagePosts({ userId, page })
+    .then(
+        payload => dispatch(receivePosts(payload)),
+        errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
+    )
+);
+    }
+export const fetchAndMergePosts = ({ userId, page }) => dispatch => (
+    PostAPIUtil.fetchPagePosts({ userId, page })
+        .then(
+            payload => dispatch(mergePosts(payload)),
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
         )
 );
@@ -75,20 +92,4 @@ export const fetchPost = postId => dispatch => (
             payload => dispatch(receivePost(payload)),
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
         )
-);
-
-export const fetchNewsfeedPosts = ({ userId, page }) => dispatch => (
-    PostAPIUtil.fetchNewsfeedPosts({ userId, page })
-    .then(
-        payload => dispatch(receivePosts(payload)),
-        errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
-    )
-)
-
-export const fetchAndMergeNewsfeedPosts = ({ userId, page}) => dispatch => (
-    PostAPIUtil.fetchNewsfeedPosts({ userId, page })
-    .then(
-        payload => dispatch(mergePosts(payload)),
-        errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
-    )
 );

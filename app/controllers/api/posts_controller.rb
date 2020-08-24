@@ -4,15 +4,14 @@ class Api::PostsController < ApplicationController
 
         @posts = []
         post_limit = 5
+        # debugger
 
         if user_id.scan(/\D/).empty?
 
             current_id = current_user.id
 
             page = params[:page]
-            newsfeed = params[:newsfeed]
-            if newsfeed && page
-
+            if page
                 friend_ids = current_user.friends.map { |friend| friend.id }
                 friend_ids << current_user.id
                 @posts = Post

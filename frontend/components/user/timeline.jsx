@@ -3,6 +3,7 @@ import PostIndex from "../post/post_index";
 import NewPostFormContainer from "../post/new_post_form_container";
 import NotFound404 from "../navigation/not_found_404";
 import { ProfileImage } from "../../util/resources_util";
+import { Waypoint } from "react-waypoint";
 
 const Section = ({ style, children }) => (
     <div style={style} className="section">{children}</div>
@@ -13,27 +14,44 @@ class Timeline extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            page: 1,
+        };
+
         this.presentNewPostForm = this.presentNewPostForm.bind(this);
     }
 
     presentNewPostForm(e) {
         e.preventDefault();
         this.props.pushModal(<NewPostFormContainer />);
-
     }
 
     componentDidMount() {
-        // debugger;
+        debugger
         this.props.fetchPosts(this.props.ownerId);
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        // debugger;
-        // let nextId = nextProps.match.params.userId;
         let nextId = nextProps.ownerId;
         if (nextId !== this.props.ownerId) {
             this.props.fetchPosts(nextId);
         }
+    }
+
+    getPosts(page) {
+        this.props.mergePosts(this.props.currentUser.id, page);
+    }
+
+    getOnScrollUpPosts() {
+        this.setState({ page: this.state.page - 1}, ()=> {
+            this.getPosts(this.state.page);
+        } );
+    }
+
+    getOnScrollDownPosts() {
+        this.setState({ page: this.state.page + 1 }, () => {
+            this.getPosts(this.state.page);
+        });
     }
 
     render() {
@@ -84,6 +102,7 @@ class Timeline extends React.Component {
                     }
 
                     <PostIndex posts={posts} />
+                    { posts && posts.length > 1 && <Waypoint onEnter={() => this.getOnScrollDownPosts()} /> }
                 </div>
             </div>
         ) : <NotFound404 />

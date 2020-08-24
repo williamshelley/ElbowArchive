@@ -21,14 +21,12 @@ class NewsFeed extends React.Component {
     }
 
     getOnScrollUpPosts() {
-        console.log("up")
         this.setState({ page: this.state.page - 1}, ()=> {
             this.getPosts(this.state.page);
         } );
     }
 
     getOnScrollDownPosts() {
-        console.log("down")
         this.setState({ page: this.state.page + 1 }, () => {
             this.getPosts(this.state.page);
         });

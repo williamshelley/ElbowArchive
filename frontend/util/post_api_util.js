@@ -23,8 +23,8 @@ export const fetchPosts = userId => $.ajax({
     method: "GET"
 });
 
-export const fetchNewsfeedPosts = userId => $.ajax({
+export const fetchNewsfeedPosts = ({ userId, page }) => $.ajax({
     url: `/api/users/${userId}/posts`,
     method: "GET",
-    data: { newsfeed: true }
+    data: { newsfeed: true, page }
 })

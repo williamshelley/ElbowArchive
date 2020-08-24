@@ -27,6 +27,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem "aws-sdk-s3"
 gem "activestorage"
+gem "kaminari"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

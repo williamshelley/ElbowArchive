@@ -2,6 +2,7 @@ import * as PostAPIUtil from "../util/post_api_util";
 
 export const RECEIVE_POST = "RECEIVE_POST";
 export const RECEIVE_POSTS = "RECEIVE_POSTS";
+export const MERGE_POSTS = "MERGE_POSTS";
 export const RECEIVE_POST_ERRORS = "RECEIVE_POST_ERRORS"
 export const CLEAR_POST_ERRORS = "CLEAR_POST_ERRORS";
 export const RECEIVE_POST_ERROR = "RECEIVE_POST_ERROR";
@@ -14,6 +15,11 @@ export const receivePost = post => ({
 
 export const receivePosts = posts => ({
     type: RECEIVE_POSTS,
+    posts
+});
+
+export const mergePosts = posts => ({
+    type: MERGE_POSTS,
     posts
 });
 
@@ -71,10 +77,18 @@ export const fetchPost = postId => dispatch => (
         )
 );
 
-export const fetchNewsfeedPosts = userId => (
-    PostAPIUtil.fetchNewsfeedPosts(userId)
+export const fetchNewsfeedPosts = ({ userId, page }) => dispatch => (
+    PostAPIUtil.fetchNewsfeedPosts({ userId, page })
     .then(
         payload => dispatch(receivePosts(payload)),
         errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
     )
 )
+
+export const fetchAndMergeNewsfeedPosts = ({ userId, page}) => dispatch => (
+    PostAPIUtil.fetchNewsfeedPosts({ userId, page })
+    .then(
+        payload => dispatch(mergePosts(payload)),
+        errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
+    )
+);

@@ -7,7 +7,7 @@ import FriendIndexItem from "../user/friend_index_item";
 import { ProfileImage } from "../../util/resources_util";
 import { safePush } from "../../util/navigation_util";
 
-const WAIT_TIME = 1000;
+const WAIT_TIME = 250;
 const DISAPPEAR_WAIT_TIME = 100;
 
 class SearchItem extends React.Component {

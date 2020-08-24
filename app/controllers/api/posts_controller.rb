@@ -1,17 +1,27 @@
 class Api::PostsController < ApplicationController
     def index
         user_id = params[:user_id]
+
         @posts = []
-        
+        post_limit = 5
+
         if user_id.scan(/\D/).empty?
+
             current_id = current_user.id
-            if params[:newsfeed]
+
+            page = params[:page]
+            newsfeed = params[:newsfeed]
+            if newsfeed && page
+
                 friend_ids = current_user.friends.map { |friend| friend.id }
                 friend_ids << current_user.id
                 @posts = Post
                     .includes(:author, :wall, :likes, :comments, comments: :user)
                     .select("*")
                     .where("author_id IN (?) OR wall_id IN (?)", friend_ids, friend_ids)
+                    .order("date_posted DESC")
+                    .page(page)
+                    .per(post_limit)
                     .with_attached_photos
 
             else

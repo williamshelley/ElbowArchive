@@ -27,7 +27,6 @@ class Timeline extends React.Component {
     }
 
     componentDidMount() {
-        debugger
         this.props.fetchPosts(this.props.ownerId);
     }
 

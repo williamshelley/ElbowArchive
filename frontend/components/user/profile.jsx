@@ -41,22 +41,24 @@ class Profile extends React.Component {
             safePush(this.props.history, "/invalid-user");
         }
 
-        if (newId !== oldId || !profilePhotosAreSame) {
-            this.props.fetchUser(newId).then(() => {
-                this.setState({ mountedUser: newProps.user });
-            });
+        if ((newId !== oldId || !profilePhotosAreSame)) {
+            if (!newProps.users[newId]) {
+                this.props.fetchUser(newId).then(() => {
+                    this.setState({ mountedUser: newProps.user });
+                });
+            } else {
+                this.setState({ mountedUser: newProps.users[newId] });
+            }
         }
     }
 
     render() {
         let { user, loggedInUser, topModal, modals, pushModal } = this.props;
         let PATH = (next) => `/profile/:userId/${next ? next : ""}`;
-        let { mountedUser } = this.state;
-        return mountedUser ? (
+        return user ? (
             <div className="profile">
 
-                {/* <ProfileHeader loggedInUser={loggedInUser} user={user} pushModal={pushModal} /> */}
-                <ProfileHeaderContainer user={mountedUser}/>
+                <ProfileHeaderContainer user={user}/>
 
                 <div className="body">
                     <div className="content">

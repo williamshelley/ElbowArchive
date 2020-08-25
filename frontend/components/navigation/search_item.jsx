@@ -3,9 +3,10 @@ import NavBarIcon from "./nav_bar_icon";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { ProfileImage } from "../../util/resources_util";
 import { safePush } from "../../util/navigation_util";
+import { Waypoint } from "react-waypoint";
 
 const WAIT_TIME = 300;
-const DISAPPEAR_WAIT_TIME = 100;
+const DISAPPEAR_WAIT_TIME = 500;
 
 class SearchItem extends React.Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class SearchItem extends React.Component {
         this.state = {
             typing: false,
             name: "",
+            page: 1,
         }
 
         this.handleFocus = this.handleFocus.bind(this);
@@ -34,12 +36,12 @@ class SearchItem extends React.Component {
             this.props.searchUsers(this.state.name); 
         };
         this.timer = setTimeout(_timeout, WAIT_TIME);
-        this.setState({ name: e.target.value });
+        this.setState({ name: e.target.value, page: 1 });
     }
 
     handleFocus(e) {
         e.preventDefault();
-        this.setState({ typing: true });
+        this.setState({ typing: true, page: 1 });
         $(e.target).addClass("focused");
     }
 
@@ -49,7 +51,7 @@ class SearchItem extends React.Component {
         let target = e.target;
         
         let _timeout = () => {
-            this.setState({ typing: false, name: "" }, () => {
+            this.setState({ typing: false, name: "", page: 1 }, () => {
                 $(target).removeClass("focused");
                 this.props.clearSearchedUsers();
             });
@@ -58,8 +60,16 @@ class SearchItem extends React.Component {
         this.disappearTimer = setTimeout(_timeout, DISAPPEAR_WAIT_TIME);
     }
 
+    handleScroll() {
+        this.setState({ page: this.state.page + 1 }, () => {
+            this.props.mergeSearchUsers(this.state.name, this.state.page);
+        });
+    }
+
     navigate(user) {
-        return () => safePush(this.props.history, `/profile/${user.id}`);
+        return () => {
+            safePush(this.props.history, `/profile/${user.id}`);
+        }
     }
 
     render() {
@@ -80,7 +90,6 @@ class SearchItem extends React.Component {
                 { typing && searchedUsers.length > 0 ? 
                 ( <div className="dropdown">
                     { searchedUsers.map(user => {
-                        // return (<DropdownItem key={user.id} label={`${user.first_name} ${user.last_name}`} />);
                         return (
                             <div 
                                 key={user.id} 
@@ -93,10 +102,9 @@ class SearchItem extends React.Component {
                                     </h3>
                                 </div>
                             </div>
-                            
                         );
-                        // return (<FriendIndexItem key={user.id} user={user} />)
                     })}
+                    { searchedUsers && searchedUsers.length > 1 && <Waypoint onEnter={() => this.handleScroll()}/>}
                 </div> )
                 : null
                 }

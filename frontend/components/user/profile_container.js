@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Profile from "./profile";
-import { selectCurrentUser, selectTopModal, selectUser, selectModals } from "../../reducers/selectors";
+import { selectCurrentUser, selectTopModal, selectUser, selectModals, selectUsers } from "../../reducers/selectors";
 import { pushModal } from "../../actions/ui_actions";
 import { fetchUser } from "../../actions/user_actions";
 import { fetchFriendRequests, fetchFriend } from "../../actions/friend_request_actions";
@@ -10,6 +10,7 @@ const mapStateToProps = (state, ownProps) => {
         user: selectUser(ownProps.match.params.userId, state),
         loggedInUser: selectCurrentUser(state),
         topModal: selectTopModal(state),
+        users: selectUsers(state)
     };
 };
 

@@ -1,7 +1,9 @@
 class Api::UsersController < ApplicationController
     def index
         @users = [current_user]
-        
+
+        num_search_users_per_page = 10
+
         if filter_params
             if filter_params[:page_owner_id]
                 @users << (User
@@ -16,7 +18,18 @@ class Api::UsersController < ApplicationController
                 .with_attached_cover_photo
                 .select("*")
                 .where("id IN (?)", filter_params[:user_ids]))
-                
+
+            elsif filter_params[:name] && filter_params[:page]
+                start_of_name = filter_params[:name] ? "%#{filter_params[:name]}%" : ""
+                @users = (User
+                .with_attached_profile_photo
+                .with_attached_cover_photo
+                .select("*")
+                .page(filter_params[:page])
+                .per(num_search_users_per_page)
+                .where("UPPER(CONCAT(first_name, ' ', last_name)) LIKE UPPER(?)
+                ", start_of_name))
+
             elsif filter_params[:name]
                 start_of_name = filter_params[:name] ? "%#{filter_params[:name]}%" : ""
                 @users = (User
@@ -85,6 +98,6 @@ class Api::UsersController < ApplicationController
     end
 
     def filter_params
-        params.require(:filters).permit(:name, :all_users, :page_owner_id, user_ids: [])
+        params.require(:filters).permit(:name, :page, :all_users, :page_owner_id, user_ids: [])
     end
 end

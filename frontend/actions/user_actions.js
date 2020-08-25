@@ -5,6 +5,7 @@ export const RECEIVE_USER = "RECEIVE_USER";
 export const RECEIVE_USERS = "RECEIVE_USERS";
 export const RECEIVE_FRIENDS = "RECEIVE_FRIENDS";
 export const RECEIVE_SEARCHED_USERS = "RECEIVE_SEARCHED_USERS";
+export const MERGE_SEARCHED_USERS = "MERGE_SEARCHED_USERS";
 export const CLEAR_SEARCHED_USERS = "CLEAR_SEARCHED_USERS";
 
 export const receiveUser = user => ({
@@ -25,7 +26,12 @@ export const receiveUsers = users => ({
 export const receiveSearchedUsers = users => ({
     type: RECEIVE_SEARCHED_USERS,
     users
-})
+});
+
+export const mergeSearchedUsers = users => ({
+    type: MERGE_SEARCHED_USERS,
+    users
+});
 
 export const clearSearchedUsers = () => ({
     type: CLEAR_SEARCHED_USERS
@@ -60,6 +66,12 @@ export const searchUsers = filters => dispatch => (
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
 );
 
+export const fetchMergeSearchUsers = filters => dispatch => (
+    UserAPIUtil.fetchUsers(filters)
+    .then(
+        payload => dispatch(mergeSearchedUsers(payload)),
+        errorPayload => dispatch(receiveErrors(errorPayload.responseJSON)))
+);
 
 export const fetchUsers = filters => dispatch => (
     UserAPIUtil.fetchUsers(filters)

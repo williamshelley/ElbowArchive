@@ -23,7 +23,7 @@ export default class LoggedOut extends React.Component {
                             // src={FB_LOGO}
                             src={EA_LOGO}
                             />
-                        <SectionHeaderMessage title="Recent Logins"
+                        {/* <SectionHeaderMessage title="Recent Logins"
                             description="Click your picture or add an account."
                         />
                         <div className={style.RECENT_LOGIN_LIST}>
@@ -34,7 +34,7 @@ export default class LoggedOut extends React.Component {
                                     </div>
                                 );
                             })}
-                        </div>
+                        </div> */}
                     </div>
                     <div className={style.LOGGED_OUT_BODY_LOGIN}>
                         <LoginFormContainer />

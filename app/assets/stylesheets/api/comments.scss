@@ -1,7 +1,7 @@
 @import "../static_pages.scss";
 
 .new-comment {
-    margin-top: 24px;
+    margin-top: 4px;
     form {
         height: fit-content;
         textarea {
@@ -24,8 +24,13 @@
             span {
                 padding: inherit;
                 outline: none;
-                
+                width: 100%;
+                font-size: 80%;
             }
+        }
+
+        p:hover {
+            cursor: text;
         }
     }
 }

@@ -45,7 +45,6 @@ class PostFormModal extends React.Component {
         }
 
         this.props.submitPost(post).then(() => {
-            this.props.fetchPosts(this.props.match.params.userId);
             this.props.popModal();
         }, () => {
             alert("Oops! Something went wrong!");

@@ -69,17 +69,17 @@ export const fetchPosts = (userId) => dispatch => (
         )
 );
 
-export const fetchPagePosts = ({ userId, page }) => dispatch => {
+export const fetchPagePosts = (filters) => dispatch => {
     return (
-    PostAPIUtil.fetchPagePosts({ userId, page })
+    PostAPIUtil.fetchPagePosts(filters)
     .then(
         payload => dispatch(receivePosts(payload)),
         errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
     )
 );
     }
-export const fetchAndMergePosts = ({ userId, page }) => dispatch => (
-    PostAPIUtil.fetchPagePosts({ userId, page })
+export const fetchAndMergePosts = (filters) => dispatch => (
+    PostAPIUtil.fetchPagePosts(filters)
         .then(
             payload => dispatch(mergePosts(payload)),
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))

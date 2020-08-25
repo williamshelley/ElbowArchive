@@ -12,7 +12,6 @@ class NewsFeed extends React.Component {
     }
 
     componentDidMount() {
-        console.log("mounted");
         this.props.fetchPosts(this.props.currentUser.id);
     }
 

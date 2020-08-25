@@ -10,11 +10,23 @@ div {
 
 .post {
     p {
-        border-bottom: 1px solid $border-color;
+        // border-bottom: 1px solid $border-color;
         padding-bottom: 16px;
         width: unset;
 
     }
+
+    .num-likes {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 14px;
+        img {
+            width: 18px;
+        }
+    }
+
     ul {
         // width: unset;
         list-style-type: none;

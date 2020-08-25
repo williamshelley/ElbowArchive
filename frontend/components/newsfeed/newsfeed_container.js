@@ -13,8 +13,8 @@ const msp = (state) => {
 
 const mdp = dispatch => {
     return {
-        fetchPosts: userId => dispatch(fetchPagePosts({ userId, page: 1 })),
-        mergePosts: (userId, page) => dispatch(fetchAndMergePosts({ userId, page }))
+        fetchPosts: userId => dispatch(fetchPagePosts({ userId, page: 1, newsfeed: true })),
+        mergePosts: (userId, page) => dispatch(fetchAndMergePosts({ userId, page, newsfeed: true }))
     };
 };
 

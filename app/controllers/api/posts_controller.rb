@@ -11,7 +11,7 @@ class Api::PostsController < ApplicationController
             current_id = current_user.id
 
             page = params[:page]
-            if page
+            if params[:newsfeed] && page
                 friend_ids = current_user.friends.map { |friend| friend.id }
                 friend_ids << current_user.id
                 @posts = Post
@@ -23,12 +23,14 @@ class Api::PostsController < ApplicationController
                     .per(post_limit)
                     .with_attached_photos
 
-            else
-
+            elsif page
                 @posts = Post
                     .includes(:author, :wall, :likes, :comments, comments: :user)
                     .select("*")
                     .where("posts.author_id = ? OR posts.wall_id = ?", user_id, user_id)
+                    .order("date_posted DESC")
+                    .page(page)
+                    .per(post_limit)
                     .with_attached_photos
 
             end

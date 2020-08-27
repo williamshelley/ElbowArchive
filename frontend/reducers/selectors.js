@@ -242,4 +242,4 @@ export const selectPendingFriendRequest = (idA, idB, state) => {
 
 export const selectSearchedUsers = (state) => {
     return state.entities.searchedUsers;
-}
+};

@@ -5,7 +5,7 @@ import { ProfileImage } from "../../util/resources_util";
 import { safePush } from "../../util/navigation_util";
 import { Waypoint } from "react-waypoint";
 
-const WAIT_TIME = 300;
+const WAIT_TIME = 100;
 const DISAPPEAR_WAIT_TIME = 500;
 
 class SearchItem extends React.Component {
@@ -32,7 +32,8 @@ class SearchItem extends React.Component {
     handleInput(e) {
         clearTimeout(this.timer);
         e.preventDefault();
-        let _timeout = () => { 
+        let _timeout = () => {
+            console.log("hello");
             this.props.searchUsers(this.state.name); 
         };
         this.timer = setTimeout(_timeout, WAIT_TIME);
@@ -81,7 +82,6 @@ class SearchItem extends React.Component {
                 <input type="search"
                     value={name}
                     onChange={this.handleInput}
-                    
                     placeholder="Search Elbow Archive"
                     onFocus={this.handleFocus}
                     onBlur={this.handleBlur}

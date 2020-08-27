@@ -4,7 +4,7 @@ import { pushModal } from "../../actions/ui_actions";
 import { fetchUser } from "../../actions/user_actions";
 import ProfileHeader from "./profile_header";
 import { withRouter } from "react-router-dom";
-import { sendFriendRequest, deleteFriendRequest, fetchFriend, fetchFriendRequests } from "../../actions/friend_request_actions";
+import { sendFriendRequest, deleteFriendRequest, fetchFriend, fetchFriendRequests, acceptFriendRequest, updateFriendRequest } from "../../actions/friend_request_actions";
 
 const mapStateToProps = (state, ownProps) => {
     let userId = parseInt(ownProps.match.params.userId);
@@ -23,17 +23,19 @@ const mapStateToProps = (state, ownProps) => {
 
     let friendRequest = selectAcceptedFriendRequest(userId, currentUser.id, state);
 
+    
     friendRequest = friendRequest ? friendRequest : selectPendingFriendRequest(userId, currentUser.id, state);
-
-
-    // debugger;
-
+    
+    let isSenderOfRequest = friendRequest && currentUser.id === friendRequest.sender_id;
+    
+    
     return {
         user: ownProps.user,
         friendRequest,
         loggedInUser: currentUser,
         isFriended,
         isPendingFriend,
+        isSenderOfRequest,
         PATH
     };
 };
@@ -45,6 +47,7 @@ const mapDispatchToProps = dispatch => ({
     fetchUser: userId => dispatch(fetchUser(userId)),
     sendFriendRequest: request => dispatch(sendFriendRequest(request)),
     deleteFriendRequest: requestId => dispatch(deleteFriendRequest(requestId)),
+    acceptFriendRequest: sender_id => dispatch(updateFriendRequest({sender_id}))
     // fetchFriend: friendId => dispatch(fetchFriend(friendId))
 });
 const ProfileHeaderContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileHeader));

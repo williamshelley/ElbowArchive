@@ -43,17 +43,17 @@ export default class NavBar extends React.Component {
 
                 <div className="middle">
                     <NavBarIcon icon={faHome} onClick={this.navigate("/")}/>
-                    <NavBarIcon icon={faTv} />
-                    <NavBarIcon icon={faShoppingBag} />
-                    <NavBarIcon icon={faUsers} />
-                    <NavBarIcon icon={faPuzzlePiece} />
+                    {/* <NavBarIcon icon={faTv} /> */}
+                    {/* <NavBarIcon icon={faShoppingBag} /> */}
+                    {/* <NavBarIcon icon={faUsers} /> */}
+                    {/* <NavBarIcon icon={faPuzzlePiece} /> */}
                 </div>
 
                 <div className="right">
                     <ProfileItemContainer />
-                    <NavBarIcon icon={faPlus} />
-                    <NavBarIcon icon={faComment} />
-                    <NavBarIcon icon={faBell} />
+                    {/* <NavBarIcon icon={faPlus} /> */}
+                    {/* <NavBarIcon icon={faComment} /> */}
+                    {/* <NavBarIcon icon={faBell} /> */}
                     <NavBarIcon icon={faSortDown}
                         onClick={this.toggleDropdown} />
                 </div>

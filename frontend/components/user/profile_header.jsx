@@ -1,6 +1,6 @@
 import React from "react";
 import ProfileNavItemContainer from "./profile_nav_item_container";
-import { faPencilAlt, faUserPlus, faUserCheck, faRetweet, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
+import { faPencilAlt, faUserPlus, faUserCheck, faRetweet, faRedoAlt, faUserAlt } from "@fortawesome/free-solid-svg-icons";
 import EditProfileModalContainer from "./edit_profile_modal_container";
 import { ProfileImage } from "../../util/resources_util";
 import ProfileHeaderButton from "./profile_header_button";
@@ -11,6 +11,7 @@ class ProfileHeader extends React.Component {
 
         this.presentEditModal = this.presentEditModal.bind(this);
         this.addFriendHandler = this.addFriendHandler.bind(this);
+        this.acceptFriendHandler = this.acceptFriendHandler.bind(this);
         this.removeFriendHandler = this.removeFriendHandler.bind(this);
         this.friendButton = this.friendButton.bind(this);
     }
@@ -40,6 +41,13 @@ class ProfileHeader extends React.Component {
         this.props.deleteFriendRequest(this.props.friendRequest.id);
     }
 
+    acceptFriendHandler(e) {
+        e.preventDefault();
+        this.props.acceptFriendRequest(this.props.user.id).then(() => {
+
+        });
+    }
+
     friendButton(isMyProfile) {
         if (isMyProfile) {
             return (
@@ -50,9 +58,22 @@ class ProfileHeader extends React.Component {
         } else {
             if (this.props.friendRequest) {
                 let { isFriended } = this.props;
-                return (<ProfileHeaderButton icon={isFriended ? faUserCheck : faRedoAlt}
-                    message={isFriended ? "Friends" : "Pending Request"}
-                    onClick={this.removeFriendHandler} />);
+                if (isFriended) {
+                    return (<ProfileHeaderButton icon={faUserCheck}
+                        message={"Friends"}
+                        onClick={this.removeFriendHandler} />);
+                } else {
+                    if (this.props.isSenderOfRequest) {
+                        return (<ProfileHeaderButton icon={faUserAlt} 
+                            message={"Request Sent"}
+                            onClick={this.removeFriendHandler}/>)
+                    } else {
+                        return (<ProfileHeaderButton icon={faUserPlus} 
+                            message={"Accept Request"} 
+                            onClick={this.acceptFriendHandler}/>)
+                    }
+                }
+
             } else {
                 return (<ProfileHeaderButton icon={faUserPlus}
                     message="Add Friend"

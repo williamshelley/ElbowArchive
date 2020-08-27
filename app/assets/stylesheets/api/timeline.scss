@@ -147,6 +147,24 @@
     }
 }
 
+@media (max-width: 1000px) {
+    .timeline {
+        flex-direction: column;
+
+        .right, .left {
+            width: 100%;
+            .section {
+                width: 100%;
+            }
+            .posts-list {
+                .section {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
 
 @media only screen and (max-device-width: 480px) {
     .timeline {

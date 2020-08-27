@@ -1,10 +1,16 @@
 import React from "react";
 import NavBarIcon from "./nav_bar_icon";
-import { faHome, faTv, faShoppingBag, faUsers, faPuzzlePiece, faComment, faBell, faSortDown, faPlus, faSignOutAlt, faBalanceScale } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faTv, faShoppingBag, faUsers, faPuzzlePiece, faComment, faBell, faSortDown, faPlus, faSignOutAlt, faBalanceScale, faLink, faPersonBooth } from "@fortawesome/free-solid-svg-icons";
+import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import ProfileItemContainer from "./profile_item_container";
 import DropdownItem from "./dropdown_item";
 import SearchItemContainer from "./search_item_container";
 import { safePush } from "../../util/navigation_util";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const GITHUB = "https://github.com/williamshelley";
+const LINKEDIN = "https://www.linkedin.com/in/william-shelley-280293177/";
+const PERSONAL = "https://willshelley.com/";
 
 export default class NavBar extends React.Component {
     constructor(props) {
@@ -16,6 +22,7 @@ export default class NavBar extends React.Component {
 
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this.navigate = this.navigate.bind(this);
+
     }
 
     toggleDropdown(e) {
@@ -31,6 +38,12 @@ export default class NavBar extends React.Component {
         };
     }
 
+    redirect(destination) {
+        return e => {
+            window.location = destination;
+        }
+    }
+
     render() {
         return (
             <div className="nav-bar">
@@ -42,7 +55,19 @@ export default class NavBar extends React.Component {
                 </div>
 
                 <div className="middle">
-                    <NavBarIcon icon={faHome} onClick={this.navigate("/")}/>
+                    <NavBarIcon icon={faHome} 
+                        onClick={this.navigate("/")}/>
+
+                    <NavBarIcon icon={faGithub} 
+                        onClick={this.redirect(GITHUB)}/>
+
+                    <NavBarIcon icon={faLinkedin} 
+                        onClick={this.redirect(LINKEDIN)}/>
+
+                    <NavBarIcon icon={faPersonBooth}
+                        hoverText={"Personal Site"}
+                        onClick={this.redirect(PERSONAL)}/>
+
                     {/* <NavBarIcon icon={faTv} /> */}
                     {/* <NavBarIcon icon={faShoppingBag} /> */}
                     {/* <NavBarIcon icon={faUsers} /> */}

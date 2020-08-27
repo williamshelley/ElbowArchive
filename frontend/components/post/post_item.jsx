@@ -65,7 +65,7 @@ class PostItem extends React.Component {
             color: "#B1B3B8"
         });
 
-        return (
+        return author ? (
             <div className="section">
                 <div className="post">
                     <div className="header">
@@ -133,7 +133,7 @@ class PostItem extends React.Component {
                         parentType="Post" />
                 </div>
             </div>
-        );
+        ) : null;
     }
 }
 

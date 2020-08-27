@@ -8,10 +8,15 @@ import { receivePosts, fetchPosts, fetchAndMergePosts, fetchPagePosts } from "..
 
 const mapStateToProps = (state, ownProps) => {
     const ownerId = ownProps.user ? ownProps.user.id : ownProps.match.params.userId;
+    const posts = Object.values(selectAllPosts(state));
+    const sortedByDate = posts ? (posts.sort((postA, postB) => {
+        const dateA = new Date(postA.date_posted);
+        const dateB = new Date(postB.date_posted);
+        return dateB - dateA;
+    })) : [];
     return {
         ownerId,
-        // need to sort by date instead of just reversing
-        posts: Object.values(selectAllPosts(state)).reverse(),
+        posts: sortedByDate,
         user: ownProps.user ? ownProps.user : selectCurrentUser(state),
         currentUser: selectCurrentUser(state)
     };

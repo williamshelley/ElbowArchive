@@ -1,4 +1,3 @@
-import { faTableTennis } from "@fortawesome/free-solid-svg-icons";
 
 export const selectSessionErrors = state => {
     return state.errors.session;
@@ -69,19 +68,6 @@ export const selectPendingFriendRequests = state => {
 };
 
 const friendIdsFromRequests = (userId, requests) => {
-    // let currentUser = selectCurrentUser(state);
-    // let friend_ids = [];
-    // if (requests) {
-    //     Object.values(requests).forEach(request => {
-    //         if (userId === request.sender_id) {
-    //             friend_ids.push(request.recipient_id);
-    //         } else if (userId === request.recipient_id) {
-    //             friend_ids.push(request.sender_id);
-    //         }
-    //     });
-    // }
-    // return friend_ids;
-
     let ids = [];
     Object.values(requests).forEach(req => {
         if (req.sender_id === userId || req.recipient_id === userId) {
@@ -90,21 +76,10 @@ const friendIdsFromRequests = (userId, requests) => {
         }
     });
 
-    // console.log("requests:", requests);
-    // console.log("ids: ", ids);
-    // console.log("userId: ", userId);
-    // let ids = Object.values(requests).map(req => (
-    //     parseInt(userId) !== req.sender_id ? req.sender_id : req.recipient_id
-    // ));
-    // debugger;
     return ids;
 }
 
 const senderIdsOfRecipient = (recipientId, requests) => {
-    // return Object.values(requests).map(req => (
-    //     parseInt(userId) === req.sender_id ? req.sender_id : 
-    // ));
-
     let senderIds = [];
     Object.values(requests).map(req => {
         if (parseInt(recipientId) === req.recipient_id) {
@@ -127,18 +102,12 @@ const recipientIdsOfSender = (senderId, requests) => {
 export const selectAcceptedFriendIds = (userId, state) => {
     let requests = selectAcceptedFriendRequests(state);
     return friendIdsFromRequests(userId, requests);
-    // return Object.values(requests).map(req => (
-    //     parseInt(userId) !== req.sender_id ? req.sender_id : req.recipient_id
-    // ));
 }
 
 
 export const selectPendingFriendIds = (userId, state) => {
     let requests = selectPendingFriendRequests(state);
     return friendIdsFromRequests(userId, requests);
-    // return Object.values(requests).map(req => (
-    //     parseInt(userId) !== req.sender_id ? req.sender_id : req.recipient_id
-    // ));
 }
 
 export const selectAcceptedIdsWithSender = (senderId, state) => {
@@ -175,19 +144,7 @@ export const selectNonFriends = state => {
     pendingArr.forEach(id => pending[id] = true);
     acceptedArr.forEach(id => accepted[id] = true);
 
-
-    // console.log(pendingArr.length);
-    // console.log(acceptedArr.length);
-
-    // console.log(pendingArr);
-    // console.log(acceptedArr);
-
     let users = Object.values(selectUsers(state));
-    // console.log(users);
-
-    // console.log(pending);
-    // console.log(accepted);
-    // console.log(state.entities.friendRequests.pending);
 
     let nonFriends = {};
     users.forEach(user => {
@@ -196,7 +153,6 @@ export const selectNonFriends = state => {
         }
     });
 
-    // console.log(nonFriends);
     return nonFriends;
 }
 

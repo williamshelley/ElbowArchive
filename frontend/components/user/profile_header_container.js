@@ -48,7 +48,6 @@ const mapDispatchToProps = dispatch => ({
     sendFriendRequest: request => dispatch(sendFriendRequest(request)),
     deleteFriendRequest: requestId => dispatch(deleteFriendRequest(requestId)),
     acceptFriendRequest: sender_id => dispatch(updateFriendRequest({sender_id}))
-    // fetchFriend: friendId => dispatch(fetchFriend(friendId))
 });
 const ProfileHeaderContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileHeader));
 

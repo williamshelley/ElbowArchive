@@ -52,7 +52,6 @@ class SignupForm extends React.Component {
         }
 
         this.setState({ email, phone_number, birth_date, gender }, () => {
-            console.log(this.state);
             const {
                 first_name, last_name, email, phone_number,
                 password, birth_date, gender

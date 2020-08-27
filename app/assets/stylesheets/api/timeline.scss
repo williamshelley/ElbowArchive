@@ -65,7 +65,6 @@
 }
 
 .posts-list {
-    // margin-top: 16px;
     gap: 16px;
     width: fit-content;
 }
@@ -146,4 +145,24 @@
         max-height: 250px;
         font-weight: 400;
     }
+}
+
+
+@media only screen and (max-device-width: 480px) {
+    .timeline {
+        flex-direction: column;
+
+        .right, .left {
+            width: 100%;
+            .section {
+                width: 100%;
+            }
+            .posts-list {
+                .section {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
 }

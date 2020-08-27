@@ -32,10 +32,7 @@ class SearchItem extends React.Component {
     handleInput(e) {
         clearTimeout(this.timer);
         e.preventDefault();
-        let _timeout = () => {
-            console.log("hello");
-            this.props.searchUsers(this.state.name); 
-        };
+        let _timeout = () => { this.props.searchUsers(this.state.name); };
         this.timer = setTimeout(_timeout, WAIT_TIME);
         this.setState({ name: e.target.value, page: 1 });
     }

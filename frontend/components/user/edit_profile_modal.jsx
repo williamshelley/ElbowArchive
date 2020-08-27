@@ -19,7 +19,6 @@ class EditProfileModal extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         
-        // this.props.updateUser(this.state);
         this.props.fetchUser(this.props.user.id).then(() => {
             this.props.popModal();
         });

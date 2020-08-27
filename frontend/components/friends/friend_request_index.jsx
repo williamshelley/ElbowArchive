@@ -16,19 +16,9 @@ class FriendRequestIndex extends React.Component {
     }
 
     componentDidMount() {
-        // this.props.fetchFriends()
-        // console.log("mounted");
-        this.props.fetchUsers()
-        .then(() => {
-        this.props.fetchFriendRequests(this.props.currentUser.id).then(() => {
-                // console.log(this.props.nonFriends);
-            });
+        this.props.fetchUsers().then(() => {
+            this.props.fetchFriendRequests(this.props.currentUser.id)
         });
-    }
-
-    UNSAFE_componentWillReceiveProps(newProps) {
-        // console.log(newProps.currentUser)
-        // console.log("receive props")
     }
 
     sendRequest(recipient) {
@@ -39,7 +29,6 @@ class FriendRequestIndex extends React.Component {
         return e => {
             this.props.updateFriendRequest(sender.id).then(() => {
                 this.props.fetchFriendRequests(this.props.currentUser.id);
-                // this.props.acceptFriendRequest({ sender_id: sender.id, accepted: true, recipient_id: this.props.currentUser.id })
             });
         };
     }
@@ -49,7 +38,7 @@ class FriendRequestIndex extends React.Component {
     }
 
     render() {
-        let { currentUser, sendFriendRequest, nonFriends, pendingFriends } = this.props;
+        let { nonFriends, pendingFriends } = this.props;
         let { mountedUser } = this.state;
         return (
             <div className="friend-requests">

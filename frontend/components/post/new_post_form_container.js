@@ -18,7 +18,6 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    // submitPost: post => dispatch(createPost(post)),
     submitPost: formData => dispatch(createPostFromFormData(formData)),
     popModal: () => dispatch(popModal()),
     receivePost: post => dispatch(receivePost(post)),

@@ -34,7 +34,7 @@ class UpdatePhotoModal extends React.Component {
         if (photo) {
             reader.readAsDataURL(photo);
         } else {
-            console.log("Something went wrong!");
+            alert("Something went wrong!");
         }
     }
 

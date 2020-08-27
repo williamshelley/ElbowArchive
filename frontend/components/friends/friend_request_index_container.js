@@ -9,28 +9,11 @@ const msp = state => {
     let currentUser = selectCurrentUser(state);
     let pendingIds = selectPendingIdsWithRecipient(currentUser.id, state);
     let pendingFriends = Object.values(selectUsersFromIds(pendingIds, state));
-    // debugger;
-
-    // let pendingFriends = [];
-
-    // let requests = merge({}, state.entities.friendRequests);
-    // let pendingRequests = requests ? requests.pending : undefined;
-    // if (pendingRequests) {
-    //     Object.values(pendingRequests).forEach(req => {
-    //         if (req.recipient_id === currentUser.id && !req.accepted) {
-    //             pendingFriends.push(state.entities.friends[req.sender_id]);
-    //         }
-    //     });
-    // }
     
     let nonFriends = Object.values(selectNonFriends(state));
-    // console.log(nonFriends)
-
-    // console.log(pendingIds)
     return {
         currentUser,
         nonFriends,
-        // nonFriends: Object.values(state.entities.friends),
         pendingFriends,
     };
 };

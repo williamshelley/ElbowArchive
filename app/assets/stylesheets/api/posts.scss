@@ -10,7 +10,6 @@ div {
 
 .post {
     p {
-        // border-bottom: 1px solid $border-color;
         padding-bottom: 16px;
         width: unset;
 
@@ -22,13 +21,13 @@ div {
         align-items: flex-start;
         gap: 8px;
         margin-bottom: 14px;
+        justify-content: flex-start;
         img {
             width: 18px;
         }
     }
 
     ul {
-        // width: unset;
         list-style-type: none;
         padding: 0;
         display: flex;
@@ -36,14 +35,11 @@ div {
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        // height: 100%;
 
         img {
             object-fit: contain;
             height: 200px;
             width: 200px;
-            // width: 50%;
-            // height: auto;
         }
     }
 }

@@ -7,8 +7,6 @@ class NewCommentForm extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state =  this.props.comment;
-
         this.handleSubmit = this.handleSubmit.bind(this);
 
         this.id = uuidv4();
@@ -16,14 +14,13 @@ class NewCommentForm extends React.Component {
     }
 
     componentDidMount() {
-        // addTextResizableListener(this.id, 65, "no resize");
         $(`#${this.id}`).text("Write a comment...");
     }
 
     handleSubmit(e) {
         if (e.key === 'Enter' || e.which === 13) {
             const textbox = $(e.target);
-            const newComment = merge({}, this.state, { body: textbox.text() })
+            const newComment = merge({}, this.props.comment, { body: textbox.text() });
             this.props.createComment(newComment).then(() => {
                 textbox.text("Write a comment...");
                 this.textFocus.blur();

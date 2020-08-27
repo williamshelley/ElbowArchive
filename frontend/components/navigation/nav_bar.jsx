@@ -6,7 +6,6 @@ import ProfileItemContainer from "./profile_item_container";
 import DropdownItem from "./dropdown_item";
 import SearchItemContainer from "./search_item_container";
 import { safePush } from "../../util/navigation_util";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const GITHUB = "https://github.com/williamshelley";
 const LINKEDIN = "https://www.linkedin.com/in/william-shelley-280293177/";
@@ -72,7 +71,6 @@ export default class NavBar extends React.Component {
         if (this.dropdownWrapper && this.dropdownWrapper.current
             && !toggle.contains(e.target)
             && !this.dropdownWrapper.current.contains(e.target)) {
-                console.log(this.dropdownWrapper.current)
             this.hideDropdown();
         }
     }

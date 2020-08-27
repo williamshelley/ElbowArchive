@@ -7,6 +7,7 @@ export const RECEIVE_POST_ERRORS = "RECEIVE_POST_ERRORS"
 export const CLEAR_POST_ERRORS = "CLEAR_POST_ERRORS";
 export const RECEIVE_POST_ERROR = "RECEIVE_POST_ERROR";
 export const REMOVE_POST_ERROR = "REMOVE_POST_ERROR";
+export const DELETE_POST = "DELETE_POST";
 
 export const receivePost = post => ({
     type: RECEIVE_POST,
@@ -42,6 +43,11 @@ export const removePostError = (field) => ({
     type: REMOVE_POST_ERROR,
     field
 });
+
+export const removePost = post => ({
+    type: DELETE_POST,
+    post
+})
 
 
 export const createPost = post => dispatch => (
@@ -93,3 +99,11 @@ export const fetchPost = postId => dispatch => (
             errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
         )
 );
+
+export const deletePost = postId => dispatch => (
+    PostAPIUtil.deletePost(postId)
+    .then(
+        payload => dispatch(removePost(payload)),
+        errorPayload => dispatch(receiveErrors(errorPayload.responseJSON))
+    )
+)

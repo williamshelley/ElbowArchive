@@ -13,10 +13,27 @@ class PostItem extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            showDropdown: false,
+            showPostOptions: false,
+        }
+
         this.likeHandler = this.likeHandler.bind(this);
         this.commentHandler = this.commentHandler.bind(this);
         this.onLike = this.onLike.bind(this);
         this.onUnlike = this.onUnlike.bind(this);
+        this.deletePostHandler = this.deletePostHandler.bind(this);
+        this.onOptionsClick = this.onOptionsClick.bind(this);
+        this.onOptionsBlur = this.onOptionsBlur.bind(this);
+        this.optionsWrapper = React.createRef();
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.onOptionsBlur);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.onOptionsBlur);
     }
 
     onLike(e) {
@@ -36,13 +53,32 @@ class PostItem extends React.Component {
         return this.onLike;
     }
 
+    deletePostHandler(e) {
+        e.preventDefault();
+        this.props.deletePost(this.props.post.id);
+    }
+
     commentHandler(e) {
         e.preventDefault();
         console.log("Comment Handler");
     }
 
+    onOptionsClick(e) {
+        e.preventDefault();
+        this.setState({ showPostOptions: !this.state.showPostOptions })
+    }
+
+    onOptionsBlur(e) {
+        const toggle = $("#post-options-toggle")[0];
+        if (this.optionsWrapper && this.optionsWrapper.current
+            && !toggle.contains(e.target)
+            && !this.optionsWrapper.current.contains(e.target)) {
+            this.setState({ showPostOptions: false });
+        }
+    }
+
     render() {
-        let { post, isLikedByCurrentUser } = this.props;
+        let { post, isLikedByCurrentUser, currentUser } = this.props;
         let { author, wall, photos } = post;
         let numCharsBeforeResize = 60;
         let style = {};
@@ -87,9 +123,20 @@ class PostItem extends React.Component {
                                     {Moment.monthsShort(moment.month())} {moment.toDate().getDate()}
                                 </div>
                             </div>
-                            <div className="icon">
-                                <FontAwesomeIcon icon={faEllipsisH} />
-                            </div>
+                            {author.id === currentUser.id && (
+                                <div className="icon"
+                                    ref={this.optionsWrapper}
+                                    id="post-options-toggle"
+                                    onClick={this.onOptionsClick}>
+                                    <FontAwesomeIcon icon={faEllipsisH} />
+                                    {this.state.showPostOptions && <div className="dropdown">
+                                        <div className="item"
+                                            onClick={this.deletePostHandler}>
+                                            Remove Post
+                                    </div>
+                                    </div>}
+                                </div>
+                            )}
                         </div>
                     </div>
                     <p style={style}>{post.body}</p>
@@ -100,11 +147,11 @@ class PostItem extends React.Component {
                         </ul>)
                         : null
                     }
-                    { (post.likes && numLikes > 0) ?
-                    <div className="num-likes">
-                        <img src={LIKE_SVG} />
-                        { `${numLikes}` }
-                    </div> : null }
+                    {(post.likes && numLikes > 0) ?
+                        <div className="num-likes">
+                            <img src={LIKE_SVG} />
+                            {`${numLikes}`}
+                        </div> : null}
 
                     <div className="buttons">
 
@@ -115,17 +162,17 @@ class PostItem extends React.Component {
                         <ProfileHeaderButton icon={faComment} message="Comment"
                             onClick={this.commentHandler} />
 
-                        <ProfileHeaderButton icon={faShareSquare} message="Share"onClick={this.commentHandler} />
+                        <ProfileHeaderButton icon={faShareSquare} message="Share" onClick={this.commentHandler} />
                     </div>
 
                     {post.comments ? (
                         <div className="comments-list">
 
                             {Object.values(post.comments).map(comment => (
-                                <CommentContainer key={comment.id} 
+                                <CommentContainer key={comment.id}
                                     comment={comment} />
                             ))}
-                            
+
                         </div>
                     ) : null}
 

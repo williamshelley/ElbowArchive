@@ -160,33 +160,4 @@
         cursor: pointer;
         background-color: $icon-hover-bg;
     }
-
-    .dropdown {
-        position: absolute;
-        border:1px solid $border-color;
-        box-sizing: border-box;
-        border-radius: 8px;
-        right: 0px;
-        top: 55px;
-        width: 360px;
-        min-height: 250px;
-        flex-direction: column;
-        padding: 5px;
-        z-index: 100;
-
-        .item {
-            flex-direction: row;
-            justify-content: flex-start;
-            height: fit-content;
-            padding: 5px;
-            border-radius: 8px;
-            box-sizing: border-box;
-            width: 100%;
-        }
-
-        .item:hover {
-            background-color: $icon-hover-bg;
-            cursor: pointer;
-        }
-    }
 }

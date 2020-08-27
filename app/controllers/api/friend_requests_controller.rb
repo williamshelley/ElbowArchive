@@ -10,7 +10,6 @@ class Api::FriendRequestsController < ApplicationController
             .where("sender_id = ? OR recipient_id = ?", user_id, user_id)
             .where("sender_id = ? OR recipient_id = ?", friend_id, friend_id)
 
-            # debugger
         else
             @friend_requests = FriendRequest.find_by_user_id(user_id)
         end

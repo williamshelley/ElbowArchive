@@ -1,0 +1,31 @@
+.post {
+    .header {
+      .h-stack {
+        .icon {
+          position: relative;
+          .dropdown {
+            display: flex;
+            z-index: 10;
+            top: 0;
+            height: fit-content;
+            min-height: fit-content;
+            width: 110px;
+            align-items: center;
+            justify-content: center;
+            left: 100%;
+            .item {
+              font-size: 80%;
+              text-align: center;
+            }
+          }
+
+
+
+        }
+        .icon:hover .dropdown {
+          background: unset;
+        }
+      }
+
+    }
+}

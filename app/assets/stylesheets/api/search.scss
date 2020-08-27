@@ -1,14 +1,16 @@
 @import "../static_pages.scss";
 
+
 .search-item {
     position: relative;
     .dropdown {
         position: absolute;
-        top: 0;
+        top: 105%;
         left: 0;
         overflow-y: scroll;
         height: fit-content;
         max-height: 750px;
+        padding-top: 5px;
         .item {
             width: 100%;
             height: 50px;
@@ -16,6 +18,8 @@
                 height: 50px;
                 width: 50px;
                 border-radius: 8px;
+                object-fit: contain;
+                background-color: rgba(0,0,0,0.1);
             }
         }
     }

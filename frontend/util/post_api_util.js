@@ -29,4 +29,11 @@ export const fetchPagePosts = ({ userId, page, newsfeed }) => {
         method: "GET",
         data: { page, newsfeed }
     }));
+};
+
+export const deletePost = postId => {
+    return ($.ajax({
+        url: `/api/posts/${postId}`,
+        method: "DELETE",
+    }));
 }

@@ -4,7 +4,6 @@ class Api::PostsController < ApplicationController
 
         @posts = []
         post_limit = 5
-        # debugger
 
         if user_id.scan(/\D/).empty?
 
@@ -71,7 +70,13 @@ class Api::PostsController < ApplicationController
     end
 
     def destroy
-
+        @post = current_user.posts.find_by(id: params[:id])
+        if @post
+            @post.destroy
+            render :show
+        else
+            render json: { deletionError: "Could not delete post" }, status: 404
+        end
     end
 
     private

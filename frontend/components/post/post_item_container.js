@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import PostItem from "./post_item";
 import { like, unlike } from "../../actions/like_actions";
 import { selectCurrentUser, selectPostLikes } from "../../reducers/selectors";
+import { deletePost } from "../../actions/post_actions";
 
 const mapStateToProps = (state, ownProps) => {
     const currentUser = selectCurrentUser(state);
@@ -26,6 +27,7 @@ const mapDispatchToProps = dispatch => {
             likeable_id: postId
         })),
         unlikePost: likeId => dispatch(unlike(likeId)),
+        deletePost: postId => dispatch(deletePost(postId))
     };
 };
 

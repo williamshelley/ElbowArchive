@@ -1,4 +1,4 @@
-import { RECEIVE_POST, RECEIVE_POSTS, MERGE_POSTS } from "../actions/post_actions";
+import { RECEIVE_POST, RECEIVE_POSTS, MERGE_POSTS, DELETE_POST } from "../actions/post_actions";
 import { merge } from "lodash";
 import { RECEIVE_LIKE, DELETE_LIKE } from "../actions/like_actions";
 import likeableMerger from "./likeable_merger";
@@ -23,6 +23,10 @@ const postsReducer = (state = {}, action) => {
                 return likeableMerger(state, action.like);
             }
             return state;
+        
+        case DELETE_POST:
+            delete newState[action.post.id];
+            return newState;
 
         case DELETE_LIKE:
             delete newState[action.like.likeable_id].likes[action.like.user_id]

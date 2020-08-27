@@ -19,7 +19,7 @@ class Api::UsersController < ApplicationController
                 .select("*")
                 .where("id IN (?)", filter_params[:user_ids]))
 
-            elsif filter_params[:name] && filter_params[:page]
+            elsif filter_params[:name] && filter_params[:page] && filter_params[:name].length > 0
                 start_of_name = filter_params[:name] ? "%#{filter_params[:name]}%" : ""
                 @users = (User
                 .with_attached_profile_photo
@@ -30,7 +30,7 @@ class Api::UsersController < ApplicationController
                 .where("UPPER(CONCAT(first_name, ' ', last_name)) LIKE UPPER(?)
                 ", start_of_name))
 
-            elsif filter_params[:name]
+            elsif filter_params[:name] && filter_params[:name].length > 0
                 start_of_name = filter_params[:name] ? "%#{filter_params[:name]}%" : ""
                 @users = (User
                 .with_attached_profile_photo

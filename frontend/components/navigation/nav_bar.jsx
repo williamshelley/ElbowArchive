@@ -22,12 +22,27 @@ export default class NavBar extends React.Component {
 
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this.navigate = this.navigate.bind(this);
-
+        this.dropdownWrapper = React.createRef();
+        this.handleDropdownBlur = this.handleDropdownBlur.bind(this);
+        this.showDropdown = this.showDropdown.bind(this);
+        this.hideDropdown = this.hideDropdown.bind(this);
     }
 
     toggleDropdown(e) {
         e.preventDefault();
-        this.setState({ showDropdown: !this.state.showDropdown });
+        if (this.state.showDropdown === true) {
+            this.hideDropdown();
+        } else {
+            this.showDropdown();
+        }
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleDropdownBlur);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleDropdownBlur);
     }
 
     navigate(destination) {
@@ -41,6 +56,24 @@ export default class NavBar extends React.Component {
     redirect(destination) {
         return e => {
             window.location = destination;
+        }
+    }
+
+    hideDropdown() {
+        this.setState({ showDropdown: false });
+    }
+
+    showDropdown() {
+        this.setState({ showDropdown: true });
+    }
+
+    handleDropdownBlur(e) {
+        const toggle = $("#dropdown-toggle")[0];
+        if (this.dropdownWrapper && this.dropdownWrapper.current
+            && !toggle.contains(e.target)
+            && !this.dropdownWrapper.current.contains(e.target)) {
+                console.log(this.dropdownWrapper.current)
+            this.hideDropdown();
         }
     }
 
@@ -80,11 +113,12 @@ export default class NavBar extends React.Component {
                     {/* <NavBarIcon icon={faComment} /> */}
                     {/* <NavBarIcon icon={faBell} /> */}
                     <NavBarIcon icon={faSortDown}
+                        id={"dropdown-toggle"}
                         onClick={this.toggleDropdown} />
                 </div>
 
                 {this.state.showDropdown ?
-                    <div className="dropdown">
+                    <div className="dropdown" ref={this.dropdownWrapper}>
                         <DropdownItem label="Log Out" 
                             icon={faSignOutAlt}
                             onClick={() => this.props.logout() } />

@@ -36,7 +36,7 @@ class FriendRequestIndex extends React.Component {
     }
 
     removeHandler(user) {
-        return e => console.log("remove handler");
+        return e => console.log("Feature will be added in later release.");
     }
 
     pageUp(e) {

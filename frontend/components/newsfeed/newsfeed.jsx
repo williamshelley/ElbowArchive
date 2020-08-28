@@ -49,7 +49,6 @@ class NewsFeed extends React.Component {
 
     render() {
         let { posts, suggested } = this.props;
-        console.log(suggested);
 
         return (
                 <div className="newsfeed">

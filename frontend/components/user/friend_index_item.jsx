@@ -19,7 +19,7 @@ const FriendIndexItem = ({ history, user, message }) => {
                 <p>Number of mutual friends.</p>
             </div>
 
-            <button onClick={() => console.log("display dropdown") }>
+            <button onClick={() => console.log("Feature will be added in a later release.") }>
                 {message ? message : "Friends"}
             </button>
         </div>

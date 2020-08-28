@@ -45,7 +45,7 @@ class UpdatePhotoModal extends React.Component {
 
     addFrameHandler(e) {
         e.preventDefault();
-        console.log("Add Frame Handler");
+        console.log("Feature will be added in a later release.");
     }
 
     handleSubmit(e) {

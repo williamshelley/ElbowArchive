@@ -60,7 +60,7 @@ class PostItem extends React.Component {
 
     commentHandler(e) {
         e.preventDefault();
-        console.log("Comment Handler");
+        console.log("Feature will be added in a later release.");
     }
 
     onOptionsClick(e) {

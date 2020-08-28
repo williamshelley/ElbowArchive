@@ -8,10 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    loginDemoUser: () => dispatch(login({ 
-        email: "harry_potter@gmail.com", 
-        phone_number: "917-111-1234",
-        password: "password"}))
+    loginDemoUser: () => dispatch(login({ demo_user: true }))
 });
 
 const LoggedOutContainer = connect(mapStateToProps, mapDispatchToProps)(LoggedOut);

@@ -1,22 +1,24 @@
 import React from "react";
 import FriendRequestIndexItem from "./friend_request_index_item";
-import ProfileContainer from "../user/profile_container";
 import ProfileModalContainer from "./profile_modal_container";
+import { Waypoint } from "react-waypoint";
 
 class FriendRequestIndex extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mountedUser: null
+            mountedUser: null,
+            suggestedPage: 1,
         }
 
         this.sendRequest = this.sendRequest.bind(this);
         this.removeHandler = this.removeHandler.bind(this);
         this.acceptRequest = this.acceptRequest.bind(this);
+        this.pageDown = this.pageDown.bind(this);
     }
 
     componentDidMount() {
-        this.props.fetchUsers().then(() => {
+        this.props.fetchUsers(this.state.suggestedPage).then(() => {
             this.props.fetchFriendRequests(this.props.currentUser.id)
         });
     }
@@ -37,12 +39,24 @@ class FriendRequestIndex extends React.Component {
         return e => console.log("remove handler");
     }
 
+    pageUp(e) {
+        this.setState({ suggestedPage: this.state.suggestedPage - 1}, () => {
+            this.props.fetchMergeUsers(this.state.suggestedPage);
+        });
+    }
+
+    pageDown() {
+        this.setState({ suggestedPage: this.state.suggestedPage + 1}, () => {
+            this.props.fetchMergeUsers(this.state.suggestedPage);
+        });
+    }
+
     render() {
         let { nonFriends, pendingFriends } = this.props;
         let { mountedUser } = this.state;
         return (
             <div className="friend-requests">
-                <div className="friend-requests-list">
+                <div className="friend-requests-list" id="friend-requests-list">
                     <h2>Friends</h2>
                     <div className="pending-requests">
                         {pendingFriends.length > 0 ? (pendingFriends.map((user, idx) => {
@@ -71,6 +85,7 @@ class FriendRequestIndex extends React.Component {
                                 key={idx} user={user} />
                         ) : null;
                     })}
+                    <Waypoint onEnter={() => this.pageDown()} />
                 </div>
                 {
                     mountedUser ? <ProfileModalContainer user={mountedUser} /> : null

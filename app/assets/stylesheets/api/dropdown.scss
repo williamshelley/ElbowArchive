@@ -6,12 +6,16 @@
   box-sizing: border-box;
   border-radius: 8px;
   right: 0px;
-  top: 55px;
+  top: 95%;
   width: 360px;
-  min-height: 250px;
+  // min-height: 250px;
+
   flex-direction: column;
   padding: 5px;
+  padding-top: 10px;
   z-index: 100;
+  background-color: $nav-bar-bg;
+  justify-content: flex-start;
 
   .item {
       flex-direction: row;

@@ -1,47 +1,64 @@
 import React from "react";
 import NavBarIcon from "./nav_bar_icon";
 import { faHome, faTv, faShoppingBag, faUsers, faPuzzlePiece, faComment, faBell, faSortDown, faPlus, faSignOutAlt, faBalanceScale, faLink, faPersonBooth } from "@fortawesome/free-solid-svg-icons";
-import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faLinkedin, faAngellist } from "@fortawesome/free-brands-svg-icons";
 import ProfileItemContainer from "./profile_item_container";
 import DropdownItem from "./dropdown_item";
 import SearchItemContainer from "./search_item_container";
 import { safePush } from "../../util/navigation_util";
+import { GITHUB, LINKEDIN, PERSONAL, ANGELLIST } from "../../util/sites";
 
-const GITHUB = "https://github.com/williamshelley";
-const LINKEDIN = "https://www.linkedin.com/in/william-shelley-280293177/";
-const PERSONAL = "https://willshelley.com/";
+const NOTIFICATIONS = "navbar_notifications";
+const OPTIONS = "navbar_options";
 
 export default class NavBar extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            showDropdown: false,
+            navbar_options: false,
+            navbar_notifications: false
         }
 
-        this.toggleDropdown = this.toggleDropdown.bind(this);
         this.navigate = this.navigate.bind(this);
-        this.dropdownWrapper = React.createRef();
-        this.handleDropdownBlur = this.handleDropdownBlur.bind(this);
+        
         this.showDropdown = this.showDropdown.bind(this);
         this.hideDropdown = this.hideDropdown.bind(this);
+        
+        this.toggleDropdown = this.toggleDropdown.bind(this);
+        this.handleDropdownBlur = this.handleDropdownBlur.bind(this);
+        
+        this.chooseWrapper = this.chooseWrapper.bind(this);
+
+        this.optionsWrapper = React.createRef();
+        this.notificationsWrapper = React.createRef();
     }
 
-    toggleDropdown(e) {
-        e.preventDefault();
-        if (this.state.showDropdown === true) {
-            this.hideDropdown();
-        } else {
-            this.showDropdown();
+    toggleDropdown(dropdownName) {
+        return e => {
+            e.preventDefault();
+            if (this.state[dropdownName] === true) {
+                this.hideDropdown(dropdownName);
+            } else {
+                this.showDropdown(dropdownName);
+            }
         }
     }
 
     componentDidMount() {
-        document.addEventListener('mousedown', this.handleDropdownBlur);
+        document.addEventListener('mousedown', 
+            this.handleDropdownBlur(NOTIFICATIONS));
+
+        document.addEventListener('mousedown', 
+            this.handleDropdownBlur(OPTIONS));
     }
 
     componentWillUnmount() {
-        document.removeEventListener('mousedown', this.handleDropdownBlur);
+        document.removeEventListener('mousedown', 
+            this.handleDropdownBlur(NOTIFICATIONS));
+
+        document.removeEventListener('mousedown', 
+            this.handleDropdownBlur(OPTIONS));
     }
 
     navigate(destination) {
@@ -58,22 +75,57 @@ export default class NavBar extends React.Component {
         }
     }
 
-    hideDropdown() {
-        this.setState({ showDropdown: false });
+    hideDropdown(dropdownName) {
+        this.setState({ [dropdownName]: false });
     }
 
-    showDropdown() {
-        this.setState({ showDropdown: true });
+    showDropdown(dropdownName) {
+        this.setState({ [dropdownName]: true });
     }
 
-    handleDropdownBlur(e) {
-        const toggle = $("#dropdown-toggle")[0];
-        if (this.dropdownWrapper && this.dropdownWrapper.current
-            && !toggle.contains(e.target)
-            && !this.dropdownWrapper.current.contains(e.target)) {
-            this.hideDropdown();
+    chooseWrapper(dropdownName) {
+        switch(dropdownName) {
+            case NOTIFICATIONS:
+                return this.notificationsWrapper;
+            case OPTIONS:
+                return this.optionsWrapper;
+            default:
+                return null;
         }
     }
+
+    handleDropdownBlur(dropdownName) {
+        return e => {
+            const toggle = $(`#${dropdownName}`)[0];
+            let wrapper = this.chooseWrapper(dropdownName);
+
+            if (wrapper && wrapper.current && !toggle.contains(e.target)
+                && !wrapper.current.contains(e.target)) {
+                this.hideDropdown(dropdownName);
+            }
+        }
+    }
+
+    optionsDropdown() {
+        return this.state.navbar_options ? (
+                <div className="dropdown" ref={this.chooseWrapper(OPTIONS)}>
+                    <DropdownItem label="Log Out" 
+                        icon={faSignOutAlt}
+                        onClick={() => this.props.logout() } />
+                </div>
+        ) : null;
+    }
+
+    notificationsDropdown() {
+        return this.state.navbar_notifications ? (
+            <div className="dropdown" ref={this.chooseWrapper(NOTIFICATIONS)}>
+                <DropdownItem label="Received Friend Requests" 
+                    icon={faUsers}
+                    onClick={this.navigate("/friend_requests")} />
+            </div>
+        ) : null;
+    }
+
 
     render() {
         return (
@@ -92,12 +144,16 @@ export default class NavBar extends React.Component {
                     <NavBarIcon icon={faGithub} 
                         onClick={this.redirect(GITHUB)}/>
 
-                    <NavBarIcon icon={faLinkedin} 
-                        onClick={this.redirect(LINKEDIN)}/>
-
                     <NavBarIcon icon={faPersonBooth}
                         hoverText={"Personal Site"}
                         onClick={this.redirect(PERSONAL)}/>
+
+                    <NavBarIcon icon={faLinkedin} 
+                        onClick={this.redirect(LINKEDIN)}/>
+
+                    <NavBarIcon icon={faAngellist} 
+                        onClick={this.redirect(ANGELLIST)}/>
+
 
                     {/* <NavBarIcon icon={faTv} /> */}
                     {/* <NavBarIcon icon={faShoppingBag} /> */}
@@ -109,19 +165,20 @@ export default class NavBar extends React.Component {
                     <ProfileItemContainer />
                     {/* <NavBarIcon icon={faPlus} /> */}
                     {/* <NavBarIcon icon={faComment} /> */}
-                    {/* <NavBarIcon icon={faBell} /> */}
+                    <NavBarIcon icon={faBell} 
+                        id={NOTIFICATIONS}
+                        onClick={this.toggleDropdown(NOTIFICATIONS)}>
+                        {this.notificationsDropdown()}
+                        </NavBarIcon>
+
                     <NavBarIcon icon={faSortDown}
-                        id={"dropdown-toggle"}
-                        onClick={this.toggleDropdown} />
+                        id={OPTIONS}
+                        onClick={this.toggleDropdown(OPTIONS)}>
+
+                        {this.optionsDropdown()}
+                    </NavBarIcon>
                 </div>
 
-                {this.state.showDropdown ?
-                    <div className="dropdown" ref={this.dropdownWrapper}>
-                        <DropdownItem label="Log Out" 
-                            icon={faSignOutAlt}
-                            onClick={() => this.props.logout() } />
-                    </div> : null
-                }
 
             </div>
         );

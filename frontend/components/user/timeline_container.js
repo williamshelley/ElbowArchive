@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Timeline from "./timeline";
-import { selectCurrentUser, selectUserTimelinePosts, selectAllPosts } from "../../reducers/selectors";
+import { selectCurrentUser, selectUserTimelinePosts, selectAllPosts, selectUser } from "../../reducers/selectors";
 import { pushModal } from "../../actions/ui_actions";
 import { fetchUser } from "../../actions/user_actions";
 import { withRouter } from "react-router-dom";
@@ -14,11 +14,17 @@ const mapStateToProps = (state, ownProps) => {
         const dateB = new Date(postB.date_posted);
         return dateB - dateA;
     })) : [];
+    const user = ownProps.user ? ownProps.user : selectCurrentUser(state);
+    const owner = selectUser(ownerId, state);
+
     return {
         ownerId,
         posts: sortedByDate,
-        user: ownProps.user ? ownProps.user : selectCurrentUser(state),
-        currentUser: selectCurrentUser(state)
+        user,
+        currentUser: selectCurrentUser(state),
+        owner,
+        photos: owner.photos ? owner.photos : [],
+        // friends: owner.friends ? owner.friends : []
     };
 };
 

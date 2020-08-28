@@ -3,12 +3,15 @@ class User < ApplicationRecord
     validates :password_digest, :session_token, :birth_date, presence: true
     validates :password, length: { minimum: 6 }, allow_nil: true
 
-    validates :email, :phone_number, uniqueness: true, presence: true, allow_nil: true
+    validates :email, :phone_number, presence: true, uniqueness: true, allow_nil: true
     validate :email_or_phone_number
 
     after_initialize :ensure_session_token!
 
     has_many :posts, foreign_key: :author_id
+    has_many :photos,
+        through: :posts,
+        source: :photos_attachments
     
     has_one_attached :profile_photo
     has_one_attached :cover_photo
@@ -33,6 +36,26 @@ class User < ApplicationRecord
 
     attr_reader :password
 
+    def self.seed_to_demo
+        demo_user_number = SecureRandom::urlsafe_base64
+        user = User.create!(
+            first_name: "Demo", 
+            last_name: "User", 
+            email: "demo_user_#{demo_user_number}@gmail.com", 
+            phone_number: nil, 
+            password: "password", 
+            birth_date: "1981-07-31",
+            gender: "")
+
+        post = Post.create!(
+            author_id: user.id,
+            wall_id: user.id,
+            body: "This is a demo account. Please use it responsibly.",
+            date_posted: DateTime.now)
+
+        user
+    end
+
     def friends
         User.select("*")
         .joins("JOIN friend_requests ON friend_requests.sender_id = users.id")
@@ -40,7 +63,9 @@ class User < ApplicationRecord
     end
 
     def email_or_phone_number
-        self.email || self.phone_number
+        if !self.email && !self.phone_number
+            errors.add("Email and Phone Number cannot both be blank or invalid")
+        end
     end
 
     def get_friend(user_id)

@@ -3,6 +3,8 @@ class Api::UsersController < ApplicationController
         @users = [current_user]
 
         num_search_users_per_page = 10
+        num_all_users_per_page = 20
+
 
         if filter_params
             if filter_params[:page_owner_id]
@@ -32,17 +34,34 @@ class Api::UsersController < ApplicationController
 
             elsif filter_params[:name] && filter_params[:name].length > 0
                 start_of_name = filter_params[:name] ? "%#{filter_params[:name]}%" : ""
-                @users = (User
+                @users += (User
                 .with_attached_profile_photo
                 .with_attached_cover_photo
                 .select("*")
                 .where("UPPER(CONCAT(first_name, ' ', last_name)) LIKE UPPER(?)", start_of_name))
                 
-            elsif filter_params[:all_users]
-                @users = (User
+            elsif filter_params[:all_users] && filter_params[:page]
+                @users += (User
                 .with_attached_profile_photo
                 .with_attached_cover_photo
-                .all)
+                .all
+                .page(filter_params[:page])
+                .per(num_all_users_per_page))
+
+            elsif filter_params[:suggested]
+                requests = FriendRequest.all.map
+                sender_ids = requests.map { |request| request.sender_id }.uniq
+                recipient_ids = requests.map { |request| request.recipient_id }.uniq
+
+                @users += (User
+                .select("*")
+                .where("id NOT IN (?) AND id NOT IN (?)", sender_ids, recipient_ids)
+                .limit(15)
+                .with_attached_profile_photo
+                .with_attached_cover_photo)
+                # && filter_params[:page]
+                # .page(filter_params[:page])
+                # .per(num_all_users_per_page))
             end
         end
 
@@ -98,6 +117,6 @@ class Api::UsersController < ApplicationController
     end
 
     def filter_params
-        params.require(:filters).permit(:name, :page, :all_users, :page_owner_id, user_ids: [])
+        params.require(:filters).permit(:name, :page, :all_users, :page_owner_id, :suggested, user_ids: [])
     end
 end

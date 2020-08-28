@@ -4,6 +4,10 @@
     background-color: $nav-bar-bg;
     padding: 16px;
     border-radius: 8px;
+    p {
+
+        color: $text-color;
+    }
 }
 
 .timeline {
@@ -66,7 +70,7 @@
 
 .posts-list {
     gap: 16px;
-    width: fit-content;
+    // width: fit-content;
 }
 
 .post {

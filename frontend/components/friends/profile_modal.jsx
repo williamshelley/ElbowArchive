@@ -27,8 +27,8 @@ class ProfileModal extends React.Component {
         switch (name) {
             case TIMELINE:
                 return <TimelineContainer user={user} />
-            case ABOUT:
-                return <AboutContainer user={user} />
+            // case ABOUT:
+            //     return <AboutContainer user={user} />
             case FRIENDS:
                 return <FriendsIndexContainer user={user} />
             default:
@@ -76,9 +76,9 @@ class ProfileModal extends React.Component {
                             Timeline
                         </button>
 
-                        <button onClick={this.changeComponent(ABOUT)}>
+                        {/* <button onClick={this.changeComponent(ABOUT)}>
                             About
-                        </button>
+                        </button> */}
 
                         <button onClick={this.changeComponent(FRIENDS)}>
                             Friends

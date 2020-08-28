@@ -9,10 +9,9 @@ div {
 }
 
 .post {
+
     p {
         padding-bottom: 16px;
-        width: unset;
-
     }
 
     .num-likes {
@@ -54,7 +53,8 @@ div {
     #new {
         width: 500px;
         box-sizing: border-box;
-        max-height: 750px;
+        // max-height: 750px;
+        height: fit-content;
 
         .image-previews {
             width: 100%;

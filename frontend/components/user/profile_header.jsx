@@ -111,17 +111,17 @@ class ProfileHeader extends React.Component {
                                     <ProfileNavItemContainer label="Timeline"
                                         to={PATH()} />
 
-                                    <ProfileNavItemContainer label="About"
-                                        to={PATH("about")} />
+                                    {/* <ProfileNavItemContainer label="About"
+                                        to={PATH("about")} /> */}
 
                                     <ProfileNavItemContainer label="Friends"
                                         to={PATH("friends")} />
 
-                                    <ProfileNavItemContainer label="Photos"
+                                    {/* <ProfileNavItemContainer label="Photos"
                                         to={PATH("photos")} />
 
                                     <ProfileNavItemContainer label="Archive"
-                                        to={PATH("archive")} />
+                                        to={PATH("archive")} /> */}
                                 </>)
                                 : children
                             }

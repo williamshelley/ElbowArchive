@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import * as style from "../../styles/session";
 import LoginFormContainer from "./login_form_container";
 import SignupFormContainer from "./signup_form_container";
-import SectionHeaderMessage from "./section_header_message";
 
-const FB_LOGO = "https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg";
 const EA_LOGO = "logo.png";
 export default class LoggedOut extends React.Component {
     constructor(props) {

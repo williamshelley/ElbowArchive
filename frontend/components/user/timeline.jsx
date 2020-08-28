@@ -4,6 +4,7 @@ import NewPostFormContainer from "../post/new_post_form_container";
 import NotFound404 from "../navigation/not_found_404";
 import { ProfileImage } from "../../util/resources_util";
 import { Waypoint } from "react-waypoint";
+import { safePush } from "../../util/navigation_util";
 
 const Section = ({ style, children }) => (
     <div style={style} className="section">{children}</div>
@@ -19,6 +20,7 @@ class Timeline extends React.Component {
         };
 
         this.presentNewPostForm = this.presentNewPostForm.bind(this);
+        this.navigate = this.navigate.bind(this);
     }
 
     presentNewPostForm(e) {
@@ -53,8 +55,14 @@ class Timeline extends React.Component {
         });
     }
 
+    navigate(user) {
+        return () => {
+            safePush(this.props.history, `/profile/${user.id}`);
+        }
+    }
+
     render() {
-        let { user, posts, ownerId, currentUser } = this.props;
+        let { user, posts, ownerId, currentUser, photos, owner} = this.props;
 
         let profile_pic = "https://img.icons8.com/ios-glyphs/96/000000/gender-neutral-user.png";
         if (user) {
@@ -65,20 +73,39 @@ class Timeline extends React.Component {
             <div className="timeline">
                 <div className="left">
                     <Section>
-                        Intro
+                        <h3>Intro</h3>
+                        <p>Welcome to {owner.first_name}'s timeline! Say something nice, post an amazing photo, or make a comment!</p>
                     </Section>
 
                     <Section>
-                        Photos
+                        <h3>Photos</h3>
+                        {photos && (<div className="photo-grid">
+                            { photos.map((photoUrl, idx) => {
+                                return (
+                                    <img key={idx} src={photoUrl} />
+                                );
+                            })}
+                        </div>)}
                     </Section>
-
+{/* 
                     <Section>
-                        Friends
-                    </Section>
-
+                        <h3>Friends</h3>
+                        <div className="friend-grid">
+                            { friends && friends.map((friend, idx) => {
+                                return (
+                                    <div key={idx} 
+                                    onClick={this.navigate(friend)}>
+                                    <ProfileImage user={friend} />
+                                    <p>{friend.first_name} {friend.last_name}</p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </Section> */}
+{/* 
                     <Section>
                         Life Events
-                    </Section>
+                    </Section> */}
                 </div>
 
                 <div className="right">

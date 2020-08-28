@@ -27,8 +27,4 @@ json.wall do
     json.extract! @post.wall, *@post.wall.keys
 end
 
-json.photos do
-    @post.photos.each do |p|
-        url_for(p)
-    end
-end
+json.photos @post.photos.map { |p| url_for(p) }

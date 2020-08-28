@@ -1,11 +1,8 @@
 import React from "react";
-import ProfileHeader from "./profile_header";
 import AboutContainer from "./about_container";
 import TimelineContainer from "./timeline_container";
 import { ProtectedRoute } from "../../util/route_util";
 import { Switch, Redirect } from "react-router-dom";
-import { PROFILE_PATH } from "../../util/path_util";
-import { render } from "react-dom";
 import ProfileHeaderContainer from "./profile_header_container";
 import FriendsIndexContainer from "./friends_index_container";
 import { safePush } from "../../util/navigation_util";
@@ -28,6 +25,7 @@ class Profile extends React.Component {
     }
 
     UNSAFE_componentWillReceiveProps(newProps) {
+        window.scrollTo(0,0);
         let newId = newProps.match.params.userId;
         let oldId = this.props.match.params.userId;
         let oldUser = this.props.user;
@@ -42,7 +40,7 @@ class Profile extends React.Component {
         }
 
         if ((newId !== oldId || !profilePhotosAreSame)) {
-            if (!newProps.users[newId]) {
+        if (!newProps.users[newId] || (newProps.users[newId] && !newProps.users[newId].photos)) {
                 this.props.fetchUser(newId).then(() => {
                     this.setState({ mountedUser: newProps.user });
                 });

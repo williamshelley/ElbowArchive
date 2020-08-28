@@ -1,6 +1,12 @@
 class Api::SessionsController < ApplicationController
     def create
-        @user = User.find_by_credentials(email: params[:user][:email], phone_number: params[:user][:phone_number], password: params[:user][:password])
+
+
+        if params[:user][:demo_user]
+            @user = User.seed_to_demo
+        else
+            @user = User.find_by_credentials(email: params[:user][:email], phone_number: params[:user][:phone_number], password: params[:user][:password])
+        end
 
         if @user
             login!(@user)

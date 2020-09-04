@@ -33,7 +33,7 @@ export default class LoggedOut extends React.Component {
                 </div>
                 
                 <div className={style.LOGGED_OUT_FOOTER}>
-                    FOOTER
+                    {/* FOOTER */}
                 </div>
 
                 <div className={style.SIGNUP_OVERLAY}>

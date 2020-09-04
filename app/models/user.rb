@@ -38,13 +38,14 @@ class User < ApplicationRecord
 
     def self.seed_to_demo
         demo_user_number = SecureRandom::urlsafe_base64
+        name = Faker::Movies::HarryPotter.character.split(" ")
         user = User.create!(
-            first_name: "Demo", 
-            last_name: "User", 
-            email: "demo_user_#{demo_user_number}@gmail.com", 
+            first_name: name.first,
+            last_name: name.last,
+            email: "#{name.first}.#{name.last}.#{demo_user_number}@gmail.com", 
             phone_number: nil, 
-            password: "password", 
-            birth_date: "1981-07-31",
+            password: "password",
+            birth_date: Faker::Date.between(from: '1980-01-10', to: '2020-01-10'),
             gender: "")
 
         post = Post.create!(

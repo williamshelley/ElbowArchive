@@ -80,11 +80,11 @@ class UpdatePhotoModal extends React.Component {
                             <input id="profile-photo-input" type="file"
                                 onChange={this.handlePhoto} />
                         </div>
-
+{/* 
                         <ProfileHeaderButton
                             icon={faAddressBook}
                             message="Add Frame"
-                            onClick={this.addFrameHandler} />
+                            onClick={this.addFrameHandler} /> */}
                     </div>
 
                     <ProfileImage user={{ profile_photo: photoUrl }} />

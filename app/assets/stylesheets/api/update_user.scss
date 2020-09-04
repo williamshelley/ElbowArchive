@@ -37,7 +37,8 @@
         img {
             width: 300px;
             height: 300px;
-            // border-radius: 50%;
+            border-radius: 4px;
+            object-fit: cover;
         }
 
         .item{
@@ -80,6 +81,10 @@
                 margin: 0;
             }
 
+            .item {
+                max-width: 50%;
+            }
+
             .icon {
                 width: 40px;
                 height: 40px;
@@ -104,6 +109,7 @@
                 height: fit-content;
                 padding: 16px;
                 img {
+                    object-fit: cover;
                     background-color: $icon-color;
                     border-radius: 50%;
                     border: none;

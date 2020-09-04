@@ -22,8 +22,6 @@ FriendRequest.reset_pk_sequence
 Like.destroy_all
 Like.reset_pk_sequence
 
-# file = File.open("app/assets/images/logo.png")
-
 hermione = User.create!(
     first_name: "Hermione", 
     last_name: "Granger", 
@@ -33,8 +31,6 @@ hermione = User.create!(
     birth_date: "1981-04-10",
     gender: "Female")
 
-# hermione.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
-# hermione.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
 
 harry = User.create!(
     first_name: "Harry", 
@@ -44,37 +40,6 @@ harry = User.create!(
     password: "password", 
     birth_date: "1981-07-31",
     gender: "Male")
-
-# harry.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
-# harry.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
-
-# Post.create!(
-#     author_id: harry.id,
-#     wall_id: harry.id,
-#     body: "Hogwarts is great!",
-#     date_posted: "1993-10-15"
-# )
-
-# Post.create!(
-#     author_id: harry.id,
-#     wall_id: harry.id,
-#     body: "Hogwarts is amazing!",
-#     date_posted: "1991-12-09"
-# )
-
-# Post.create!(
-#     author_id: hermione.id,
-#     wall_id: harry.id,
-#     body: "Hogwarts is fabulous!",
-#     date_posted: "1991-09-07"
-# )
-
-# Post.create!(
-#     author_id: harry.id,
-#     wall_id: hermione.id,
-#     body: "Hogwarts is incredible!",
-#     date_posted: "1991-10-06"
-# )
 
 
 users = Set.new()
@@ -103,21 +68,11 @@ while users.length < NUM_USERS do
             user.email = "#{e[0]}#{users.size}@#{e[1]}"
         end
     end
-
-    # if users.include?(user)
-    #     e = user.email.split("@")
-    #     user.email = "#{e[0]}#{users.size}@#{e[1]}"
-    # end
-    
-    # user.profile_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
-    # user.cover_photo.attach(io: File.open("app/assets/images/logo.png"), filename: "logo.png")
     
     p user.email
-    # user.save
     users << user
 end
 
-p "start users_a"
 users_a = users.to_a
 users_a = users_a.select { |user| !user.nil? and user.save }
 # users_a.each { |user| user.save }

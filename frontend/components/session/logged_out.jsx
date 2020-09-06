@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import * as style from "../../styles/session";
 import LoginFormContainer from "./login_form_container";
 import SignupFormContainer from "./signup_form_container";
+import { GITHUB, LINKEDIN, PERSONAL, ANGELLIST } from "../../util/sites";
+import { faGithub, faLinkedin, faAngellist } from "@fortawesome/free-brands-svg-icons";
+import { faPersonBooth } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const EA_LOGO = "logo.png";
 export default class LoggedOut extends React.Component {
@@ -11,7 +15,6 @@ export default class LoggedOut extends React.Component {
     }
 
     render() {
-        let recentLogins = [1,2,3,4,5];
         return (
             <div className={style.LOGGED_OUT_CONTAINER}>
                 <div className={style.LOGGED_OUT_BODY}>
@@ -20,6 +23,28 @@ export default class LoggedOut extends React.Component {
                             className={style.LOGGED_OUT_LOGO}
                             src={EA_LOGO}
                             />
+                        <p>Facebook clone (single-page-app) where users can search/befriend other users, make posts, comments, likes, and upload photos</p>
+                        <div className="links">
+                            <a href={GITHUB}>
+                                <FontAwesomeIcon icon={faGithub} />
+                                {/* GitHub */}
+                            </a>
+                            
+                            <a href={PERSONAL}>
+                                <FontAwesomeIcon icon={faPersonBooth} />
+                                {/* Personal Site */}
+                            </a>
+
+                            <a href={LINKEDIN}>
+                                <FontAwesomeIcon icon={faLinkedin} />
+                                {/* LinkedIn */}
+                            </a>
+
+                            <a href={ANGELLIST}>
+                                <FontAwesomeIcon icon={faAngellist} />
+                                {/* AngelList */}
+                            </a>
+                        </div>
                     </div>
                     <div className={style.LOGGED_OUT_BODY_LOGIN}>
                         <LoginFormContainer />

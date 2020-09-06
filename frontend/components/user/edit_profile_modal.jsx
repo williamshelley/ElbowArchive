@@ -56,7 +56,7 @@ class EditProfileModal extends React.Component {
                     <Section>Bio</Section>
                     <Section>Customize Your Intro</Section>
                     <Section>Featured</Section>
-                    <button type="submit">Edit Your About Info</button>
+                    {/* <button type="submit">Edit Your About Info</button> */}
                 </form>
             </div>
         );

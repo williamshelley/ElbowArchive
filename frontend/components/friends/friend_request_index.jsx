@@ -18,8 +18,9 @@ class FriendRequestIndex extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchUsers(this.state.suggestedPage).then(() => {
-            this.props.fetchFriendRequests(this.props.currentUser.id)
+        // this.props.fetchUsers(this.state.suggestedPage).then(() => {
+        this.props.fetchUsers().then(()=> {
+            this.props.fetchFriendRequests(this.props.currentUser.id);
         });
     }
 
@@ -39,11 +40,11 @@ class FriendRequestIndex extends React.Component {
         return e => console.log("Feature will be added in later release.");
     }
 
-    pageUp(e) {
-        this.setState({ suggestedPage: this.state.suggestedPage - 1}, () => {
-            this.props.fetchMergeUsers(this.state.suggestedPage);
-        });
-    }
+    // pageUp(e) {
+    //     this.setState({ suggestedPage: this.state.suggestedPage - 1}, () => {
+    //         this.props.fetchMergeUsers(this.state.suggestedPage);
+    //     });
+    // }
 
     pageDown() {
         this.setState({ suggestedPage: this.state.suggestedPage + 1}, () => {
@@ -85,7 +86,7 @@ class FriendRequestIndex extends React.Component {
                                 key={idx} user={user} />
                         ) : null;
                     })}
-                    <Waypoint onEnter={() => this.pageDown()} />
+                    {/* <Waypoint onEnter={() => this.pageDown()} /> */}
                 </div>
                 {
                     mountedUser ? <ProfileModalContainer user={mountedUser} /> : null

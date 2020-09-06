@@ -59,9 +59,12 @@ class Api::UsersController < ApplicationController
                 .limit(15)
                 .with_attached_profile_photo
                 .with_attached_cover_photo)
-                # && filter_params[:page]
-                # .page(filter_params[:page])
-                # .per(num_all_users_per_page))
+
+            elsif filter_params[:all_users]
+                @users += (User
+                .with_attached_profile_photo
+                .with_attached_cover_photo
+                .all)
             end
         end
 

@@ -1,9 +1,8 @@
 import { connect } from "react-redux";
 import FriendRequestIndex from "./friend_request_index";
-import { selectPendingFriendRequests, selectPendingFriendIds, selectCurrentUser, selectUsers, selectAcceptedFriendIds, selectNonFriends, selectUsersFromIds, selectPendingRecipientIds, selectPendingIdsWithRecipient } from "../../reducers/selectors";
-import { fetchFriendRequests, sendFriendRequest, updateFriendRequest, receiveFriendRequests, acceptFriendRequest } from "../../actions/friend_request_actions";
+import { selectCurrentUser, selectNonFriends, selectUsersFromIds, selectPendingIdsWithRecipient } from "../../reducers/selectors";
+import { fetchFriendRequests, sendFriendRequest, updateFriendRequest, acceptFriendRequest } from "../../actions/friend_request_actions";
 import { fetchUsers, fetchFriends, fetchMergeUsers } from "../../actions/user_actions";
-import { merge} from "lodash";
 
 const msp = state => {
     let currentUser = selectCurrentUser(state);
@@ -21,13 +20,15 @@ const msp = state => {
 const mdp = dispatch => {
     return {
         fetchFriends: () => dispatch(fetchFriends({ all_users: true })),
-        fetchUsers: (page) => dispatch(fetchUsers({ all_users: true, page })),
+        // fetchUsers: (page) => dispatch(fetchUsers({ all_users: true, page })),
+        fetchUsers: () => dispatch(fetchUsers({ all_users: true })),
         fetchMergeUsers: page => dispatch(fetchMergeUsers({ all_users: true, page })),
         fetchFriendRequests: userId => dispatch(fetchFriendRequests(userId)),
         sendFriendRequest: recipient_id => dispatch(sendFriendRequest({ recipient_id })),
         updateFriendRequest: sender_id => dispatch(updateFriendRequest(
             { sender_id })),
         acceptFriendRequest: request => dispatch(acceptFriendRequest(request)),
+        fetchUsersSendingRequests: user_ids => dispatch(fetchMergeUsers({ user_ids }))
     };
 };
 

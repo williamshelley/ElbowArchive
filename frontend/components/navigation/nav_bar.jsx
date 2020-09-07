@@ -51,8 +51,8 @@ export default class NavBar extends React.Component {
 
         document.addEventListener('mousedown', 
             this.handleDropdownBlur(OPTIONS));
-
-        // this.props.fetchFriendRequests(this.props.currentUser.id);
+            
+        this.props.fetchFriendRequests(this.props.currentUser.id);
     }
 
     componentWillUnmount() {
@@ -177,9 +177,10 @@ export default class NavBar extends React.Component {
                     <NavBarIcon icon={faBell} 
                         id={NOTIFICATIONS}
                         onClick={this.toggleDropdown(NOTIFICATIONS)}>
-                            <div className="number">
+
+                            {this.props.receivedPendingRequests.length > 0 && <div className="number">
                                 {this.props.receivedPendingRequests.length}
-                            </div>
+                            </div>}
                         </NavBarIcon>
 
                     <NavBarIcon icon={faSortDown}

@@ -7,6 +7,7 @@ import DropdownItem from "./dropdown_item";
 import SearchItemContainer from "./search_item_container";
 import { safePush } from "../../util/navigation_util";
 import { GITHUB, LINKEDIN, PERSONAL, ANGELLIST } from "../../util/sites";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const NOTIFICATIONS = "navbar_notifications";
 const OPTIONS = "navbar_options";
@@ -151,18 +152,17 @@ export default class NavBar extends React.Component {
                         onClick={this.navigate("/")}/>
 
                     <NavBarIcon icon={faGithub} 
-                        onClick={this.redirect(GITHUB)}/>
+                        url={GITHUB}/>
 
                     <NavBarIcon icon={faPersonBooth}
                         hoverText={"Personal Site"}
-                        onClick={this.redirect(PERSONAL)}/>
+                        url={PERSONAL}/>
 
                     <NavBarIcon icon={faLinkedin} 
-                        onClick={this.redirect(LINKEDIN)}/>
+                        url={LINKEDIN}/>
 
                     <NavBarIcon icon={faAngellist} 
-                        onClick={this.redirect(ANGELLIST)}/>
-
+                        url={ANGELLIST}/>
 
                     {/* <NavBarIcon icon={faTv} /> */}
                     {/* <NavBarIcon icon={faShoppingBag} /> */}

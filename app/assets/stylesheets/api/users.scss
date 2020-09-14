@@ -58,7 +58,8 @@
         justify-content: space-evenly;
         position: relative;
 
-        .icon {
+        .icon, .icon > a {
+            color: $text-color;
             background-color: transparent;
 
             svg {
@@ -78,7 +79,7 @@
             border-radius: 4px;
         }
 
-        .icon:hover .hover-text {
+        .icon:hover .hover-text, .icon>a:hover .hover-text {
             visibility: visible;
         }
 

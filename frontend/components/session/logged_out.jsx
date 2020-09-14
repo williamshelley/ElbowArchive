@@ -25,22 +25,22 @@ export default class LoggedOut extends React.Component {
                             />
                         <p>Facebook clone (single-page-app) where users can search/befriend other users, make posts, comments, likes, and upload photos</p>
                         <div className="links">
-                            <a href={GITHUB}>
+                            <a href={GITHUB} target="_blank">
                                 <FontAwesomeIcon icon={faGithub} />
                                 {/* GitHub */}
                             </a>
                             
-                            <a href={PERSONAL}>
+                            <a href={PERSONAL} target="_blank">
                                 <FontAwesomeIcon icon={faPersonBooth} />
                                 {/* Personal Site */}
                             </a>
 
-                            <a href={LINKEDIN}>
+                            <a href={LINKEDIN} target="_blank">
                                 <FontAwesomeIcon icon={faLinkedin} />
                                 {/* LinkedIn */}
                             </a>
 
-                            <a href={ANGELLIST}>
+                            <a href={ANGELLIST} target="_blank">
                                 <FontAwesomeIcon icon={faAngellist} />
                                 {/* AngelList */}
                             </a>
